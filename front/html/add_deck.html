@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="../img/logo_intellicard.png" type="image/x-icon">
+        <link type="text/css" rel="stylesheet" href="../css/adddeck.css">
+        <link type="text/css" rel="stylesheet" href="../css/style.css">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <title>Ajout de deck</title>
+    </head>
+
+    <body class="body1">
+        <div id="modal" class="modal">
+            <div id="modal_content" class="modal_content">
+                <div class="modal_content_import">
+                    <p class="info_import">Assurer-vous de coller dans la zone prévu à cet effet, du texte sous la forme :<br><br> Q1:Ma question <br>R1:Ma réponse <br> Question 2:Ma Question 2 <br> Réponse 2 : Ma réponse 2 <br> Question: Ma question <br> Réponse : Ma réponse</p>
+                    <div class="container_importation">
+                        <textarea id="import_value"></textarea>
+                        <div id="valider">Valider</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <header class="header_nav_pc">
+            <div class="container">
+                <div class="navbar">
+                    <ul class="pc">
+                        <a href="/hub" class="li_nav"><span class="white">Jeux</span></a>
+                        <a href="/decks" class="li_nav"><span class="white">Decks</span></a>
+                        <a href="/home" class="li_nav"><span class="white">Accueil</span></a>
+                        <a href="/search" class="li_nav"><span class="white">Recherche</span></a>
+                        <a href="/profil" class="li_nav"><span class="white">Profil</span></a>
+                        <a href="/gestion" class="li_nav"><span class="white">Gestion</span></a>
+                    </ul>
+                </div>
+            </div>
+        </header>
+        <main>
+            <div class="fom_adding_deck">
+                <div class="display_choice">
+                    <h1 id="show_deck" class="h1_fancy toggle_display bright_display"><span class="fancy">Deck</span></h1>
+
+                </div>
+
+                <div id="deck_container" class="infocarte">      
+                    <form id="form_deck" class="form_deck" enctype="multipart/form-data">
+                        <div class="first_infos">
+                            <div class="form_group_deck">
+                                <fieldset>
+                                    <legend>Nom :</legend>
+                                    <input type="text" id="name" name="name" maxlength="100" required placeholder="Nom du deck">
+                                </fieldset>
+                            </div>
+                            <div class="form_group_deck">
+                                <fieldset>
+                                    <legend>Acces :</legend>
+                                    
+                                    <input type="radio" id="private" name="acces" class="private" value="PRIVATE" required>
+                                    <label for="private">Privé</label>  
+                                    <input type="radio" id="public" name="acces" class="public" value="PUBLIC" required>
+                                    <label for="public">Public</label>
+                                </fieldset>
+                            </div>
+                            <div class="form_group_deck">
+                                <fieldset>
+                                    <legend>Matière :</legend>
+                                    <select id="tag" name="tag" required>
+                                    </select>
+                                </fieldset>
+                            </div>
+                            <div class="form_group_deck">
+                                <fieldset>
+                                    <legend>Niveau :</legend>
+                                    <select id="level" name="level" required>
+                                    </select>
+                                </fieldset>
+                            </div>
+                        </div>
+
+
+                            
+                        <div id="cards_container" class="cards_container">
+                            <div class="card_group">
+                                <div class="card_container_mini">
+                                    <div class="maincarte_mini">
+                                        <div class="carte_mini noflip" id="carte">
+                                            <div class="cartefront">
+                                                <h1><span class="fancy">Question 1 :</span></h1>
+                                                <div class="infofront">
+                                                    <label class="label_photo label_file" for="q-1">
+                                                        <i class="fa-solid fa-image fa-3x label_file_icon" style="color: #3f2a56; padding: 20px;"></i>
+                                                        <img style="display: none;" class="preview" src="#" alt=""/>
+                                                        <div style="display: none;" class="delete_file"><i class="fa-solid fa-circle-minus"></i></div>
+                                                    </label>
+                                                    <input id="q-1" type="file" class="photo" name="q-1" accept="image/*">
+                                                    <textarea class="textarea_deck" type="text" id="q1"  name="q[]" ></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card_container_mini">
+                                    <div class="maincarte_mini">
+                                        <div class="carte_mini flip noflip" id="carte">
+                                            <div class="carteback">
+                                                <h1><span class="fancy_back">Réponse 1 :</span></h1>
+                                                <div class="infoback">
+                                                    <label class="label_photo label_file" for="r-1">
+                                                        <i class="fa-solid fa-image fa-3x label_file_icon" style="color: #3f2a56; padding: 20px;"></i>
+                                                        <img style="display: none;" class="preview" src="#" alt=""/>
+                                                        <div style="display: none;" class="delete_file"><i class="fa-solid fa-circle-minus"></i></div>
+                                                    </label>
+                                                    <input id="r-1" type="file" class="photo" name="r-1" accept="image/*">
+                                                    <textarea class="textarea_deck" type="text" id="r1"  name="r[]" ></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="addFields"><i class="fa-solid fa-circle-plus"></i></div>
+                            <div id="import" class="import"><i class='fas fa-upload'></i></div>
+                        </div>
+                        <div id="buttonAccesCard">   
+                            <!--création d'une mini carte réctangulaire-->
+                            <div class="listcard" id="zonelist">
+                                <p id="c">1</p>
+                            </div>
+                        </div>
+
+                        <div class="form_group_deck">
+                            <button class="submit" type="submit" value="Sauvegarder">Sauvegarder</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+        <footer class="header_nav_mobile">
+            <div class="container">
+                <div class="navbar">
+                    <div class="mobile">
+                        <div class="li_nav"><a href="/hub"><i class='fas fa-gamepad'></i></a></div>
+                        <div class="li_nav"><a href="/decks"><i class="fas fa-clone"></i></a></div>
+                        <div class="li_nav"><a href="/home"><i class='fas fa-home'></i></a></div>
+                        <div class="li_nav"><a href="/search"><i class='fas fa-search'></i></a></div>
+                        <div class="li_nav"><a href="/profil"><i class='fas fa-user-alt'></i></a></div>
+                        <div class="li_nav"><a href="/gestion"><i class='fas fa-wrench'></i></a></div>
+                    </div>
+                </div>
+        </footer>
+    </body>
+    <script src="../js/functions.js"></script>
+    <script src="../js/setup.js"></script>
+    <script>
+
+        var fieldCount = 1;
+
+        $(document).ready(function () {
+
+            $('#import').click(function(){
+                $("#modal").css('display', 'flex');
+            })
+
+            $('#valider').click(function(){
+                parse($("#import_value").val());
+                $("#modal").css('display', 'none');
+            })
+
+
+            $.ajax({
+                url: 'get_all_tag',
+                type: 'POST',
+                success: function(response) {
+                    const data = response.data
+                    data.forEach(element => {
+                        $('#tag').append('<option value="'+element.id_tag+'">'+element.tag+'</option>');
+                    });
+                },
+                error: function(xhr, status, error) {
+                    // Récupération de l'erreur
+                    console.error('Erreur de requête:', error, xhr);
+                    // Traitement de l'erreur
+                    showError(xhr.responseJSON.message)
+                }
+            });
+
+            $.ajax({
+                url: 'get_all_level',
+                type: 'POST',
+                success: function(response) {
+                    const data = response.data
+                    data.forEach(element => {
+                        $('#level').append('<option value="'+element.id_level+'">'+element.level+'</option>');
+                    });
+                },
+                error: function(xhr, status, error) {
+                    // Récupération de l'erreur
+                    console.error('Erreur de requête:', error, xhr);
+                    // Traitement de l'erreur
+                    showError(xhr.responseJSON.message)
+                }
+            });
+
+
+
+
+            $('#addFields').click(function() {
+                fieldCount++;
+                var newFieldGroup =
+                
+                '<div class="card_group">'+
+                    '<div class="card_container_mini">'+
+                        '<div class="maincarte_mini">'+
+                            '<div class="carte_mini noflip" id="carte">'+
+                                '<div class="cartefront">'+
+                                    '<h1><span class="fancy">Question ' + fieldCount + ' :</span></h1>'+
+                                    '<div class="infofront">'+
+                                        '<label class="label_photo label_file" for="q-' + fieldCount + '">'+
+                                            '<i class="fa-solid fa-image fa-3x label_file_icon" style="color: #3f2a56; padding: 20px;"></i>'+
+                                            '<img style="display: none;" class="preview" src="#" alt=""/>'+
+                                            '<div style="display: none;" class="delete_file"><i class="fa-solid fa-circle-minus"></i></div>'+
+                                        '</label>'+
+                                        '<input id="q-' + fieldCount + '" type="file" class="photo" name="q-' + fieldCount + '" accept="image/*">'+
+                                        '<textarea class="textarea_deck" type="text" id="q' + fieldCount + '"  name="q[]" required></textarea>'+
+                                    '</div>'+
+                                '</div>'+
+                            '</div>'+
+                        '</div>'+
+                    '</div>'+
+                    '<div class="card_container_mini">'+
+                        '<div class="maincarte_mini">'+
+                            '<div class="carte_mini flip noflip" id="carte">'+
+                                '<div class="carteback">'+
+                                    '<h1><span class="fancy_back">Réponse ' + fieldCount + ' :</span></h1>'+
+                                    '<div class="infoback">'+
+                                        '<label class="label_photo label_file" for="r-' + fieldCount + '">'+
+                                            '<i class="fa-solid fa-image fa-3x label_file_icon" style="color: #3f2a56; padding: 20px;"></i>'+
+                                            '<img style="display: none;" class="preview" src="#" alt=""/>'+
+                                            '<div style="display: none;" class="delete_file"><i class="fa-solid fa-circle-minus"></i></div>'+
+                                        '</label>'+
+                                        '<input id="r-' + fieldCount + '" type="file" class="photo" name="r-' + fieldCount + '" accept="image/*">'+
+                                        '<textarea class="textarea_deck" type="text" id="r' + fieldCount + '"  name="r[]" required></textarea>'+
+                                    '</div>'+
+                                '</div>'+
+                            '</div>'+
+                        '</div>'+
+                    '</div>'+
+                    '<div id="deleteField"><i class="fa-solid fa-circle-minus"></i></div>'+
+                '</div>';
+
+                //ici ça créer ca pour aller à la carte crée
+                var newButton = '<div class="listcard" id="zonelist">'+'<p id="ca"> '+ fieldCount+ '</p>'+'</div>';
+                $('#buttonAccesCard').append(newButton);
+
+                $(newFieldGroup).insertBefore(this);
+                $( "#addFields" )[0].scrollIntoView({ behavior: "smooth", block: "end", inline: "end" });
+
+                setImageForm();
+
+            });
+
+            //fonction enlever la ca pour aller à la carte crée quand une carte est supprimé tout en évitant d'aller en dessous de 0
+            $('#cards_container').on('click', '#deleteField', function() {
+                if(fieldCount > 0){
+                    $('#buttonAccesCard').children().last().remove();
+                }
+            });
+
+
+
+            //fonction pour supprimer une carte
+            $('#cards_container').on('click', '#deleteField', function() {
+                $(this).parent().remove();
+                fieldCount--;
+                // Mettre à jour les numéros des cartes restantes 
+                $('#cards_container').children().each(function(index) {
+                    $(this).find('span').first().text('Question ' + (index + 1));
+                    $(this).find('textarea').first().attr('id', 'q' + (index + 1));
+                    $(this).find('span').last().text('Réponse ' + (index + 1));
+                    $(this).find('textarea').last().attr('id', 'r' + (index + 1));
+                    $(this).find('.photo').first().attr('name', 'q-' + (index + 1));
+                    $(this).find('.photo').last().attr('name', 'r-' + (index + 1));
+                });
+
+            });
+                        
+        
+
+            //fonction pour aller à la carte correspondante
+            $('#buttonAccesCard').on('click', '.listcard', function() {
+                var id = $(this).find('p').text();
+                console.log(id);
+                var card = $('#cards_container').children().eq(id-1);
+                console.log(card);
+                card[0].scrollIntoView({ behavior: "smooth", block: "end", inline: "end" });
+            });
+
+
+            
+
+            $('#form_deck').submit(function(event) {
+                event.preventDefault();
+
+                
+                var formData2 = new FormData($("#form_deck")[0]);
+
+                /*$('.photo').each((index, elem)=>{
+                    formData2.append('photo', elem.files[0])
+                })*/
+
+
+                console.log(formData2);
+
+                $.ajax({
+                    url: 'add_deck',
+                    type: 'POST',
+                    data: formData2,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        console.log(response)
+                        window.location.href = "/my-deck/"+response.id;
+                    },
+                    error: function(xhr, status, error) {
+                        // Récupération de l'erreur
+                        console.error('Erreur de requête:', error, xhr);
+                        // Traitement de l'erreur
+                    showError(xhr.responseJSON.message)
+                    }
+                });
+            });
+
+        });
+
+
+        function parse(input) {
+            const parsedData = parseQuestionsAndAnswers(input);
+            if(parsedData) {
+                $('#buttonAccesCard').empty();
+                $('.card_group').remove();
+                fieldCount = 0;
+            }
+            parsedData.forEach(element => {
+                console.log(element)
+                fieldCount++;
+                var newFieldGroup =
+                '<div class="card_group">'+
+                    '<div class="card_container_mini">'+
+                        '<div class="maincarte_mini">'+
+                            '<div class="carte_mini noflip" id="carte">'+
+                                '<div class="cartefront">'+
+                                    '<h1><span class="fancy">Question ' + fieldCount + ' :</span></h1>'+
+                                    '<div class="infofront">'+
+                                        '<label class="label_photo label_file" for="q-' + fieldCount + '">'+
+                                            '<i class="fa-solid fa-image fa-3x label_file_icon" style="color: #3f2a56; padding: 20px;"></i>'+
+                                            '<img style="display: none;" class="preview" src="#" alt=""/>'+
+                                            '<div style="display: none;" class="delete_file"><i class="fa-solid fa-circle-minus"></i></div>'+
+                                        '</label>'+
+                                        '<input id="q-' + fieldCount + '" type="file" class="photo" name="q-' + fieldCount + '" accept="image/*">'+
+                                        '<textarea class="textarea_deck" type="text" id="q' + fieldCount + '"  name="q[]" required>'+element.question+'</textarea>'+
+                                    '</div>'+
+                                '</div>'+
+                            '</div>'+
+                        '</div>'+
+                    '</div>'+
+                    '<div class="card_container_mini">'+
+                        '<div class="maincarte_mini">'+
+                            '<div class="carte_mini flip noflip" id="carte">'+
+                                '<div class="carteback">'+
+                                    '<h1><span class="fancy_back">Réponse ' + fieldCount + ' :</span></h1>'+
+                                    '<div class="infoback">'+
+                                        '<label class="label_photo label_file" for="r-' + fieldCount + '">'+
+                                            '<i class="fa-solid fa-image fa-3x label_file_icon" style="color: #3f2a56; padding: 20px;"></i>'+
+                                            '<img style="display: none;" class="preview" src="#" alt=""/>'+
+                                            '<div style="display: none;" class="delete_file"><i class="fa-solid fa-circle-minus"></i></div>'+
+                                        '</label>'+
+                                        '<input id="r-' + fieldCount + '" type="file" class="photo" name="r-' + fieldCount + '" accept="image/*">'+
+                                        '<textarea class="textarea_deck" type="text" id="r' + fieldCount + '"  name="r[]" required>'+element.answer+'</textarea>'+
+                                    '</div>'+
+                                '</div>'+
+                            '</div>'+
+                        '</div>'+
+                    '</div>'+
+                    '<div id="deleteField"><i class="fa-solid fa-circle-minus"></i></div>'+
+                '</div>';
+
+                //ici ça créer ca pour aller à la carte crée
+                var newButton = '<div class="listcard" id="zonelist">'+'<p id="ca"> '+ fieldCount+ '</p>'+'</div>';
+                $('#buttonAccesCard').append(newButton);
+
+                $(newFieldGroup).insertBefore("#addFields");
+                $( "#addFields" )[0].scrollIntoView({ behavior: "smooth", block: "end", inline: "end" });
+
+                setImageForm();
+            });
+        }
+
+
+    </script>
+</html>

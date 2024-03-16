@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="../img/logo_intellicard.png" type="image/x-icon">
+        <link type="text/css" rel="stylesheet" href="../css/search.css">
+        <link type="text/css" rel="stylesheet" href="../css/style.css">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+            integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+            crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <title>Search</title>
+    </head>
+    <body class="body1">
+        <div id="modal" class="modal">
+            <div id="modal_content" class="modal_content">
+            </div>
+        </div>
+        <header class="header_nav_pc">
+            <div class="container">
+                <div class="navbar">
+                    <ul class="pc">
+                        <a href="/hub" class="li_nav"><span class="white">Jeux</span></a>
+                        <a href="/decks" class="li_nav"><span class="white">Decks</span></a>
+                        <a href="/home" class="li_nav"><span class="white">Accueil</span></a>
+                        <a href="/search" class="li_nav"><span class="white">Recherche</span></a>
+                        <a href="/profil" class="li_nav"><span class="white">Profil</span></a>
+                        <a href="/gestion" class="li_nav"><span class="white">Gestion</span></a>
+                    </ul>
+                </div>
+            </div>
+        </header>
+        <main>
+            <div class="search_container">
+                <div class="suprem-header">
+                    <div class="search_bar">
+                        <div class="each_input_search">
+                            <input type="text" id="search_bar" placeholder="Rechercher...">
+                            <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                        </div>
+                        <div class="each_input_search">
+                            <input type="text" id="search_deck" placeholder="Code">
+                            <button id="button_search_code" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                        </div>
+                        <div class="each_input_search">
+                            <select id="order" name="order" required>
+                                <option value="nameASC">A-Z</option>
+                                <option value="nameDESC">Z-A</option>
+                                <option value="upvote">Votes positifs</option>
+                                <option value="downvote">Votes négatifs</option>
+                                <option value="nb_cards">Nombre de cartes</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div id="tags_container" class="tags_container"></div>
+                <div id="levels_container" class="levels_container"></div>
+            </div>
+
+            <div id="deck_container" class="deck_container">
+            
+            </div>
+        </main>
+        <footer class="header_nav_mobile">
+            <div class="container">
+                <div class="navbar">
+                    <div class="mobile">
+                        <div class="li_nav"><a href="/hub"><i class='fas fa-gamepad'></i></a></div>
+                        <div class="li_nav"><a href="/decks"><i class="fas fa-clone"></i></a></div>
+                        <div class="li_nav"><a href="/home"><i class='fas fa-home'></i></a></div>
+                        <div class="li_nav"><a href="/search"><i class='fas fa-search'></i></a></div>
+                        <div class="li_nav"><a href="/profil"><i class='fas fa-user-alt'></i></a></div>
+                        <div class="li_nav"><a href="/gestion"><i class='fas fa-wrench'></i></a></div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </body>
+    <script src="../js/functions.js"></script>
+    <script src="../js/setup.js"></script>
+    <script>
+        function order(tabDecks, orderType){
+            let orderedTabDecks = [];
+            switch (orderType) {
+                case "nameASC":
+                    orderedTabDecks =tabDecks.sort((a, b) => {
+                        const nameA = a.name.toUpperCase(); // ignore upper and lowercase
+                        const nameB = b.name.toUpperCase(); // ignore upper and lowercase
+                        if (nameA > nameB) {
+                            return 1;
+                        }
+                    });
+                    break;
+                case "nameDESC":
+                    orderedTabDecks =tabDecks.sort((a, b) => {
+                        const nameA = a.name.toUpperCase(); // ignore upper and lowercase
+                        const nameB = b.name.toUpperCase(); // ignore upper and lowercase
+                        if (nameA < nameB) {
+                            return 1;
+                        }
+                    });
+                    break;
+            
+                case "upvote":
+                    orderedTabDecks =tabDecks.sort((a, b) => {
+                        if (a.up_vote < b.up_vote) {
+                            return 1;
+                        }
+                    });
+                    break;
+
+                case "downvote":
+                    orderedTabDecks =tabDecks.sort((a, b) => {
+                        if (a.down_vote < b.down_vote) {
+                            return 1;
+                        }
+                    });
+                    break;
+                case "nb_cards":
+                    orderedTabDecks =tabDecks.sort((a, b) => {
+                        if (a.card_count < b.card_count) {
+                            return 1;
+                        }
+                    });
+                    break;
+                default:
+                    orderedTabDecks =tabDecks.sort((a, b) => {
+                        const nameA = a.name.toUpperCase(); // ignore upper and lowercase
+                        const nameB = b.name.toUpperCase(); // ignore upper and lowercase
+                        if (nameA > nameB) {
+                            return 1;
+                        }
+                    });
+                    break;
+            }
+            return orderedTabDecks;
+        }
+
+        function search(){
+            let name = $("#search_bar").val();
+            let elems_tag = $(".bright_tag");
+            let tags = [];
+            for(let elem of elems_tag) {
+                console.log(elem)
+                tags.push($(elem).parent().data("value"))
+            }
+            let elems_level = $(".bright_level");
+            let levels = [];
+            for(let elem of elems_level) {
+                console.log(elem)
+                levels.push($(elem).parent().data("value"))
+            }
+            $.ajax({
+                url: 'search_deck',
+                type: 'POST',
+                data:{name:name, tags:tags, levels:levels},
+                success: function(response) {
+                    $('#deck_container').empty();
+                    console.log(response);
+                    if(response.data){
+                        const data = order(response.data, $("#order").val())
+                        data.forEach(element => {
+                            var newDeck =
+                                '<div data-id="' + element.id_deck + '" class="deck_display '+((element.consult == 1 || element.consult == "1") ? "consulting" : "")+'">' +
+                                    '<h2 class="title_deck_display">' + element.name + '</h2>' +
+                                    //'<p class="by"><i>par ' + element.firstname + ' ' + element.surname + '</i></p>' +
+                                    '<div class="votes">'+
+                                        '<div class="each_vote up_vote"><i class="fa fa-arrow-up"></i><div>'+element.up_vote+'</div></div>'+
+                                        '<div class="each_vote down_vote"><i class="fa fa-arrow-down"></i><div>'+element.down_vote+'</div></div>'+
+                                        '<div class="each_vote nb_cards"><i class="fas fa-clone"></i><div>'+element.card_count+'</div></div>'+
+                                        (element.type == "PARCOURS" ? '<div class="each_vote nb_step"><i class="fa-solid fa-route"></i><div>'+element.step_count+'</div></div>' : '')+
+                                    '</div>'+
+                                    '<div class="tag_container">'+
+                                        '<div class="tag"><p><span class="puce">◉</span>&ensp; ' + element.tag + '</p></div>' +
+                                        '<div class="level"><p><span class="puce">◉</span>&ensp; ' + element.level + '</p></div>' +
+                                    '</div>'+
+                                '</div>';
+
+
+                            $('#deck_container').append(newDeck);
+                        });
+
+                        $(".deck_display").click(function(e){
+                            let target = e.target;
+                            let elementParent = target.closest('.deck_display');
+                            let id_deck = $(elementParent).data('id');
+                            $('#modal_content').empty();
+                            $("#modal").css('display', 'flex');
+                            get_more_infos(id_deck);
+                        });
+                    }
+                    else {
+                        $('#deck_container').append('<p class="error">Aucun deck trouvé</p>');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    $('#deck_container').empty();
+                    // Récupération de l'erreur
+                    console.error('Erreur de requête:', error, xhr);
+                    // Traitement de l'erreur
+                    showError(xhr.responseJSON.message)
+                }
+            });
+        }
+
+        $(document).ready(function () { 
+            var url = new URL(window.location.href);
+            var deckUrl = url.searchParams.get("deck");
+            if(deckUrl != ""){
+                console.log("search deck :", deckUrl )
+                get_more_infos(parseInt(deckUrl));
+            }
+
+
+            
+            $.ajax({
+                url: 'get_all_tag',
+                type: 'POST',
+                success: function(response) {
+                    console.log(response);
+                    const data = response.data
+                    data.forEach(element => {
+                        let newTag = 
+                        '<div data-value="' + element.id_tag + '" class="tag_container">'+
+                            '<div title="' + element.full_name + '" class="tag"><p><span class="puce">◉</span>&ensp; ' + element.tag + '</p></div>' +
+                        '</div>';
+                        $('#tags_container').append(newTag);
+                    });
+
+                    $(".tag_container").click(function(e){
+                        let target = e.target;
+                        let elementParent = target.closest('.tag');
+                        $(elementParent).toggleClass("bright_tag");
+                    })
+
+                },
+                error: function(xhr, status, error) {
+                    // Récupération de l'erreur
+                    console.error('Erreur de requête:', error, xhr);
+                    // Traitement de l'erreur
+                    showError(xhr.responseJSON.message)
+                }
+            });
+
+            $.ajax({
+                url: 'get_all_level',
+                type: 'POST',
+                success: function(response) {
+                    console.log(response);
+                    const data = response.data
+                    data.forEach(element => {
+                        let newTag = 
+                        '<div data-value="' + element.id_level + '" class="level_container">'+
+                            '<div title="' + element.full_name + '" class="level"><p><span class="puce">◉</span>&ensp; ' + element.level + '</p></div>' +
+                        '</div>';
+                        $('#levels_container').append(newTag);
+                    });
+
+                    $(".level_container").click(function(e){
+                        let target = e.target;
+                        let elementParent = target.closest('.level');
+                        $(elementParent).toggleClass("bright_level");
+                    })
+
+                },
+                error: function(xhr, status, error) {
+                    // Récupération de l'erreur
+                    console.error('Erreur de requête:', error, xhr);
+                    // Traitement de l'erreur
+                    showError(xhr.responseJSON.message)
+                }
+            });
+
+
+            $("#tags_container").click(function(){
+                search();
+            })
+            $("#levels_container").click(function(){
+                search();
+            })
+
+            $("#order").change(function(){
+                search();
+            })
+
+            $("#order").on("input", function(){
+                search();
+            })
+
+            document.getElementById("search_bar").addEventListener('input', function(e){
+                search();
+            })
+
+
+            $('#button_search_code').click(function () {
+                const code = $('#search_deck').val();
+                $.ajax({
+                    url: 'get_deck_by_code',
+                    type: 'POST',
+                    data:{code:code},
+                    success: function(response) {
+                        console.log(response)
+                        if(response) {
+                            console.log(response);
+                            const deck = response.deck;
+                            const cards = response.cards;
+                            const steps = response.steps;
+                            $('#modal_content').empty();
+                            var newModalContent =
+                            '<div class="deck_modal">'+
+                                '<div>'+
+                                    '<h2 class="title_deck_display full_name_display">' + deck.name + '</h2>' +
+                                    '<p class="by"><i>par ' + deck.firstname + ' ' + deck.surname + '</i></p>' +
+                                '</div>'+
+                                '<div class="votes modal_style">'+
+                                    '<div class="each_vote modal_style up_vote"><i class="fa fa-arrow-up"></i><div>'+deck.up_vote+'</div></div>'+
+                                    '<div class="each_vote modal_style down_vote"><i class="fa fa-arrow-down"></i><div>'+deck.down_vote+'</div></div>'+
+                                    '<div class="each_vote modal_style nb_cards"><i class="fas fa-clone"></i><div>'+deck.nb_cards+'</div></div>'+
+                                    (deck.type == "PARCOURS" ? '<div class="each_vote nb_step"><i class="fa-solid fa-route"></i><div>'+deck.nb_steps+'</div></div>' : '')+
+                                    '<div class="each_vote modal_style date_deck"><i class="far fa-calendar-alt"></i><div>'+(deck.last_modification).split("-").reverse().join(" / ")+'</div></div>'+
+                                '</div>'+
+                                '<div class="tag_container">'+
+                                    '<div class="tag"><p><span class="puce">◉</span>&ensp; ' + deck.tag + '</p></div>' +
+                                    '<div class="level"><p><span class="puce">◉</span>&ensp; ' + deck.level + '</p></div>' +
+                                '</div>'+
+                                '<div id="cards_container" class="cards_container">'+
+                                '</div>'+
+                                '<div class="parcours_line_container">'+
+                                    '<ul class="activities" id="activities">'+
+                                    '</ul>'+
+                                '</div>'+
+                                '<div id="btn_unlock" class="btn_unlock" data-id="'+deck.id_deck+'">Débloquer</div>'+
+                            '</div>';
+
+                            $('#modal_content').append(newModalContent);
+                            $('#modal').css("display", "flex")
+
+                            for(let i = 0; i < cards.length; i++){
+                                var newMiniCard =
+                                '<div class="card_container_mini">'+
+                                    '<div class="maincarte_mini">'+
+                                        '<div class="carte_mini" id="carte">'+
+                                            '<div class="cartefront">'+
+                                                    '<h1><span class="fancy">Question :</span></h1>'+
+                                                    '<div class="infofront">'+
+                                                        (cards[i].img_q != "" ? '<img class="image_carte" src="../uploads/'+cards[i].img_q+'"></img>' : "")+
+                                                        '<p class="p_card_mini">'+cards[i].question.replace(/\n/g, '<br>')+'</p>'+
+                                                    '</div>'+
+                                            '</div>'+
+                                            '<div class="carteback hide_card">'+
+                                                    '<h1><span class="fancy_back">Réponse :</span></h1>'+
+                                                    '<div class="infoback">'+
+                                                        (cards[i].img_a != "" ? '<img class="image_carte" src="../uploads/'+cards[i].img_a+'"></img>' : "")+
+                                                        '<p class="p_card_mini">'+cards[i].answer.replace(/\n/g, '<br>')+'</p>'+
+                                                    '</div>'+
+                                            '</div>'+
+                                        '</div>'+
+                                    '</div>'+
+                                '</div>';
+                                $('#cards_container').append(newMiniCard);
+                            }
+
+                            setFlipping();
+
+                            for(let i = 0; i < steps.length; i++){
+                                var newMiniStep =
+                                '<li class="activities_item column_activitie_item">'+
+                                    '<div class="header_item">'+
+                                        '<h2>'+ steps[i].title +'</h2>'+
+                                        '<div data-type="eval" class="listchoix">'+
+                                            (({ "CARDS": '<p><i class="fa-solid fa-layer-group fa-3x" style="color: #f06b42"></i></p> ', "FICHE": '<p><i class="fa-solid fa-file fa-3x" style="color: #f06b42"></i></p>', "VOD": ' <p><i class="fa-solid fa-circle-play fa-3x" style="color: #f06b42"></i></p>', "IMG": '<p><i class="fa-solid fa-image fa-3x" style="color: #f06b42"></i></p>', "PDF": '<p><i class="fa-regular fa-file-pdf fa-3x" style="color: #f06b42"></i></p>'})[steps.type] ?? "")+
+                                        '</div>'+
+                                    '</div>'+
+                                '</li>';
+                                $('#activities').append(newMiniStep);
+                            }
+
+                            updateProgressBar()
+
+                            $("#btn_unlock").off("click").click(function(e){
+                                let id = $(this).data('id');
+                                $.ajax({
+                                    url: 'unlock_deck',
+                                    type: 'POST',
+                                    data:{id:id},
+                                    success: function(response) {
+                                        window.location.href = "/deck/"+id;
+                                    },
+                                    error: function(xhr, status, error) {
+                                        // Récupération de l'erreur
+                                        console.error('Erreur de requête:', error, xhr);
+                                        // Traitement de l'erreur
+                                        showError(xhr.responseJSON.message)
+                                    }
+                                });
+                            });
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        $('#deck_container').empty();
+                        // Récupération de l'erreur
+                        console.error('Erreur de requête:', error, xhr);
+                        // Traitement de l'erreur
+                        showError(xhr.responseJSON.message)
+                    }
+                });
+            });
+            
+            
+            search()
+        });
+
+
+
+        function get_more_infos (id){
+
+            $.ajax({
+                url: 'get_more_about_deck',
+                type: 'POST',
+                data:{id:id},
+                success: function(response) {
+                    console.log(response);
+                    const deck = response.deck;
+                    const cards = response.cards;
+                    const steps = response.steps;
+                    var newModalContent =
+                    '<div class="deck_modal">'+
+                        '<div>'+
+                            '<h2 class="title_deck_display full_name_display">' + deck.name + '</h2>' +
+                            '<p class="by"><i>par ' + deck.firstname + ' ' + deck.surname + '</i></p>' +
+                        '</div>'+
+                        '<div class="votes modal_style">'+
+                            '<div class="each_vote modal_style up_vote"><i class="fa fa-arrow-up"></i><div>'+deck.up_vote+'</div></div>'+
+                            '<div class="each_vote modal_style down_vote"><i class="fa fa-arrow-down"></i><div>'+deck.down_vote+'</div></div>'+
+                            '<div class="each_vote modal_style nb_cards"><i class="fas fa-clone"></i><div>'+deck.nb_cards+'</div></div>'+
+                            (deck.type == "PARCOURS" ? '<div class="each_vote nb_step"><i class="fa-solid fa-route"></i><div>'+deck.nb_steps+'</div></div>' : '')+
+                            '<div class="each_vote modal_style date_deck"><i class="far fa-calendar-alt"></i><div>'+(deck.last_modification).split("-").reverse().join(" / ")+'</div></div>'+
+                        '</div>'+
+                        '<div class="tag_container">'+
+                            '<div class="tag"><p><span class="puce">◉</span>&ensp; ' + deck.tag + '</p></div>' +
+                            '<div class="level"><p><span class="puce">◉</span>&ensp; ' + deck.level + '</p></div>' +
+                        '</div>'+
+                        '<div id="cards_container" class="cards_container">'+
+                        '</div>'+
+                        '<div class="parcours_line_container">'+
+                            '<ul class="activities" id="activities">'+
+                            '</ul>'+
+                        '</div>'+
+                        '<div id="btn_unlock" class="btn_unlock" data-id="'+deck.id_deck+'">Débloquer</div>'+
+                    '</div>';
+
+                    $('#modal_content').append(newModalContent);
+                    $('#modal').css("display", "flex")
+
+                    for(let i = 0; i < cards.length; i++){
+                        var newMiniCard =
+                        '<div class="card_container_mini">'+
+                            '<div class="maincarte_mini">'+
+                                '<div class="carte_mini" id="carte">'+
+                                    '<div class="cartefront">'+
+                                            '<h1><span class="fancy">Question :</span></h1>'+
+                                            '<div class="infofront">'+
+                                                (cards[i].img_q != "" ? '<img class="image_carte" src="../uploads/'+cards[i].img_q+'"></img>' : "")+
+                                                '<p class="p_card_mini">'+cards[i].question.replace(/\n/g, '<br>')+'</p>'+
+                                            '</div>'+
+                                    '</div>'+
+                                    '<div class="carteback hide_card">'+
+                                            '<h1><span class="fancy_back">Réponse :</span></h1>'+
+                                            '<div class="infoback">'+
+                                                (cards[i].img_a != "" ? '<img class="image_carte" src="../uploads/'+cards[i].img_a+'"></img>' : "")+
+                                                '<p class="p_card_mini">'+cards[i].answer.replace(/\n/g, '<br>')+'</p>'+
+                                            '</div>'+
+                                    '</div>'+
+                                '</div>'+
+                            '</div>'+
+                        '</div>';
+                        $('#cards_container').append(newMiniCard);
+                    }
+
+                    setFlipping();
+
+                    for(let i = 0; i < steps.length; i++){
+                        var newMiniStep =
+                        '<li class="activities_item column_activitie_item">'+
+                            '<div class="header_item">'+
+                                '<h2>'+ steps[i].title +'</h2>'+
+                                '<div style="margin-left: 10px;" data-type="eval" class="listchoix">'+
+                                    (({ "CARDS": '<p><i class="fa-solid fa-layer-group fa-3x" style="color: #f06b42"></i></p> ', "FICHE": '<p><i class="fa-solid fa-file fa-3x" style="color: #f06b42"></i></p>', "VOD": ' <p><i class="fa-solid fa-circle-play fa-3x" style="color: #f06b42"></i></p>', "IMG": '<p><i class="fa-solid fa-image fa-3x" style="color: #f06b42"></i></p>', "PDF": '<p><i class="fa-regular fa-file-pdf fa-3x" style="color: #f06b42"></i></p>'})[steps[i].type] ?? "")+
+                                '</div>'+
+                            '</div>'+
+                        '</li>';
+                        $('#activities').append(newMiniStep);
+                    }
+
+                    updateProgressBar()
+                    
+                    $("#btn_unlock").off("click").click(function(e){
+                        let id = $(this).data('id');
+                        $.ajax({
+                            url: 'unlock_deck',
+                            type: 'POST',
+                            data:{id:id},
+                            success: function(response) {
+                                window.location.href = "/deck/"+id;
+                            },
+                            error: function(xhr, status, error) {
+                                // Récupération de l'erreur
+                                console.error('Erreur de requête:', error, xhr);
+                                // Traitement de l'erreur
+                                showError(xhr.responseJSON.message)
+                            }
+                        });
+                    });
+                },
+                error: function(xhr, status, error) {
+                    $('#deck_container').empty();
+                    // Récupération de l'erreur
+                    console.error('Erreur de requête:', error, xhr);
+                    // Traitement de l'erreur
+                    showError(xhr.responseJSON.message)
+                }
+            });
+        }
+
+
+        
+
+    </script>
+
+</html>

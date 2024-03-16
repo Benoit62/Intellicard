@@ -1,0 +1,109 @@
+<!-- jeu du memory -->
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="../img/logo_intellicard.png" type="image/x-icon">
+        <link type="text/css" rel="stylesheet" href="../css/search.css">
+        <link type="text/css" rel="stylesheet" href="../css/style.css">
+        <link type="text/css" rel="stylesheet" href="../css/game.css">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+        <title>Search</title>
+    </head>
+    <style>
+        .card {
+          width: 100px;
+          height: 100px;
+          background-color: gray;
+          border: 1px solid black;
+          margin: 5px;
+          display: inline-block;
+          text-align: center;
+          cursor: pointer;
+          font-size: 24px;
+          color: white;
+          line-height: 100px;
+          font-family: Arial, sans-serif;
+        }
+      </style>
+    <body class="body1">
+        <div id="modal" class="modal">
+            <div id="modal_content" class="modal_content">
+
+            </div>
+        </div>
+        <div id="error_notif" class="error_notif">
+            <div id="error_content" class="error_content">Erreur</div>
+        </div>
+        <header class="header_nav_pc">
+            <div class="container">
+                <div class="navbar">
+                    <ul class="pc">
+                        <li class="li_nav"><a href="/jeu">Jeu</a></li>
+                        <li class="li_nav"><a href="/decks">Decks</a></li>
+                        <li class="li_nav"><a href="/home">Accueil</a></li>
+                        <li class="li_nav"><a href="/search">Recherche</a></li>
+                        <li class="li_nav"><a href="/profil">Profil</a></li>
+                        <li class="li_nav"><a href="/manage">Manager</a></li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+        <main>
+            
+            <h1>Memory</h1>
+  
+            <div class="cardsM">
+       
+             <!--     <div class="cardM"></div>
+                 <div class="cardM"></div>
+                 <div class="cardM"></div>
+                 <div class="cardM"></div>
+                 <div class="cardM"></div>
+                 <div class="cardM"></div>
+                 <div class="cardM"></div>
+                 <div class="cardM"></div>  --> 
+               
+            </div>
+
+        </main>
+        <footer class="header_nav_mobile">
+            <div class="container">
+                <div class="navbar">
+                    <div class="mobile">
+                        <div class="li_nav"><a href="/hub"><i class='fas fa-gamepad'></i></a></div>
+                        <div><div class="vertical_bar"></div></div>
+                        <div class="li_nav"><a href="/decks"><i class="fas fa-clone"></i></a></div>
+                        <div><div class="vertical_bar"></div></div>
+                        <div class="li_nav"><a href="/home"><i class='fas fa-home'></i></a></div>
+                        <div><div class="vertical_bar"></div></div>
+                        <div class="li_nav"><a href="/search"><i class='fas fa-search'></i></a></div>
+                        <div><div class="vertical_bar"></div></div>
+                        <div class="li_nav"><a href="/profil"><i class='fas fa-user-alt'></i></a></div>
+                        <div><div class="vertical_bar"></div></div>
+                        <div class="li_nav"><a href="/gestion"><i class='fas fa-wrench'></i></a></div>
+                    </div>
+                </div>
+        </footer>
+    </body>
+
+    <script src="../js/game.js"></script>
+    
+    <script>
+        var cardImages = [
+            "../img/image1.jpg",
+            "../img/image2.jpg",
+            "../img/image3.jpg",
+            "../img/image4.jpg",
+            "../img/image5.jpg",
+            "../img/image6.jpg",
+            "../img/image7.jpg",
+            "../img/image8.jpg",
+        ];
+
+
+    </script>
+</html>

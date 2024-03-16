@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="../img/logo_intellicard.png" type="image/x-icon">
+        <link rel="stylesheet" href="../css/login.css">
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+        <script src="../js/functions.js"></script>
+        <title>Connexion</title>
+    </head>
+    <body class="body1">
+        <div class="login-container">
+            <h2>Connexion</h2>
+            <form>
+            <div class="form-group">
+                <label for="email">Adresse mail</label>
+                <input type="email" id="email" name="email" maxlength="100" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Mot de passe</label>
+                <input type="password" id="password" name="password" minlength="1" maxlength="100" required>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Connexion">
+                <p class="link_form"><a href="register">Inscription</a></p>
+            </div>
+            <p class="error" id="error"></p>
+            </form>
+        </div>
+        <script>
+            $(document).ready(function () {
+                $("form").submit(function (event) {
+                    event.preventDefault();
+                    
+                    var formData = {
+                        email: $('input[name=email]').val(),
+                        password: $('input[name=password]').val(),
+                    };
+                    $.ajax({
+                        type: 'POST',
+                        url: '/log',
+                        data: formData,
+                        success: function () {
+                            window.location.href = getUrlParameter('origin')||'/home';
+                        },
+                        error: function(xhr, status, error) {
+                            // Récupération de l'erreur
+                            console.error('Erreur de requête:', error, xhr);
+                            // Traitement de l'erreur
+                            document.getElementById("error").innerHTML = xhr.responseJSON.message;
+                        }
+                    });
+                });
+            });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="../img/logo_intellicard.png" type="image/x-icon">
+        <link type="text/css" rel="stylesheet" href="../css/deck.css">
+        <link type="text/css" rel="stylesheet" href="../css/parcours.css">
+        <link type="text/css" rel="stylesheet" href="../css/style.css">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+        <title>Ajout de deck</title>
+    </head>
+
+    <body class="body1">
+        <div id="modal" class="modal">
+            <div id="modal_content" class="modal_content">
+                <div class="modal_flex">
+                    <div class="brouillon_fiche_container">
+                        <div id="fiche" class="brouillon_fiche"></div>
+                    </div>
+                    <div class="brouillon_fiche_container">
+                        <button class="export_button" id="export_fiche">Exporter</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--<header class="header_nav_pc">
+            <div class="container">
+                <div class="navbar">
+                    <ul class="pc">
+                        <a href="/hub" class="li_nav"><span class="white">Jeux</span></a>
+                        <a href="/decks" class="li_nav"><span class="white">Decks</span></a>
+                        <a href="/home" class="li_nav"><span class="white">Accueil</span></a>
+                        <a href="/search" class="li_nav"><span class="white">Recherche</span></a>
+                        <a href="/profil" class="li_nav"><span class="white">Profil</span></a>
+                        <a href="/gestion" class="li_nav"><span class="white">Gestion</span></a>
+                    </ul>
+                </div>
+            </div>
+        </header>-->
+        <main class="main4">
+            <div data-id-deck="<%= deck[0].id_deck %>" id="parcours" class="form_deck">
+                <!--<div class="first_infos">
+                    <div class="form_group_deck form_group1">
+                        <fieldset>
+                            <legend>Titre du parcours :</legend>
+                            <p><%= //deck[0].name %></p>
+                        </fieldset>
+                    </div>
+                    <div class="form_group_deck form_group2">
+                        <fieldset>
+                            <legend>Description :</legend>
+                            <p><%= //deck[0].description %></p>
+                        </fieldset>
+                    </div>
+                </div>-->
+                <a style="text-align: center; text-decoration: underline; width: 100%; display: block; margin: 15px 0; font-size: 120%;" href="/deck/<%= deck[0].id_deck %>">Revenir au deck</a>
+                
+                <div class="parcours_part">
+                    <p style="width: 90%; margin: 25px auto 10px; font-size: 110%; border: 1px solid white; border-radius: 5px; padding: 10px 20px;"><%= deck[0].description %></p>
+                    <div id="parcours_container" class="small_parcours_container">
+                        <ul class="activities" id="activities">
+                            <% console.log(unlock) %>
+                            <% console.log(lock) %>
+                            <% unlock.forEach(function(element, index) { %>
+                                <li class="activities_item column_activitie_item">
+                                    <div class="header_item">
+                                        <h2><%= element.title %></h2>
+                                        <div data-type="eval" class="listchoix">
+                                            <% switch (element.type) { 
+                                                case "VOD": %>
+                                                <p><i class="fa-solid fa-circle-play fa-3x" style="color: #f06b42"></i></p>
+                                            <%        
+                                                    break;
+                                                case "IMG": %>
+                                                <p><i class="fa-solid fa-image fa-3x" style="color: #f06b42"></i></p>
+                                            <%
+                                                    break;
+                                                case "PDF": %>
+                                                <p><i class="fa-regular fa-file-pdf fa-3x" style="color: #f06b42"></i></p>
+                                            <%        
+                                                    break;
+                                                case "FICHE": %>
+                                                <p><i class="fa-solid fa-file fa-3x" style="color: #f06b42"></i></p>
+                                            <%      
+                                                    break;
+                                                case "CARDS": %>
+                                                <p><i class="fa-solid fa-layer-group fa-3x" style="color: #f06b42"></i></p>  
+                                            <%
+                                                break;
+                                                default:
+                                                    break;
+                                            } %>
+                                        </div>
+                                    </div>
+                                    <% switch (element.type) { 
+                                            case "VOD": %>
+                                            <iframe onload="updateProgressBar()" class="iframe_video" height="200" src="<%= element.content %>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                        <%        
+                                                break;
+                                            case "IMG": %>
+                                            <img onload="updateProgressBar()" class="image_carte" src="../uploads/<%= element.content %>" alt=""/>
+                                        <%
+                                                break;
+                                            case "PDF": %>
+                                            <object onload="updateProgressBar()" data="../uploads/<%= element.content %>" class="image_carte" type="application/pdf" width="100%" height="500px" src="" alt="">
+                                                <a href="../uploads/<%= element.content %>" download="<%= element.title %>">Votre navigateur ne peut pas lire les pdf, téléchargez le document pour le consulter</a>
+                                            </object>
+                                        <%        
+                                                break;
+                                            case "FICHE": %>
+                                                <div data-content="<%= JSON.parse(element.content) %>" onclick="displayFiche(<%= JSON.parse(element.content) %>)" class="apercu_fiche load_apercu"></div>
+                                        <%
+                                                break;
+                                            case "CARDS": %>
+                                            <div class="cards_container">
+                                            <%
+                                                let q = element.all_card_q ? element.all_card_q.split('&') : [];
+                                                let r = element.all_card_r ? element.all_card_r.split('&') : [];
+                                                let img_q = element.all_card_img_q ? element.all_card_img_q.split('&') : [];
+                                                let img_r = element.all_card_img_r ? element.all_card_img_r.split('&') : [];
+                                                for(let i = 0; i < q.length; i++){
+                                            %>
+                                                <div class="card_container_mini">
+                                                    <div class="maincarte_mini">
+                                                        <div class="carte_mini" id="carte">
+                                                            <div class="cartefront">
+                                                                    <h1><span class="fancy">Question :</span></h1>
+                                                                    <div class="infofront">
+                                                                        <% if(img_q[i] != ""){ %><img class="image_carte" src="../uploads/<%=img_q[i]%>"></img><% } %>
+                                                                        <p class="p_card_mini"><%= q[i].replace(/\n/g, '<br>')%></p>
+                                                                    </div>
+                                                            </div>
+                                                            <div class="carteback hide_card">
+                                                                    <h1><span class="fancy_back">Réponse :</span></h1>
+                                                                    <div class="infoback">
+                                                                        <% if(img_r[i] != "") { %><img class="image_carte" src="../uploads/<%=img_r[i]%>"></img><% } %>
+                                                                        <p class="p_card_mini"><%= r[i].replace(/\n/g, '<br>')%></p>
+                                                                    </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                        <%      } %>
+                                            </div>
+                                        <%    
+                                            break;
+                                            default:
+                                                break;
+                                    } %>
+                                    <% if(index == unlock.length - 1 && lock.length > 0) { %>
+                                        <button class="next_activitie" data-step="<%= element.id_step %>">Suivant</button>
+                                    <% } %>
+                                </li>
+                            <% }); %>
+                            <% lock.forEach(function(element, index) { %>
+                                <li <% if(index == 0) { %>id="last"<% } %> data-step="<%= element.id_step %>" class="activities_item column_activitie_item lock_item">
+                                    <div class="header_item">
+                                        <h2><%= element.title %></h2>
+                                        <div data-type="eval" class="listchoix">
+                                        <% switch (element.type) { 
+                                            case "VOD": %>
+                                            <p><i class="fa-solid fa-circle-play fa-3x" style="color: #f06b42"></i></p>
+                                        <%        
+                                                break;
+                                            case "IMG": %>
+                                            <p><i class="fa-solid fa-image fa-3x" style="color: #f06b42"></i></p>
+                                        <%
+                                                break;
+                                            case "PDF": %>
+                                            <p><i class="fa-regular fa-file-pdf fa-3x" style="color: #f06b42"></i></p>
+                                        <%        
+                                                break;
+                                            case "FICHE": %>
+                                            <p><i class="fa-solid fa-file fa-3x" style="color: #f06b42"></i></p>
+                                        <%      
+                                                break;
+                                            case "CARDS": %>
+                                            <p><i class="fa-solid fa-layer-group fa-3x" style="color: #f06b42"></i></p>  
+                                        <%
+                                            break;
+                                            default:
+                                                break;
+                                        } %>
+                                        </div>
+                                    </div>
+                                </li>
+                            <% }); %>
+                        </ul>
+                    </div>
+                </div>
+                <a style="text-align: center; text-decoration: underline; width: 100%; display: block; margin: 15px 0; font-size: 120%;" href="/deck/<%= deck[0].id_deck %>">Revenir au deck</a>
+            </div>
+        </main>
+        <footer class="header_nav_mobile">
+            <div class="container">
+                <div class="navbar">
+                    <div class="mobile">
+                        <div class="li_nav"><a href="/hub"><i class='fas fa-gamepad'></i></a></div>
+                         
+                        <div class="li_nav"><a href="/decks"><i class="fas fa-clone"></i></a></div>
+                         
+                        <div class="li_nav"><a href="/home"><i class='fas fa-home'></i></a></div>
+                         
+                        <div class="li_nav"><a href="/search"><i class='fas fa-search'></i></a></div>
+                         
+                        <div class="li_nav"><a href="/profil"><i class='fas fa-user-alt'></i></a></div>
+                         
+                        <div class="li_nav"><a href="/gestion"><i class='fas fa-wrench'></i></a></div>
+                    </div>
+                </div>
+            </div>
+        </footer>  
+
+        <script src="../js/create_fiche.js"></script>
+        <script src="../js/functions.js"></script>
+        <script src="../js/setup.js"></script>
+        <script>
+            $(document).ready(function() {
+                $('.next_activitie').click(function (e) {
+                    const step = $(this).data("step");
+                    const id_deck = $("#parcours").data("id-deck");
+
+                    $.ajax({
+                        url: '../unlock_step',
+                        type: 'POST',
+                        data:{id_deck:id_deck, id_step:step},
+                        success: function(response) {
+                            location.reload()
+                        },
+                        error: function(xhr, status, error) {
+                            $('#deck_container').empty();
+                            // Récupération de l'erreur
+                            console.error('Erreur de requête:', error, xhr);
+                            // Traitement de l'erreur
+                            showError(xhr.responseJSON.message)
+                        }
+                    });
+                })
+
+
+                $('#export_fiche').click(function (e) {
+                    /*var pdf = new jsPDF(); // Créer une instance de jsPDF
+
+                    var element = $("#fiche")[0]; // Sélectionner la zone à convertir en PDF
+                    var html = element.innerHTML; // Récupérer le contenu HTML de la zone
+
+                    pdf.fromHTML(html, 15, 15); // Convertir le contenu HTML en PDF
+
+                    pdf.save("conversion.pdf"); // Télécharger le fichier PDF*/
+
+                    PrintElem("fiche")
+                    //saveDiv("fiche", "Fiche")
+                })
+            })
+
+
+
+            
+
+            function PrintElem(elem)
+{
+                var mywindow = window.open('', 'PRINT', 'height=400,width=600');
+
+                mywindow.document.write('<html><head><title>' + document.title  + '</title>');
+                mywindow.document.write('</head><body >');
+                mywindow.document.write('<h1>' + document.title  + '</h1>');
+                mywindow.document.write(document.getElementById(elem).innerHTML);
+                mywindow.document.write('</body></html>');
+
+                mywindow.document.close(); // necessary for IE >= 10
+                mywindow.focus(); // necessary for IE >= 10*/
+
+                mywindow.print();
+                mywindow.close();
+
+                return true;
+            }
+
+            var doc = new jsPDF();
+
+            function saveDiv(divId, title) {
+                doc.fromHTML(`<html><head><title>${title}</title></head><body>` + document.getElementById(divId).innerHTML + `</body></html>`);
+                doc.save('div.pdf');
+            }
+        </script>
+    </body>
+</html>

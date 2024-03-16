@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="../img/logo_intellicard.png" type="image/x-icon">
+        <link type="text/css" rel="stylesheet" href="../css/admin.css">
+        <link type="text/css" rel="stylesheet" href="../css/style.css">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <title>Admin</title>
+    </head>
+
+    <body class="body1">
+        <header class="header_nav_pc">
+            <div class="container">
+                <div class="navbar">
+                    <ul class="pc">
+                        <a href="/hub" class="li_nav"><span class="white">Jeux</span></a>
+                        <a href="/decks" class="li_nav"><span class="white">Decks</span></a>
+                        <a href="/home" class="li_nav"><span class="white">Accueil</span></a>
+                        <a href="/search" class="li_nav"><span class="white">Recherche</span></a>
+                        <a href="/profil" class="li_nav"><span class="white">Profil</span></a>
+                        <a href="/gestion" class="li_nav"><span class="white">Gestion</span></a>
+                    </ul>
+                </div>
+            </div>
+        </header>
+        <main>
+            <div class="container_admin_page">
+                <div id="tags_container" class="tags_container">
+                    <% tag.forEach(elem => { %>
+                        <div data-id="<%= elem.id_tag %>" class="container_tag_infos">
+                            <div class="tag_container">
+                                <div title="<%= elem.full_name %>" class="tag"><p><span class="puce">◉</span>&ensp;<%= elem.tag %></p></div>
+                            </div>
+                            <i style="color: red;" class="fa-solid fa-trash remove_tag"></i>
+                        </div>
+                    <% }); %>
+                    <form id="form_add_tag" class="form_add_tag">
+                        <div data-value="' + element.id_tag + '" class="tag_container">
+                            <div style="padding: 4px 12px;" title="' + element.full_name + '" class="tag"><p><span class="puce">◉</span>&ensp;<input name="tag" class="input_tag" type="text" id="" placeholder="Nom abrégé de la matière"></p></div>
+                        </div>
+                        <div data-value="' + element.id_tag + '" class="tag_container">
+                            <div style="padding: 4px 12px;" title="' + element.full_name + '" class="tag"><p><span class="puce">◉</span>&ensp;<input name="full_name" class="input_tag" type="text" id="" placeholder="Nom complet de la matière"></p></div>
+                        </div>
+                        <div style="margin-left: auto; margin-right: auto; cursor: pointer;" data-value="' + element.id_tag + '" class="tag_container">
+                            <div style="padding: 4px 12px;" title="' + element.full_name + '" class="tag"><p><span class="puce">◉</span>&ensp;<button type="submit" class="button_add_tag" id="addTag">Ajouter</button></p></div>
+                        </div>
+                    </form>
+                </div>
+                
+                <div id="levels_container" class="tags_container">
+                    <% level.forEach(elem => { %>
+                        <div data-id="<%= elem.id_level %>" class="container_tag_infos">
+                            <div class="tag_container">
+                                <div title="<%= elem.full_name %>" class="tag"><p><span class="puce">◉</span>&ensp;<%= elem.level %></p></div>
+                            </div>
+                            <i style="color: red;" class="fa-solid fa-trash remove_level"></i>
+                        </div>
+                    <% }); %>
+                    <form id="form_add_level" class="form_add_tag">
+                        <div data-value="' + element.id_tag + '" class="tag_container">
+                            <div style="padding: 4px 12px;" title="' + element.full_name + '" class="tag"><p><span class="puce">◉</span>&ensp;<input name="level" class="input_tag" type="text" id="" placeholder="Nom abrégé du niveau"></p></div>
+                        </div>
+                        <div data-value="' + element.id_tag + '" class="tag_container">
+                            <div style="padding: 4px 12px;" title="' + element.full_name + '" class="tag"><p><span class="puce">◉</span>&ensp;<input name="full_name" class="input_tag" type="text" id="" placeholder="Nom complet du niveau"></p></div>
+                        </div>
+                        <div style="margin-left: auto; margin-right: auto; cursor: pointer;" data-value="' + element.id_tag + '" class="tag_container">
+                            <div style="padding: 4px 12px;" title="' + element.full_name + '" class="tag"><p><span class="puce">◉</span>&ensp;<button type="submit" class="button_add_tag" id="addTag">Ajouter</button></p></div>
+                        </div>
+                    </form>
+                </div>
+            
+                
+                <div class="supp_ask_container">
+                    <% if(supp && supp.length > 0) { %>
+                        <% supp.forEach(element => { %>
+                            <div class="each_supp_ask" data-id="<%= element.id_deck %>">
+                                <a href="deck/<%= element.id_deck %>" class="deck_display consulting">
+                                    <h2 class="title_deck_display"><%= element.name %></h2>
+                                    <div class="votes">
+                                        <div class="each_vote up_vote"><i class="fa fa-arrow-up"></i><div><%= element.up_vote %></div></div>
+                                        <div class="each_vote down_vote"><i class="fa fa-arrow-down"></i><div><%= element.down_vote %></div></div>
+                                        <div class="each_vote nb_cards"><i class="fas fa-clone"></i><div><%= element.card_count %></div></div>
+                                        <% if(element.type == "PARCOURS"){ %><div class="each_vote nb_step"><i class="fa-solid fa-route"></i><div><%= element.step_count %></div></div><% } %>
+                                        <% if(element.acces_type === 'PRIVATE') { %><div class="each_vote acces"><i class='fas fa-lock'></i></div><% } %>
+                                    </div>
+                                    <div class="tag_container">
+                                        <div class="tag"><p><span class="puce">◉</span>&ensp; <%= element.tag %></p></div>
+                                        <div class="level"><p><span class="puce">◉</span>&ensp; <%= element.level %></p></div>
+                                    </div>
+                                    <div class="average_score">
+                                        <div>Score moyen : <% switch (element.average_score) {
+                                                                case 1:
+                                                            %>
+                                                                <i class="fa-solid fa-face-frown TM"></i>
+                                                            <%        
+                                                                    break;
+                                                                case 2:
+                                                            %>
+                                                                <i class="fa-solid fa-face-frown-open M"></i>
+                                                            <%        
+                                                                    break;
+                                                                case 3:
+                                                            %>
+                                                                <i class="fa-solid fa-face-meh N"></i>
+                                                            <%        
+                                                                    break;
+                                                                case 4:
+                                                            %>
+                                                                <i class="fa-solid fa-face-smile B"></i>
+                                                            <%        
+                                                                    break;
+                                                                case 5:
+                                                            %>
+                                                                <i class="fa-solid fa-face-laugh TB"></i>
+                                                            <%        
+                                                                    break;
+                                                            
+                                                                default:
+                                                            %>
+                                                                <i class='fas fa-ban NEW'></i>
+                                                            <%
+                                                                    break;
+                                        } %></div>
+                                    </div>
+                                </a>
+                                <div class="infos_supp">
+                                    <p>Par : <%= element.firstname %> <%= element.surname %></p>
+                                    <p>Raison : <%= element.reason %></p>
+                                </div>
+                                <div class="actions">
+                                    <i style="color: red;"  class="fa-solid fa-trash trash_definitive"></i>
+                                    <i style="color: green;" class="fa-regular fa-circle-xmark refuse_ask"></i>
+                                </div>
+                                <div class="valid_actions">
+                                    <i style="color: green;" class="fa-regular fa-circle-xmark refuse_delete"></i>
+                                    <i style="color: red;" class="fa-regular fa-circle-check delete_definitive"></i>
+                                </div>
+                            </div>
+                        <% }); %>
+                    <% } else { %>
+                        <p class="error">Aucune demande de suppression</p>
+                    <% } %>
+                </div>
+            </div>
+
+        </main>
+        <footer class="header_nav_mobile">
+            <div class="container">
+                <div class="navbar">
+                    <div class="mobile">
+                        <div class="li_nav"><a href="/hub"><i class='fas fa-gamepad'></i></a></div>
+                         
+                        <div class="li_nav"><a href="/decks"><i class="fas fa-clone"></i></a></div>
+                         
+                        <div class="li_nav"><a href="/home"><i class='fas fa-home'></i></a></div>
+                         
+                        <div class="li_nav"><a href="/search"><i class='fas fa-search'></i></a></div>
+                         
+                        <div class="li_nav"><a href="/profil"><i class='fas fa-user-alt'></i></a></div>
+                         
+                        <div class="li_nav"><a href="/gestion"><i class='fas fa-wrench'></i></a></div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </body>
+    <script src="../js/functions.js"></script>
+    <script src="../js/setup.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $(".trash_definitive").click(function (e) {
+                $(this).closest(".actions").siblings(".valid_actions").css('display', 'flex')
+                $(this).closest(".actions").css('display', 'none')
+            })
+            $(".refuse_delete").click(function (e) {
+                $(this).closest(".valid_actions").siblings(".actions").css('display', 'flex')
+                $(this).closest(".valid_actions").css('display', 'none')
+            })
+
+
+            $(".refuse_ask").click(function(e) {
+                e.preventDefault();
+                const elem = $(this).closest(".each_supp_ask")
+                const id_deck = elem.data("id");
+                console.log(id_deck)
+                $.ajax({
+                    url: 'refuse_supp',
+                    type: 'POST',
+                    data:{
+                        id_deck:id_deck
+                    },
+                    success: function (response) {
+                        elem.remove();
+                    },
+                    error: function (xhr, status, error) {
+                        // Récupération de l'erreur
+                        console.error('Erreur de requête:', error, xhr);
+                        showError(xhr.responseJSON.message)
+                    }
+                });
+            })
+
+            $(".delete_definitive").click(function(e) {
+                e.preventDefault();
+                const elem = $(this).closest(".each_supp_ask")
+                const id_deck = elem.data("id");
+                console.log(id_deck)
+                $.ajax({
+                    url: 'supp_deck',
+                    type: 'POST',
+                    data:{
+                        id_deck:id_deck
+                    },
+                    success: function (response) {
+                        elem.remove();
+                    },
+                    error: function (xhr, status, error) {
+                        // Récupération de l'erreur
+                        console.error('Erreur de requête:', error, xhr);
+                        showError(xhr.responseJSON.message)
+                    }
+                });
+            })
+
+
+            $(".remove_tag").click(function(e) {
+                e.preventDefault();
+                const elem = $(this).closest(".container_tag_infos")
+                const id_tag = elem.data("id");
+                console.log(id_tag)
+                $.ajax({
+                    url: 'supp_tag',
+                    type: 'POST',
+                    data:{
+                        id_tag:id_tag
+                    },
+                    success: function (response) {
+                        elem.remove();
+                    },
+                    error: function (xhr, status, error) {
+                        // Récupération de l'erreur
+                        console.error('Erreur de requête:', error, xhr);
+                        showError(xhr.responseJSON.message)
+                    }
+                });
+            })
+
+            $(".remove_level").click(function(e) {
+                e.preventDefault();
+                const elem = $(this).closest(".container_tag_infos")
+                const id_level = elem.data("id");
+                console.log(id_level)
+                $.ajax({
+                    url: 'supp_level',
+                    type: 'POST',
+                    data:{
+                        id_level:id_level
+                    },
+                    success: function (response) {
+                        elem.remove();
+                    },
+                    error: function (xhr, status, error) {
+                        // Récupération de l'erreur
+                        console.error('Erreur de requête:', error, xhr);
+                        showError(xhr.responseJSON.message)
+                    }
+                });
+            })
+
+            $("#r_ask").click(function(e) {
+                e.preventDefault();
+                const elem = $(this).closest(".each_supp_ask")
+                const id_deck = elem.data("id");
+                console.log(id_deck)
+                $.ajax({
+                    url: 'refuse_supp',
+                    type: 'POST',
+                    data:{
+                        id_deck:id_deck
+                    },
+                    success: function (response) {
+                        elem.remove();
+                    },
+                    error: function (xhr, status, error) {
+                        // Récupération de l'erreur
+                        console.error('Erreur de requête:', error, xhr);
+                        showError(xhr.responseJSON.message)
+                    }
+                });
+            })
+            
+
+            $("#form_add_tag").submit(function(e) {
+                e.preventDefault()
+                const data = $(this).serialize()
+                console.log(data)
+                $.ajax({
+                    url: 'add_tag',
+                    type: 'POST',
+                    data:data,
+                    success: function (response) {
+                        window.location.reload()
+                        $("#form_add_tag").find("input").val("")
+                    },
+                    error: function (xhr, status, error) {
+                        // Récupération de l'erreur
+                        console.error('Erreur de requête:', error, xhr);
+                        showError(xhr.responseJSON.message)
+                    }
+                });
+            })
+
+            $("#form_add_level").submit(function(e) {
+                e.preventDefault()
+                const data = $(this).serialize()
+                console.log(data)
+                $.ajax({
+                    url: 'add_level',
+                    type: 'POST',
+                    data:data,
+                    success: function (response) {
+                        window.location.reload()
+                        $("#form_add_level").find("input").val("")
+                    },
+                    error: function (xhr, status, error) {
+                        // Récupération de l'erreur
+                        console.error('Erreur de requête:', error, xhr);
+                        showError(xhr.responseJSON.message)
+                    }
+                });
+            })
+        })
+    </script>
+</html>

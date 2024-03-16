@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../img/logo_intellicard.png" type="image/x-icon">
+    <link type="text/css" rel="stylesheet" href="../css/train.css">
+    <link type="text/css" rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>Home</title>
+</head>
+
+
+<body class="body1">
+    <main class="main4">
+        <% if(data.length > 0) { %>
+        <div data-deck="<%= data[0].id_deck %>" class="card_training_container">
+            <% data.forEach(function(element, index) { %>
+                <div data-id="<%= element.id_card %>" class="maincarte  <% if(index > 0) { %>hide<% } %>">
+                    <div class="carte" id="carte">
+                        <div class="cartefront">
+                            <h1><span class="fancy"><% if(reverse) { %>Réponse :<% } else { %>Question :<% } %></span></h1>
+                            <div class="infofront">
+                                <% if(element.img_q != "") { %>
+                                    <img class="image_carte" src="../uploads/<%= element.img_q %>"></img>
+                                <% } %>
+                                <p class="p_card">
+                                    <%= element.question %>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="carteback hide_card">
+                            <h1><span class="fancy"><% if(reverse) { %>Question :<% } else { %>Réponse :<% } %></span></h1>
+                            <div class="infoback">
+                                <% if(element.img_a != "") { %>
+                                    <img class="image_carte" src="../uploads/<%= element.img_a %>"></img>
+                                <% } %>
+                                <p class="p_card">
+                                    <%= element.answer %>
+                                </p>
+
+                                <!-- Auto-évaluation -->
+                                <div class="comprehension">
+                                    <hr>
+                                    <b>Mon auto-évaluation</b>
+                                    <table class="table-eval">
+                                        <tbody>
+                                            <tr class="big" id="autoevaltab">
+                                                <td data-eval="1" class="eval" id="TM" title="Très Mauvais"><i class="fa-solid fa-face-frown"></i></td>
+                                                <td data-eval="2" class="eval" id="M" title="Mauvais"><i class="fa-solid fa-face-frown-open"></i></td>
+                                                <td data-eval="3" class="eval" id="N" title="Neutre"><i class="fa-solid fa-face-meh"></i></td>
+                                                <td data-eval="4" class="eval" id="B" title="Bien"><i class="fa-solid fa-face-smile"></i> </td>
+                                                <td data-eval="5" class="eval" id="TB" title="Très Bien"><i class="fa-solid fa-face-laugh"></i></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- FIN Auto-évaluation -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+        <% } else { %>
+            <script>
+                window.location.href = history.back();
+            </script>
+        <% } %>
+    </main>
+</body>
+<script src="../js/functions.js"></script>
+<script src="../js/setup.js"></script>
+<script>
+
+    $(document).ready(function () {
+
+
+        $(".eval").click(function(e){
+            const carte = $(this).closest(".maincarte");
+            
+
+            const id_deck = $(".card_training_container").data("deck");
+            const id_card = carte.data("id");
+            const note = $(this).data("eval");
+
+            $.ajax({
+                url: '../eval_card',
+                type: 'POST',
+                data:{id_deck:id_deck, id_card:id_card, note:note},
+                success: function(response) {
+                    carte.animate({
+                        left: "-800px"
+                    }, {
+                        duration: 500,
+                        complete: function() {
+                            carte.fadeOut(10);
+                            carte.next().fadeIn(500);
+                            if(carte.next().length == 0) {
+                                window.location.href = '../deck/'+$(".card_training_container").data("deck");
+                            }
+                        }
+                    });
+                },
+                error: function(xhr, status, error) {
+                    $('#deck_container').empty();
+                    // Récupération de l'erreur
+                    console.error('Erreur de requête:', error, xhr);
+                    // Traitement de l'erreur
+                    showError(xhr.responseJSON.message)
+                }
+            });
+
+
+
+
+
+            
+        })
+    })
+</script>
+
+</html>

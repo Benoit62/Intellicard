@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="../img/logo_intellicard.png" type="image/x-icon">
+        <link type="text/css" rel="stylesheet" href="../css/manage.css">
+        <link type="text/css" rel="stylesheet" href="../css/style.css">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+            integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+            crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <title>Deck</title>
+    </head>
+
+    <body class="body2">
+        <header class="header_nav_pc">
+            <div class="container">
+                <div class="navbar">
+                    <ul class="pc">
+                        <li class="li_nav"><a href="/jeu">Jeu</a></li>
+                        <li class="li_nav"><a href="/decks">Decks</a></li>
+                        <li class="li_nav"><a href="/home">Accueil</a></li>
+                        <li class="li_nav"><a href="/search">Recherche</a></li>
+                        <li class="li_nav"><a href="/profil">Profil</a></li>
+                        <li class="li_nav"><a href="/manage">Manager</a></li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+        <main>
+            <div class="main_manager">
+                <div class="display_choice">
+                    <h1 id="show_deck" class="h1_fancy toggle_display bright_display"><span class="fancy">Deck</span></h1>
+                    <h1 id="show_parcours" class="h1_fancy toggle_display"><span class="fancy">Parcours</span></h1>
+                </div>
+
+                <div class="display_results">
+                    
+                        <div id="deck_container" class="deck_container">
+                            <div class="deck_display">
+                                <a href="/add-deck">
+                                    <h2 class="title_add">Ajouter un deck</h2>
+                                    <br>
+                                    <div class="adddeck">
+                                        <i class="fa-solid fa-circle-plus"></i>
+                                    </div>
+                                    <div class="tag_container">
+                                    </div>
+                                </a>
+                            </div>
+
+                    </div>
+                    <div id="parcours_container" class="parcours_container hide_container">
+                        <div>
+                            <div class="deck_display">
+                                <a href="/add-parcours">
+                                    <h2 class="title_add">Ajouter un parcours</h2>
+                                    <br>
+                                    <div class="addparcours">
+                                        <i class="fa-solid fa-circle-plus"></i>
+                                    </div>
+                                    <div class="tag_container">
+                                    </div>
+                                </a>
+                            </div>                        
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="header_nav_mobile">
+            <div class="container">
+                <div class="navbar">
+                    <div class="mobile">
+                        <div class="li_nav"><a href="#"><i class='fas fa-gamepad'></i></a></div>
+                        <div><div class="vertical_bar"></div></div>
+                        <div class="li_nav"><a href="/decks"><i class="fas fa-clone"></i></a></div>
+                        <div><div class="vertical_bar"></div></div>
+                        <div class="li_nav"><a href="/home"><i class='fas fa-home'></i></a></div>
+                        <div><div class="vertical_bar"></div></div>
+                        <div class="li_nav"><a href="/search"><i class='fas fa-search'></i></a></div>
+                        <div><div class="vertical_bar"></div></div>
+                        <div class="li_nav"><a href="/profil"><i class='fas fa-user-alt'></i></a></div>
+                        <div><div class="vertical_bar"></div></div>
+                        <div class="li_nav"><a href="/manage"><i class='fas fa-wrench'></i></a></div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </body>
+    <script>
+                    //premier ajout de code
+
+
+
+            //cree un tableau avec les lettres de l'alphabet
+            let alphabet = [];
+            for (let i = 65; i < 91; i++) {
+                alphabet.push(String.fromCharCode(i));
+            }
+            console.log(alphabet);
+            //crée un code aléatoire de 6 caractères avec des lettres de l'alphabet et des chiffres et le remplace dans l'input code
+            let code = '';
+            for (let i = 0; i < 6; i++) {
+                let random = Math.floor(Math.random() * 36);
+                if (random < 26) {
+                    code += alphabet[random];
+                }
+                else {
+                    code += random - 26;
+                }
+            }
+            $('#code').val(code);
+            console.log(code);
+
+            
+            //verifie que le code créé et stocker dans la variable code n'est pas déjà utilisé, si déjà utilisé, on en génère un autre
+            /*  je te laisse regarder ce code, étant donner que je n'ai pas touché a la bdd
+            let checkCode = function() {
+                $.ajax({
+                    url: '/checkCode',
+                    type: 'POST',
+                    data: {code: code},
+                    dataType: 'json',
+                    success: function(data) {
+                        if (data == true) {
+                            code = '';
+                            for (let i = 0; i < 6; i++) {
+                                let random = Math.floor(Math.random() * 36);
+                                if (random < 26) {
+                                    code += alphabet[random];
+                                }
+                                else {
+                                    code += random - 26;
+                                }
+                            }
+                            $('#code').val(code);
+                            console.log(code);
+                            checkCode();
+                        }
+                    }
+                });
+            }
+
+            */
+
+
+            //quand l'input public est checked, on cache le code
+            $('.public').click(function() {
+                $('#code').hide();
+            });
+            //quand l'input private est checked, on affiche le code
+            $('.private').click(function() {
+                $('#code').show();
+            });
+
+        $(document).ready(function () {         
+            $.ajax({
+                url: 'get_deck_owner',
+                type: 'POST',
+                success: function(response) {
+                    console.log(response);
+                    if(response.data){
+                        const data = response.data
+                        data.forEach(element => {
+                            var newDeck =
+                                '<a href="my-deck/' + element.id_deck + '" class="deck_display">' +
+                                    '<h2 class="title_deck_display">' + element.name + '</h2>' +
+                                    '<p class="by"><i>par ' + element.firstname + ' ' + element.surname + '</i></p>' +
+                                    '<div class="votes">'+
+                                        '<div class="each_vote up_vote"><i class="fa fa-arrow-up"></i><div>'+element.up_vote+'</div></div>'+
+                                        '<div class="each_vote down_vote"><i class="fa fa-arrow-down"></i><div>'+element.down_vote+'</div></div>'+
+                                        '<div class="each_vote nb_cards"><i class="fas fa-clone"></i><div>'+element.card_count+'</div></div>'+
+                                        (element.acces_type == 'PRIVATE' ? '<div class="each_vote acces"><i class="fas fa-lock"></i></div>' : '')+
+                                    '</div>'+
+                                    '<div class="tag_container">'+
+                                        '<div class="tag"><p><span class="puce">◉</span>&ensp; ' + element.tag + '</p></div>' +
+                                        '<div class="level"><p><span class="puce">◉</span>&ensp; ' + element.level + '</p></div>' +
+                                    '</div>'+
+                                '</a>';
+
+
+                            $('#deck_container').append(newDeck);
+                        });
+                    }
+                    else {
+                        $('#deck_container').append('<p class="error">Vous n\'avez créé aucun deck</p>');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    // Récupération de l'erreur
+                    console.error('Erreur de requête:', error, xhr);
+                    // Traitement de l'erreur
+                    //document.getElementById("error").innerHTML = xhr.responseJSON.message;
+                }
+            });
+
+
+            $(".toggle_display").click(function(){
+                $("#show_deck").toggleClass('bright_display')
+                $("#show_parcours").toggleClass('bright_display')
+                $("#deck_container").toggleClass('hide_container')
+                $("#parcours_container").toggleClass('hide_container')
+            })
+        });
+
+
+    </script>
+</html>

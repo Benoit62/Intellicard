@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="../img/logo_intellicard.png" type="image/x-icon">
+        <link type="text/css" rel="stylesheet" href="../css/hub.css">
+        <link type="text/css" rel="stylesheet" href="../css/style.css">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+            integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+            crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <title>Deck</title>
+    </head>
+
+    <body class="body2">
+        <header class="header_nav_back_pc">
+            <a href="/hub">
+                <i class='fas fa-arrow-left'></i>
+            </a>
+        </header>
+        <main class="main2">
+            <h1 class="h1_fancy"><span class="fancy">Choisi le deck</span></h1>
+            <div class="display_results">
+                <div id="deck_container" class="deck_container">
+                    <a href="memory/shuffle" data-id="' + element.id_deck + '" class="deck_display consulting">
+                        <h2 class="title_deck_display">Mélange</h2>
+                        <div class="votes">
+                            <p style="margin: 0;">Choisi des cartes aléatoirement</p>
+                        </div>
+                        <div class="tag_container">
+                            <div class="tag"><p><span class="puce">◉</span>&ensp; mélange</p></div>
+                        </div>
+                    </a>
+                    <% if(rows && rows.length > 0) { %>
+                        <a href="memory/<%= rows[Math.floor(Math.random() * rows.length)].id_deck %>" data-id="' + element.id_deck + '" class="deck_display consulting">
+                            <h2 class="title_deck_display">Aléatoire</h2>
+                            <div class="votes">
+                                <p style="margin: 0;">Choisi un deck aléatoirement</p>
+                            </div>
+                            <div class="tag_container">
+                                <div class="tag"><p><span class="puce">◉</span>&ensp; aléatoire</p></div>
+                            </div>
+                        </a>
+                        <% rows.forEach(element => { %>
+                            <a href="memory/<%= element.id_deck %>" data-id="' + element.id_deck + '" class="deck_display consulting">
+                                <h2 class="title_deck_display"><%= element.name %></h2>
+                                <div class="votes">
+                                    <div class="each_vote up_vote"><i class="fa fa-arrow-up"></i><div><%= element.up_vote %></div></div>
+                                    <div class="each_vote down_vote"><i class="fa fa-arrow-down"></i><div><%= element.down_vote %></div></div>
+                                    <div class="each_vote nb_cards"><i class="fas fa-clone"></i><div><%= element.card_count %></div></div>
+                                    <% if(element.acces_type === 'PRIVATE') { %><div class="each_vote acces"><i class='fas fa-lock'></i></div><% } %>
+                                </div>
+                                <div class="tag_container">
+                                    <div class="tag"><p><span class="puce">◉</span>&ensp; <%= element.tag %></p></div>
+                                    <div class="level"><p><span class="puce">◉</span>&ensp; <%= element.level %></p></div>
+                                </div>
+                                <div class="average_score">
+                                    <div>Score moyen : <% switch (element.average_score) {
+                                                            case 1:
+                                                        %>
+                                                            <i class="fa-solid fa-face-frown TM"></i>
+                                                        <%        
+                                                                break;
+                                                            case 2:
+                                                        %>
+                                                            <i class="fa-solid fa-face-frown-open M"></i>
+                                                        <%        
+                                                                break;
+                                                            case 3:
+                                                        %>
+                                                            <i class="fa-solid fa-face-meh N"></i>
+                                                        <%        
+                                                                break;
+                                                            case 4:
+                                                        %>
+                                                            <i class="fa-solid fa-face-smile B"></i>
+                                                        <%        
+                                                                break;
+                                                            case 5:
+                                                        %>
+                                                            <i class="fa-solid fa-face-laugh TB"></i>
+                                                        <%        
+                                                                break;
+                                                        
+                                                            default:
+                                                        %>
+                                                            <i class='fas fa-ban NEW'></i>
+                                                        <%
+                                                                break;
+                                    } %></div>
+                                </div>
+                            </a>
+                        <% }); %>
+                    <% } else { %>
+                        <a style="text-decoration: underline;" href="/search" class="error">Aucun deck disponible pour jouer</a>
+                    <% } %>
+                </div>
+            </div>
+        </main>
+        <footer class="header_nav_back_mobile">
+            <a href="/hub">
+                <i class='fas fa-arrow-left'></i>
+            </a>
+        </footer>
+    </body>
+    <script src="../js/functions.js"></script>
+    <script src="../js/setup.js"></script>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../img/logo_intellicard.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/test_add_parcours.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Parcours</title>
+</head>
+
+<body class="body1">
+    
+    <div id="error_notif" class="error_notif">
+        <div id="error_content" class="error_content">Lien incorrect</div>
+    </div>
+    
+    <header class="header_nav_pc">
+        <div class="container">
+            <div class="navbar">
+                <ul class="pc">
+                    <a href="/hub" class="li_nav"><span class="white">Jeux</span></a>
+                    <a href="/decks" class="li_nav"><span class="white">Decks</span></a>
+                    <a href="/home" class="li_nav"><span class="white">Accueil</span></a>
+                    <a href="/search" class="li_nav"><span class="white">Recherche</span></a>
+                    <a href="/profil" class="li_nav"><span class="white">Profil</span></a>
+                    <a href="/gestion" class="li_nav"><span class="white">Gestion</span></a>
+                </ul>
+            </div>
+        </div>
+    </header>
+    <main>
+        
+        <div class="content">
+            <form id="form_deck" enctype="multipart/form-data">
+                <input type="file" name="photo1" id="photo1">
+                <input type="file" name="photo2" id="photo2">
+                <input type="file" name="photo3" id="photo3">
+
+                <div id="test" value="Upload">Envoyer</div>
+              </form>
+              
+        </div>
+
+
+    </main>
+    <footer class="header_nav_mobile">
+        <div class="container">
+            <div class="navbar">
+                <div class="mobile">
+                    <div class="li_nav"><a href="/hub"><i class='fas fa-gamepad'></i></a></div>
+                    <div class="li_nav"><a href="/decks"><i class="fas fa-clone"></i></a></div>
+                    <div class="li_nav"><a href="/home"><i class='fas fa-home'></i></a></div>
+                    <div class="li_nav"><a href="/search"><i class='fas fa-search'></i></a></div>
+                    <div class="li_nav"><a href="/profil"><i class='fas fa-user-alt'></i></a></div>
+                    <div class="li_nav"><a href="/gestion"><i class='fas fa-wrench'></i></a></div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="../js/create_fiche.js"></script>
+    <script>
+        
+        $(document).ready(function () {
+
+            $("#test").click(function (e) {
+                var formData = new FormData();
+
+                // Ajouter les fichiers dans FormData
+                formData.append('photo1', $('#photo1')[0].files[0]);
+                formData.append('photo2', $('#photo2')[0].files[0]);
+                formData.append('photo3', $('#photo3')[0].files[0]);
+                formData.append('test', 'joerjihgbnojporoigjrdofbgjdfhjbfhish');
+
+                console.log(formData)
+                // Envoyer la requête Ajax
+                $.ajax({
+                    url: '/test_img',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        // Traitement réussi
+                    },
+                    error: function(xhr, status, error) {
+                        // Gérer les erreurs
+                    }
+                });
+            });
+
+            /*document.getElementById('test').addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                var formData = new FormData();
+                formData.append('image', document.getElementById('imageInput').files[0]);
+
+                fetch('/test_img', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(function(response) {
+                    if (response.ok) {
+                    console.log('Image uploaded successfully');
+                    // Faire quelque chose avec la réponse du serveur
+                    } else {
+                    console.error('Error uploading image:', response.statusText);
+                    }
+                })
+                .catch(function(error) {
+                    console.error('Error uploading image:', error);
+                });
+            });*/
+
+
+        });
+
+    </script>
+</body>
+
+</html>

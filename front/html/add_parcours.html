@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../img/logo_intellicard.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/add_parcours.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Parcours</title>
+</head>
+
+<body class="body1">
+    <div id="modal" class="modal">
+        <div id="modal_content" class="modal_content">
+            <div class="modal_flex">
+                <div class="brouillon_fiche_container">
+                    <div id="file" class="brouillon_fiche"></div>
+                </div>
+
+                <div class="side_fiche_editor">
+                    <div id="tools_container" class="tools_container">
+                        <div id="first_tools" class="first_tools">
+                            <div data-type="title" class="add_text elem_to_add">Titre</div>
+                            <div data-type="text" class="add_text elem_to_add">Texte</div>
+                            <div data-type="ul" class="add_list elem_to_add">Liste</div>
+                            <div data-type="ol" class="add_list elem_to_add">Liste ordonnée</div>
+                            <div data-type="def" class="add_text elem_to_add">Définition</div>
+                        </div>
+                        <div id="second_tools" class="second_tools">
+                            <div class="each_container_tool"><input id="color" type="color"></div>
+                            <div class="each_container_tool"><button style="text-decoration: underline;" id="underline">Souligner</button></div>
+                            <div class="each_container_tool"><button style="font-weight: bold;" id="bold">Gras</button></div>
+                            <div class="each_container_tool"><button style="text-align: center;" id="center">Centrer</button></div>
+                            <div class="each_container_tool"><i id="up_size" data-type="up" class='fas fa-chevron-up'></i><i id="down_size" data-type="down" class='fas fa-chevron-down'></i></div>
+                        </div>
+                    </div>
+                    <div class="valid_fiche" id="valid_fiche">Valider</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="modal2" class="modal">
+        <div id="modal_content" class="modal_content">
+            <div class="modal_content_import">
+                <p class="info_import">Assurer-vous de coller dans la zone prévu à cet effet, du texte sous la forme :<br><br> Q1:Ma question <br>R1:Ma réponse <br> Question 2:Ma Question 2 <br> Réponse 2 : Ma réponse 2 <br> Question: Ma question <br> Réponse : Ma réponse</p>
+                <div class="container_importation">
+                    <textarea id="import_value"></textarea>
+                    <div id="valider_import">Valider</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <header class="header_nav_pc">
+        <div class="container">
+            <div class="navbar">
+                <ul class="pc">
+                    <a href="/hub" class="li_nav"><span class="white">Jeux</span></a>
+                    <a href="/decks" class="li_nav"><span class="white">Decks</span></a>
+                    <a href="/home" class="li_nav"><span class="white">Accueil</span></a>
+                    <a href="/search" class="li_nav"><span class="white">Recherche</span></a>
+                    <a href="/profil" class="li_nav"><span class="white">Profil</span></a>
+                    <a href="/gestion" class="li_nav"><span class="white">Gestion</span></a>
+                </ul>
+            </div>
+        </div>
+    </header>
+    <main>
+
+        <div class="content">
+            <form id="form_parcours" class="form_deck" enctype="multipart/form-data">
+                <div class="first_infos">
+                    <div class="form_group_deck">
+                        <fieldset>
+                            <legend>Titre :</legend>
+                            <input type="text" id="name" name="title" maxlength="100" required placeholder="Titre du parcours">
+                        </fieldset>
+                    </div>
+                    <div class="form_group_deck">
+                        <fieldset>
+                            <legend>Acces :</legend>
+                            
+                            <input type="radio" id="private" name="acces" class="private" value="PRIVATE" required>
+                            <label for="private">Privé</label>  
+                            <input type="radio" id="public" name="acces" class="public" value="PUBLIC" required>
+                            <label for="public">Public</label>
+                        </fieldset>
+                    </div>
+                    <div class="form_group_deck">
+                        <fieldset>
+                            <legend>Matière :</legend>
+                            <select id="tag" name="tag" required>
+                            </select>
+                        </fieldset>
+                    </div>
+                    <div class="form_group_deck">
+                        <fieldset>
+                            <legend>Niveau :</legend>
+                            <select id="level" name="level" required>
+                            </select>
+                        </fieldset>
+                    </div>
+                </div>
+                <div style="margin-top: 0px;" class="first_infos">
+                    <div class="form_group_deck form_group2">
+                        <fieldset>
+                            <legend>Description :</legend>
+                            <textarea name="desc" placeholder="Description du parcours" required></textarea>
+                        </fieldset>
+                    </div>
+                </div>
+                <ul class="activities" id="activities">
+                    <li class="activities_item">
+                        <div id="addFields"><i class="fa-solid fa-circle-plus"></i></div>
+                        <div style="display: none;" id="parcours_items_choices" class="parcours_items_choices">
+                            <div data-type="img" class="listchoix">
+                                <p><i title="Image" class="fa-solid fa-image fa-3x" style="color: #f06b42"></i></p>
+                            </div>
+                            <div data-type="pdf" class="listchoix">
+                                <p><i title="PDF" class="fa-regular fa-file-pdf fa-3x" style="color: #f06b42"></i></p>
+                            </div>
+                            <div data-type="video" class="listchoix">
+                                <p><i  title="Video" class="fa-solid fa-circle-play fa-3x" style="color: #f06b42"></i></p>
+                            </div>
+                            <div data-type="fiche" class="listchoix">
+                                <p><i title="Fiche" class="fa-solid fa-file fa-3x" style="color: #f06b42"></i></p>
+                            </div>
+                            <div data-type="card" class="listchoix">
+                                <p><i title="Carte" class="fa-solid fa-layer-group fa-3x" style="color: #f06b42"></i></p>
+                            </div>
+                            <div data-type="eval" class="listchoix">
+                                <p><i title="Eval" class="fa-solid fa-graduation-cap fa-3x" style="color: #f06b42"></i></p>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <div id="buttonAccesCard">
+                </div>
+
+                
+                <div class="form-group">
+                    <input type="submit" value="Valider">
+                </div>
+            </form>
+        </div>
+
+
+    </main>
+    <footer class="header_nav_mobile">
+        <div class="container">
+            <div class="navbar">
+                <div class="mobile">
+                    <div class="li_nav"><a href="/hub"><i class='fas fa-gamepad'></i></a></div>
+                    <div class="li_nav"><a href="/decks"><i class="fas fa-clone"></i></a></div>
+                    <div class="li_nav"><a href="/home"><i class='fas fa-home'></i></a></div>
+                    <div class="li_nav"><a href="/search"><i class='fas fa-search'></i></a></div>
+                    <div class="li_nav"><a href="/profil"><i class='fas fa-user-alt'></i></a></div>
+                    <div class="li_nav"><a href="/gestion"><i class='fas fa-wrench'></i></a></div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="../js/create_fiche.js"></script>
+    <script src="../js/functions.js"></script>
+    <script src="../js/setup.js"></script>
+    <script>
+        let fieldCount = 0;
+
+        let activeFiche;
+        $(document).ready(function () {
+            $.ajax({
+                url: 'get_all_tag',
+                type: 'POST',
+                success: function(response) {
+                    const data = response.data
+                    data.forEach(element => {
+                        $('#tag').append('<option value="'+element.id_tag+'">'+element.tag+'</option>');
+                    });
+                },
+                error: function(xhr, status, error) {
+                    // Récupération de l'erreur
+                    console.error('Erreur de requête:', error, xhr);
+                    // Traitement de l'erreur
+                    showError(xhr.responseJSON.message)
+                }
+            });
+
+            $.ajax({
+                url: 'get_all_level',
+                type: 'POST',
+                success: function(response) {
+                    const data = response.data
+                    data.forEach(element => {
+                        $('#level').append('<option value="'+element.id_level+'">'+element.level+'</option>');
+                    });
+                },
+                error: function(xhr, status, error) {
+                    // Récupération de l'erreur
+                    console.error('Erreur de requête:', error, xhr);
+                    // Traitement de l'erreur
+                    showError(xhr.responseJSON.message)
+                }
+            });
+
+            $('#valid_fiche').click(function (e) {
+                const fiche = getFiche();
+                activeFiche.data('content', JSON.stringify(fiche))
+                activeFiche.find('.fiche_content').val(JSON.stringify(fiche))
+
+                let apercu = activeFiche.find(".apercu_fiche")
+                apercu.empty()
+                generateView(apercu, fiche, true)
+
+                $("#modal").hide()
+                $('#file').empty()
+                activeFiche = "";
+            })
+
+            $('#form_parcours').submit(function (e) {
+                let parcours = []
+                e.preventDefault()
+                $(".activities_item").each(function (index) {
+                    let newObjectParcours = {
+                        type: ""
+                    }
+                    switch ($(this).data("type")) {
+                        case 'video':
+                            newObjectParcours.type = "VOD";
+                            newObjectParcours.name = $(this).find('.item_name').val()
+                            newObjectParcours.content = $(this).find('.content').val()
+                            parcours.push(newObjectParcours)
+                            break;
+                        case 'cards':
+                            newObjectParcours.type = "CARDS";
+                            newObjectParcours.name = $(this).find('.item_name').val()
+                            newObjectParcours.content = [];
+                            $(this).find(".card_group").each(function (index) {
+                                let newObjectCards = {
+                                    q: $(this).find(".textarea_deck").first().val(),
+                                    r: $(this).find(".textarea_deck").last().val(),
+                                    img_q: $(this).find(".photo").first()[0].files.length > 0,
+                                    img_r:$(this).find(".photo").last()[0].files.length > 0
+                                }
+                                newObjectParcours.content.push(newObjectCards)
+                            });
+                            parcours.push(newObjectParcours)
+                            break;
+                        case 'fiche':
+                            newObjectParcours.type = "FICHE";
+                            newObjectParcours.name = $(this).find('.item_name').val()
+                            newObjectParcours.content = $(this).find('.content').val()
+                            parcours.push(newObjectParcours)
+                            break;
+                        case 'img':
+                            newObjectParcours.type = "IMG";
+                            newObjectParcours.name = $(this).find('.item_name').val()
+                            newObjectParcours.content = $(this).find('.content').val()
+                            parcours.push(newObjectParcours)
+                            break;
+                        case 'pdf':
+                            newObjectParcours.type = "PDF";
+                            newObjectParcours.name = $(this).find('.item_name').val()
+                            newObjectParcours.content = $(this).find('.content').val()
+                            parcours.push(newObjectParcours)
+                            break;
+                        default:
+                            return;
+                            break;
+                    }
+                });
+                console.log(parcours)
+
+                var formData = new FormData($("#form_parcours")[0]);
+                formData.append('parcours', JSON.stringify(parcours))
+
+                console.log(formData)
+
+                $.ajax({
+                    url: 'add_parcours',
+                    type: 'POST',
+                    data:formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+                        console.log(response)
+                        window.location.href = "/my-deck/"+response.id;
+                    },
+                    error: function (xhr, status, error) {
+                        // Récupération de l'erreur
+                        console.error('Erreur de requête:', error, xhr);
+                        showError(xhr.responseJSON.message)
+                    }
+                });
+            })
+
+
+
+
+            $("#addFields").click(function (e) {
+                $(this).hide();
+                fieldCount++;
+
+                $("#parcours_items_choices").show().children().click(function (e) {
+                    let type = "";
+                    let insertion = "";
+                    switch ($(this).data("type")) {
+                        case "video":
+                            type = "video"
+                            insertion = `
+                            <div class="form_group_deck full_size">
+                                <fieldset>
+                                    <legend>Nom de l'item :</legend>
+                                    <input class="item_name" type="text" placeholder="Nom de l\'item" required>
+                                </fieldset>
+                            </div>
+                            <iframe style="display: none;" class="iframe_video" height="200" src="" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            <input class="url" type="text" placeholder="URL de la vidéo" required>
+                            <input class="content" type="hidden" required>`;
+
+
+
+                            let insertedElem = $('<li draggable="true" style="display: none;" data-type="video"  class="activities_item column_activitie_item">' + insertion + '<div class="delete_field_parcours"><i class="fa-solid fa-circle-minus"></i></div></li>').insertBefore($(this).closest('.activities_item'));
+
+                            var newButton =
+                                '<div class="listcard" id="zonelist">' + '<p id="ca"> ' + fieldCount + '</p>' + '</div>';
+                            $('#buttonAccesCard').append(newButton);
+
+                            insertedElem.find(".url").change(function (e) {
+                                let url = $(this).val();
+                                //pour youtube
+                                if (url.includes("youtu")) {
+                                    url = url.replace("https://www.youtube.com/watch?v=", "");
+                                    url = url.replace("https://youtu.be/", "");
+                                    url = url.replace("https://www.youtube.com/embed/", "");
+                                    url = url.replace("https://www.youtube.com/", "");
+                                    if (testUrlVideoYoutube(url)) {
+                                        $(this).siblings('.iframe_video').show().attr('src', "https://www.youtube.com/embed/" + url);
+                                        $(this).siblings(".content").val("https://www.youtube.com/embed/" + url)
+                                    }
+                                    else {
+                                        $(this).siblings('.iframe_video').hide().attr('src', "");
+                                        $(this).siblings(".content").val("")
+                                    }
+                                }
+                                //pour vimeo
+                                else if (url.includes("vimeo")) {
+                                    url = url.replace("https://vimeo.com/", "");
+                                    url = url.replace("https://www.vimeo.com/", "");
+                                    url = url.replace("https://player.vimeo.com/video/", "");
+                                    if (testUrlVideoVimeo(url)) {
+                                        $(this).siblings('.iframe_video').show().attr('src', "https://player.vimeo.com/video/" + url);
+                                        $(this).siblings(".content").val("https://player.vimeo.com/video/" + url)
+                                    }
+                                    else {
+                                        $(this).siblings('.iframe_video').hide().attr('src', "");
+                                        $(this).siblings(".content").val("")
+                                    }
+                                }
+                                //pour dailymotion
+                                else if (url.includes("dailymotion") || url.includes("dai.ly")) {
+                                    url = url.replace("https://www.dailymotion.com/video/", "");
+                                    url = url.replace("https://dai.ly/", "");
+                                    url = url.replace("https://www.dailymotion.com/embed/video/", "");
+
+                                    if (testUrlVideoDailymotion(url)) {
+                                        $(this).siblings('.iframe_video').show().attr('src', "https://www.dailymotion.com/embed/video/" + url);
+                                        $(this).siblings(".content").val("https://www.dailymotion.com/embed/video/" + url)
+                                    }
+                                    else {
+                                        $(this).siblings('.iframe_video').hide().attr('src', "");
+                                        $(this).siblings(".content").val("")
+                                    }
+                                }
+                                else {
+                                    $(this).siblings('.iframe_video').hide().attr('src', "");
+                                    $(this).siblings(".content").val("")
+                                    console.error("lien incorrect")
+                                    showError('Le lien n\'est pas correct');
+                                }
+
+                                updateProgressBar();
+
+                            })
+                            insertedElem.fadeIn("slow")
+                            insertedElem[0].scrollIntoView({ behavior: "smooth", block: "center", inline: "start" });
+
+                            insertedElem.find(".delete_field_parcours").click(function (e) {
+                                $(this).closest('.activities_item').fadeOut("slow", function () {
+                                    $(this).remove()
+                                    $('#buttonAccesCard').children().last().remove();
+                                    fieldCount--;
+                                });
+
+                            });
+
+                            break;
+                        case "fiche":
+                            $('#modal').css("display", "flex");
+                            insertion = `
+                            
+                            <div class="form_group_deck full_size">
+                                <fieldset>
+                                    <legend>Nom de l'item :</legend>
+                                    <input class="item_name" type="text" placeholder="Nom de l\'item" required>
+                                </fieldset>
+                            </div>
+                            <input class="content fiche_content" type="hidden" required>
+                            <div class="apercu_fiche"></div>
+                            `;
+
+                            let insertedElem3 = $('<li draggable="true" style="display: none;" data-type="fiche" class="activities_item">' + insertion + '<div class="delete_field_parcours"><i class="fa-solid fa-circle-minus"></i></div></li>').insertBefore($(this).closest('.activities_item'));
+                            var newButton =
+                                '<div class="listcard" id="zonelist">' + '<p id="ca"> ' + fieldCount + '</p>' + '</div>';
+                            $('#buttonAccesCard').append(newButton);
+                            activeFiche = insertedElem3;
+
+                            insertedElem3.fadeIn("slow")
+                            insertedElem3[0].scrollIntoView({ behavior: "smooth", block: "center", inline: "start" });
+
+                            insertedElem3.find(".apercu_fiche").click(function (e) {
+                                $('#modal').css("display", "flex");
+                                activeFiche = $(this).closest(".activities_item");
+                                regenerateModificationView(JSON.parse($(this).closest(".activities_item").data("content")))
+                            });
+
+                            insertedElem3.find(".delete_field_parcours").click(function (e) {
+                                $(this).closest('.activities_item').fadeOut("slow", function () {
+                                    $(this).remove()
+                                    $('#buttonAccesCard').children().last().remove();
+                                    fieldCount--;
+                                });
+                            });
+                            break;
+                        case "card":
+
+                            insertion = `
+                            <div class="form_group_deck full_size">
+                                <fieldset>
+                                    <legend>Nom de l'item :</legend>
+                                    <input class="item_name" type="text" placeholder="Nom de l\'item" required>
+                                </fieldset>
+                            </div>
+                            <div class="cards_container">
+                                <div class="card_group">
+                                    <div class="card_container_mini">
+                                        <div class="maincarte_mini">
+                                            <div class="carte_mini noflip" id="carte">
+                                                <div class="cartefront">
+                                                    <h1><span class="fancy">Question 1 :</span></h1>
+                                                    <div class="infofront">
+                                                        <label for="photo-q-` + fieldCount + `-1" class="label_photo label_file">
+                                                            <i class="fa-solid fa-image fa-3x label_file_icon" style="color: #3f2a56; padding: 20px;"></i>
+                                                            <img style="display: none;" class="preview" src="#" alt=""/>
+                                                            <div style="display: none;" class="delete_file"><i class="fa-solid fa-circle-minus"></i></div>
+                                                        </label>
+                                                        <input id="photo-q-` + fieldCount + `-1" type="file" name="file" class="photo" accept="image/*">
+                                                        <textarea class="textarea_deck" type="text" required></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card_container_mini">
+                                        <div class="maincarte_mini">
+                                            <div class="carte_mini flip noflip" id="carte">
+                                                <div class="carteback">
+                                                    <h1><span class="fancy_back">Réponse 1 :</span></h1>
+                                                    <div class="infoback">
+                                                        <label for="photo-r-` + fieldCount + `-1" class="label_photo label_file">
+                                                            <i class="fa-solid fa-image fa-3x label_file_icon" style="color: #3f2a56; padding: 20px;"></i>
+                                                            <img style="display: none;" class="preview" src="#" alt=""/>
+                                                            <div style="display: none;" class="delete_file"><i class="fa-solid fa-circle-minus"></i></div>
+                                                        </label>
+                                                        <input id="photo-r-` + fieldCount + `-1" type="file" name="file" class="photo" accept="image/*">
+                                                        <textarea class="textarea_deck" type="text" required></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="add_fields"><i class="fa-solid fa-circle-plus"></i></div>
+                                <div class="import"><i class='fas fa-upload'></i></div>
+                            </div>
+                            `;
+
+                            let insertedElem2 = $('<li draggable="true" style="display: none;" data-type="cards"  class="activities_item column_activitie_item">' + insertion + '<div class="delete_field_parcours"><i class="fa-solid fa-circle-minus"></i></div></li>').insertBefore($(this).closest('.activities_item'));
+                            var newButton =
+                                '<div class="listcard" id="zonelist">' + '<p id="ca"> ' + fieldCount + '</p>' + '</div>';
+                            $('#buttonAccesCard').append(newButton);
+                            insertedElem2.find(".add_fields").click(function (e) {
+                                addCards($(this).closest('.cards_container'))
+                            })
+                            insertedElem2.fadeIn("slow")
+                            insertedElem2[0].scrollIntoView({ behavior: "smooth", block: "center", inline: "start" });
+
+                            insertedElem2.find(".delete_field_parcours").click(function (e) {
+                                $(this).closest('.activities_item').fadeOut("slow", function () {
+                                    $(this).remove()
+                                    $('#buttonAccesCard').children().last().remove();
+                                    //on met a jour les id des buttonAccesCard
+                                    fieldCount--;
+                                });
+                            });
+
+                            insertedElem2.find('.import').click(function(){
+                                const parent = $(this).closest(".cards_container");
+
+                                $("#modal2").css('display', 'flex');
+
+                                $('#valider_import').off('click').click(function(){
+                                    const parsedData = parseQuestionsAndAnswers($("#import_value").val());
+                                    if(parsedData) {
+                                        parent.find('.card_group').remove();
+                                        fieldCount = 0;
+                                    }
+                                    parsedData.forEach(element => {
+                                        fieldCount++;
+                                        var newFieldGroup =
+                                        '<div class="card_group">'+
+                                            '<div class="card_container_mini">'+
+                                                '<div class="maincarte_mini">'+
+                                                    '<div class="carte_mini noflip" id="carte">'+
+                                                        '<div class="cartefront">'+
+                                                            '<h1><span class="fancy">Question ' + fieldCount + ' :</span></h1>'+
+                                                            '<div class="infofront">'+
+                                                                '<label class="label_photo label_file" for="q-' + fieldCount + '">'+
+                                                                    '<i class="fa-solid fa-image fa-3x label_file_icon" style="color: #3f2a56; padding: 20px;"></i>'+
+                                                                    '<img style="display: none;" class="preview" src="#" alt=""/>'+
+                                                                    '<div style="display: none;" class="delete_file"><i class="fa-solid fa-circle-minus"></i></div>'+
+                                                                '</label>'+
+                                                                '<input id="q-' + fieldCount + '" type="file" class="photo" name="q-' + fieldCount + '" accept="image/*">'+
+                                                                '<textarea class="textarea_deck" type="text" id="q' + fieldCount + '"  name="q[]" required>'+element.question+'</textarea>'+
+                                                            '</div>'+
+                                                        '</div>'+
+                                                    '</div>'+
+                                                '</div>'+
+                                            '</div>'+
+                                            '<div class="card_container_mini">'+
+                                                '<div class="maincarte_mini">'+
+                                                    '<div class="carte_mini flip noflip" id="carte">'+
+                                                        '<div class="carteback">'+
+                                                            '<h1><span class="fancy_back">Réponse ' + fieldCount + ' :</span></h1>'+
+                                                            '<div class="infoback">'+
+                                                                '<label class="label_photo label_file" for="r-' + fieldCount + '">'+
+                                                                    '<i class="fa-solid fa-image fa-3x label_file_icon" style="color: #3f2a56; padding: 20px;"></i>'+
+                                                                    '<img style="display: none;" class="preview" src="#" alt=""/>'+
+                                                                    '<div style="display: none;" class="delete_file"><i class="fa-solid fa-circle-minus"></i></div>'+
+                                                                '</label>'+
+                                                                '<input id="r-' + fieldCount + '" type="file" class="photo" name="r-' + fieldCount + '" accept="image/*">'+
+                                                                '<textarea class="textarea_deck" type="text" id="r' + fieldCount + '"  name="r[]" required>'+element.answer+'</textarea>'+
+                                                            '</div>'+
+                                                        '</div>'+
+                                                    '</div>'+
+                                                '</div>'+
+                                            '</div>'+
+                                            '<div class="delete_fields"><i class="fa-solid fa-circle-minus"></i></div>'+
+                                        '</div>';
+
+                                        $(newFieldGroup).insertBefore(parent.find('.add_fields')).find(".delete_fields").click(function (e) {
+                                            $(this).parent().remove();
+
+                                            // Mettre à jour les numéros des cartes restantes 
+                                            $(this).closest(".cards_container").children().each(function (index) {
+                                                $(this).find('span').first().text('Question ' + (index + 1));
+                                                $(this).find('span').last().text('Réponse ' + (index + 1));
+
+                                            });
+                                        });
+                                        parent.find('.add_fields')[0].scrollIntoView({ behavior: "smooth", block: "nearest", inline: "end" });
+
+                                    });
+                                    $("#modal2").css('display', 'none');
+                                    setImageForm();
+                                })
+                            })
+
+                            setImageForm();
+
+                            break;
+                        case "img":
+                            insertion = `
+                            <div class="form_group_deck full_size">
+                                <fieldset>
+                                    <legend>Nom de l'item :</legend>
+                                    <input class="item_name" type="text" placeholder="Nom de l\'item" required>
+                                </fieldset>
+                            </div>
+                            <label class="label_photo label_file" for="img-` + fieldCount + `">
+                                <i class="fa-solid fa-image fa-3x label_file_icon big" style="color: #3f2a56; padding: 60px 0;"></i>
+                                <img style="display: none;" class="preview" src="#" alt=""/>
+                                <div style="display: none;" class="delete_file"><i class="fa-solid fa-circle-minus"></i></div>
+                            </label>
+                            <input id="img-` + fieldCount + `" type="file" class="photo" name="file" accept="image/*" required>
+                            <input type="hidden" value="img" class="content">
+                            `;
+
+                            let insertedElem4 = $('<li draggable="true" style="display: none;" data-type="img"  class="activities_item column_activitie_item">' + insertion + '<div class="delete_field_parcours"><i class="fa-solid fa-circle-minus"></i></div></li>').insertBefore($(this).closest('.activities_item'));
+                            var newButton =
+                                '<div class="listcard" id="zonelist">' + '<p id="ca"> ' + fieldCount + '</p>' + '</div>';
+                            $('#buttonAccesCard').append(newButton);
+
+                            insertedElem4.fadeIn("slow")
+                            insertedElem4[0].scrollIntoView({ behavior: "smooth", block: "center", inline: "start" });
+
+                            insertedElem4.find(".delete_field_parcours").click(function (e) {
+                                $(this).closest('.activities_item').fadeOut("slow", function () {
+                                    $(this).remove()
+                                    $('#buttonAccesCard').children().last().remove();
+                                    //on met a jour les id des buttonAccesCard
+                                    fieldCount--;
+                                });
+                            });
+
+                            setImageForm();
+
+                            break;
+
+
+                        case "eval":
+                            alert("Coming soon ... !")
+                            /*insertion = `
+                            <div class="form_group_deck full_size">
+                                <fieldset>
+                                    <legend>Nom de l'item :</legend>
+                                    <input class="item_name" type="text" placeholder="Nom de l\'item" required>
+                                </fieldset>
+                            </div>
+                            <div class="each_question">
+                                <div class="first_line_question">
+                                    <input class="question" type="text" placeholder="Question">
+                                    <div class="question_type">
+                                        Type de question
+                                        <div style="display: none;" class="question_type_select">
+                                            <p>Choix multiples</p>
+                                            <p>Choix uniques</p>
+                                            <p>Réponses courtes</p>
+                                            <div class="close"><i class="fa-regular fa-circle-xmark"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            `;
+
+                            let insertedElem5 = $('<li draggable="true" style="display: none;" data-type="eval"  class="activities_item column_activitie_item">' + insertion + '<div class="delete_field_parcours"><i class="fa-solid fa-circle-minus"></i></div></li>').insertBefore($(this).closest('.activities_item'));
+                            var newButton =
+                                '<div class="listcard" id="zonelist">' + '<p id="ca"> ' + fieldCount + '</p>' + '</div>';
+                            $('#buttonAccesCard').append(newButton);
+
+                            insertedElem5.fadeIn("slow")
+                            insertedElem5[0].scrollIntoView({ behavior: "smooth", block: "center", inline: "start" });
+
+                            insertedElem5.find(".delete_field_parcours").click(function (e) {
+                                $(this).closest('.activities_item').fadeOut("slow", function () {
+                                    $(this).remove()
+                                    $('#buttonAccesCard').children().last().remove();
+                                    //on met a jour les id des buttonAccesCard
+                                    fieldCount--;
+                                });
+                            });
+
+                            setImageForm();
+
+                            $('.question_type').click(function (e) {
+                                if (!e.target.classList.contains('close')) $(this).find(".question_type_select").show()
+                            })
+
+                            $('.close').click(function (e) {
+                                e.preventDefault()
+                                const close = $(this)
+                                close.hide()
+                                close.closest(".question_type_select").animate({
+                                    height: "0px",
+                                    width: "0px"
+                                }, 200, function () {
+                                    $(this).hide()
+                                    $(this).css({
+                                        width: "calc(100% + 20px)",
+                                        height: "auto"
+                                    })
+                                    close.show()
+                                });
+                            })*/
+
+                            break;
+
+
+                        case "pdf":
+                            insertion = `
+                            <div class="form_group_deck full_size">
+                                <fieldset>
+                                    <legend>Nom de l'item :</legend>
+                                    <input class="item_name" type="text" placeholder="Nom de l\'item" required>
+                                </fieldset>
+                            </div>
+                            <label class="label_pdf label_file" for="pdf-` + fieldCount + `">
+                                <i class="fa-regular fa-file-pdf fa-3x label_file_icon big" style="color: #3f2a56; padding: 60px 0;"></i>
+                                <object data="#" style="display: none;" class="preview" type="application/pdf" width="100%" height="500px" src="#" alt=""></object>
+                                <div style="display: none;" class="delete_file"><i class="fa-solid fa-circle-minus"></i></div>
+                            </label>
+                            <input id="pdf-` + fieldCount + `" type="file" class="pdf" name="file" accept=".pdf" required>
+                            <input type="hidden" value="pdf" class="content">
+                            `;
+
+                            let insertedElem6 = $('<li draggable="true" style="display: none;" data-type="pdf"  class="activities_item column_activitie_item">' + insertion + '<div class="delete_field_parcours"><i class="fa-solid fa-circle-minus"></i></div></li>').insertBefore($(this).closest('.activities_item'));
+                            var newButton =
+                                '<div class="listcard" id="zonelist">' + '<p id="ca"> ' + fieldCount + '</p>' + '</div>';
+                            $('#buttonAccesCard').append(newButton);
+
+                            insertedElem6.fadeIn("slow")
+                            insertedElem6[0].scrollIntoView({ behavior: "smooth", block: "center", inline: "start" });
+
+                            insertedElem6.find(".delete_field_parcours").click(function (e) {
+                                $(this).closest('.activities_item').fadeOut("slow", function () {
+                                    $(this).remove()
+                                    $('#buttonAccesCard').children().last().remove();
+                                    //on met a jour les id des buttonAccesCard
+                                    fieldCount--;
+                                });
+                            });
+
+                            setPDFForm();
+
+                            break;
+
+                        default:
+                            return;
+                            break;
+                    }
+                    $('#addFields').show();
+                    $("#parcours_items_choices").hide().children().off("click")
+                    updateProgressBar()
+                })
+            })
+
+        });
+
+        //on dectecte le click 
+        $('#buttonAccesCard').on('click', '.listcard', function () {
+            var idAcces = $(this).find('p').text();
+            console.log(idAcces);
+            //souhaite aller a activitie_item correspondant a son idAcces
+            var activitie_item = $('.activities_item').eq(idAcces - 1);
+            console.log(activitie_item);
+            activitie_item[0].scrollIntoView({ behavior: "smooth", block: "center", inline: "start" });
+
+        });
+
+        async function testUrlVideoYoutube(url) {
+            let urlVerified = false;
+            $.get("https://www.youtube.com/oembed?url=http://www.youtube.com/watch?v=" + url + "&format=json",
+                function (data) {
+                    console.log("lien youtube");
+                    urlVerified = true;
+                }).fail(function () {
+                    console.log("existe pas")
+                    showError('La vidéo n\'existe pas');
+                    urlVerified = false
+                });
+            return urlVerified;
+        }
+
+        //pour dailymotion
+        async function testUrlVideoDailymotion(url) {
+            let urlVerified = false;
+            $.get("https://www.dailymotion.com/services/oembed?url=http://www.dailymotion.com/video/" + url + "&format=json",
+                function (data) {
+                    console.log("lien dailymotion");
+                    urlVerified = true;
+                }).fail(function () {
+
+
+                });
+            return urlVerified;
+        }
+
+        //pour vimeo
+        async function testUrlVideoVimeo(url) {
+            let urlVerified = false;
+            $.get("https://vimeo.com/api/oembed.json?url=https://vimeo.com/" + url,
+                function (data) {
+                    console.log("lien vimeo");
+                    urlVerified = true;
+                }).fail(function () {
+                    console.log("existe pas")
+                    showError('La vidéo n\'existe pas');
+                    urlVerified = false
+                });
+            return urlVerified;
+        }
+
+        function addCards(container) {
+            let newFieldGroup =
+                `<div class="card_group">
+                    <div class="card_container_mini">
+                        <div class="maincarte_mini">
+                            <div class="carte_mini noflip" id="carte">
+                                <div class="cartefront">
+                                    <h1><span class="fancy">Question `+ $(container).children().length +` :</span></h1>
+                                    <div class="infofront">
+                                        <label for="photo-q-` + fieldCount + `-`+ $(container).children().length +`" class="label_photo label_file">
+                                            <i class="fa-solid fa-image fa-3x label_file_icon" style="color: #3f2a56; padding: 20px;"></i>
+                                            <img style="display: none;" class="preview" src="#" alt=""/>
+                                            <div style="display: none;" class="delete_file"><i class="fa-solid fa-circle-minus"></i></div>
+                                        </label>
+                                        <input id="photo-q-` + fieldCount + `-`+ $(container).children().length +`" type="file" name="file" class="photo" accept="image/*">
+                                        <textarea class="textarea_deck" type="text" required></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card_container_mini">
+                        <div class="maincarte_mini">
+                            <div class="carte_mini flip noflip" id="carte">
+                                <div class="carteback">
+                                    <h1><span class="fancy_back">Réponse `+ $(container).children().length +` :</span></h1>
+                                    <div class="infoback">
+                                        <label for="photo-r-` + fieldCount + `-`+ $(container).children().length +`" class="label_photo label_file">
+                                            <i class="fa-solid fa-image fa-3x label_file_icon" style="color: #3f2a56; padding: 20px;"></i>
+                                            <img style="display: none;" class="preview" src="#" alt=""/>
+                                            <div style="display: none;" class="delete_file"><i class="fa-solid fa-circle-minus"></i></div>
+                                        </label>
+                                        <input id="photo-r-` + fieldCount + `-`+ $(container).children().length +`" type="file" name="file" class="photo" accept="image/*">
+                                        <textarea class="textarea_deck" type="text" required></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="delete_fields"><i class="fa-solid fa-circle-minus"></i></div>
+                </div>`;
+
+            $(newFieldGroup).insertBefore($(container).find('.add_fields')).find(".delete_fields").click(function (e) {
+                $(this).parent().remove();
+
+                // Mettre à jour les numéros des cartes restantes 
+                $(this).closest(".cards_container").children().each(function (index) {
+                    $(this).find('span').first().text('Question ' + (index + 1));
+                    $(this).find('span').last().text('Réponse ' + (index + 1));
+
+                });
+            });
+            $($(container).find('.add_fields'))[0].scrollIntoView({ behavior: "smooth", block: "nearest", inline: "end" });
+
+            setImageForm();
+
+        }
+
+
+        function updateCounters(){
+            $('.activities_item').each((index, elem) => {
+
+            })
+        }
+    </script>
+</body>
+
+</html>

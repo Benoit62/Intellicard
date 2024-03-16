@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="../img/logo_intellicard.png" type="image/x-icon">
+        <link rel="stylesheet" href="../css/login.css">
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+        <script src="../js/functions.js"></script>
+        <title>Inscription</title>
+    </head>
+    <body>
+        <div class="login-container">
+            <h2>Inscription</h2>
+            <form>
+            <div class="form-group">
+                <label for="firstname">Prénom</label>
+                <input type="text" id="firstname" name="firstname" maxlength="100" required>
+            </div>
+            <div class="form-group">
+                <label for="surname">Nom</label>
+                <input type="text" id="surname" name="surname" maxlength="100" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Adresse mail</label>
+                <input type="email" id="email" name="email" maxlength="100" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Mot de passe</label>
+                <input type="password" id="password" name="password" minlength="1" maxlength="100" required>
+            </div>
+            <div class="form-group">
+                <label for="confirm_password">Confirmation du mot de passe</label>
+                <input type="password" id="confirm_password" name="confirm_password" minlength="1" maxlength="100" required>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Inscription">
+                <p class="link_form"><a href="login">Connexion</a></p>
+            </div>
+            <p class="error" id="error"></p>
+            </form>
+        </div>
+
+        <script>
+            $(document).ready(function () {
+                $("form").submit(function (event) {
+                    event.preventDefault();
+                    
+                    if ($('input[name=password]').val() === $('input[name=confirm_password]').val()) {
+                        var formData = {
+                            firstname: $('input[name=firstname]').val(),
+                            surname: $('input[name=surname]').val(),
+                            email: $('input[name=email]').val(),
+                            password: $('input[name=password]').val(),
+                            confirm_password: $('input[name=confirm_password]').val()
+                        };
+                        $.ajax({
+                            type: 'POST',
+                            url: '/reg',
+                            data: formData,
+                            success: function () {
+                                window.location.href = "/login";
+                            },
+                            error: function(xhr, status, error) {
+                                // Récupération de l'erreur
+                                console.error('Erreur de requête:', error, xhr);
+                                // Traitement de l'erreur
+                                document.getElementById("error").innerHTML = xhr.responseJSON.message;
+                            }
+                        });
+                    } else {
+                        document.getElementById("error").innerHTML = "Passwords don\'t match";
+                    }
+
+                });
+            });
+        </script>
+    </body>
+</html>

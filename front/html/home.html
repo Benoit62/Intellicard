@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="../img/logo_intellicard.png" type="image/x-icon">
+        <link type="text/css" rel="stylesheet" href="../css/home.css">
+        <link type="text/css" rel="stylesheet" href="../css/style.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+            integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+            crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <title>Home</title>
+    </head>
+
+    
+    <body class="body1">
+        <header class="header_nav_pc">
+            <div class="container">
+                <div class="navbar">
+                    <ul class="pc">
+                        <li class="li_nav"><a href="/hub">Jeux</a></li>
+                        <li class="li_nav"><a href="/decks">Decks</a></li>
+                        <li class="li_nav"><a href="/home">Accueil</a></li>
+                        <li class="li_nav"><a href="/search">Recherche</a></li>
+                        <li class="li_nav"><a href="/profil">Profil</a></li>
+                        <li class="li_nav"><a href="/manage">Manager</a></li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+        <main>
+
+            <!--   
+            <div class="maincarte">
+                <div class="carte" id="carte">
+                        <div class="cartefront">
+                                <h1><span class="fancy">Question :</span></h1>
+                                <div class="infofront">
+                                    <p class="p_card">
+
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean accumsan gravida lectus, vitae mollis ante porttitor id. In hac habitasse platea dictumst. Nunc vitae tellus id purus placerat condimentum ac in sem. Nunc euismod nibh neque, quis tristique ante blandit vehicula. Phasellus molestie egestas tincidunt. Etiam tellus sapien, scelerisque eu libero ut, facilisis gravida ante. Donec est tortor, consectetur sit amet consectetur vel, lacinia in turpis.
+                                        
+                                        Praesent tempor orci nec mauris sagittis ultricies. Sed vel ligula ut ex lobortis maximus. Cras auctor libero non mi interdum gravida. Vestibulum consectetur quam ut mauris pellentesque, vel tristique leo porttitor. Morbi finibus neque justo, quis bibendum quam efficitur sit amet. Morbi dapibus aliquet odio, ac volutpat turpis egestas nec. Nam nulla tortor, euismod nec tellus ut, porttitor sodales orci. Fusce tristique lectus sed luctus volutpat. Praesent nec ultrices massa, in dapibus dolor. Curabitur mollis odio nec felis vestibulum sagittis. Duis nec sem luctus, condimentum augue id, auctor mi. Fusce blandit consectetur pretium. Suspendisse commodo enim nec mi facilisis ultricies vitae non turpis. Morbi eros nunc, lacinia eu nulla quis, ultricies facilisis leo.
+                                        
+                                        Donec eu turpis elementum, venenatis est vel, vestibulum lorem. Vestibulum et tristique tortor, ut dapibus justo. Duis molestie ac purus at laoreet. Phasellus at finibus purus. Phasellus consequat at nisl eu aliquet. Nullam scelerisque ante id sem sollicitudin consectetur. Vestibulum vel mi ac lacus bibendum viverra. Aliquam vitae elit ac quam mattis ultricies ac ut purus. Nam ullamcorper accumsan ex, at cursus nisi rhoncus eget.
+                                    </p>
+                                </div>
+                        </div>
+                        <div class="carteback hide_card">
+                            <h1><span class="fancy">Réponse :</span></h1>
+                            <div class="infoback">
+                                <p class="p_card">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean accumsan gravida lectus, vitae mollis ante porttitor id. In hac habitasse platea dictumst. Nunc vitae tellus id purus placerat condimentum ac in sem. Nunc euismod nibh neque, quis tristique ante blandit vehicula. Phasellus molestie egestas tincidunt. Etiam tellus sapien, scelerisque eu libero ut, facilisis gravida ante. Donec est tortor, consectetur sit amet consectetur vel, lacinia in turpis.
+                                        
+                                    Praesent tempor orci nec mauris sagittis ultricies. Sed vel ligula ut ex lobortis maximus. Cras auctor libero non mi interdum gravida. Vestibulum consectetur quam ut mauris pellentesque, vel tristique leo porttitor. Morbi finibus neque justo, quis bibendum quam efficitur sit amet. Morbi dapibus aliquet odio, ac volutpat turpis egestas nec. Nam nulla tortor, euismod nec tellus ut, porttitor sodales orci. Fusce tristique lectus sed luctus volutpat. Praesent nec ultrices massa, in dapibus dolor. Curabitur mollis odio nec felis vestibulum sagittis. Duis nec sem luctus, condimentum augue id, auctor mi. Fusce blandit consectetur pretium. Suspendisse commodo enim nec mi facilisis ultricies vitae non turpis. Morbi eros nunc, lacinia eu nulla quis, ultricies facilisis leo.
+                                    
+                                    Donec eu turpis elementum, venenatis est vel, vestibulum lorem. Vestibulum et tristique tortor, ut dapibus justo. Duis molestie ac purus at laoreet. Phasellus at finibus purus. Phasellus consequat at nisl eu aliquet. Nullam scelerisque ante id sem sollicitudin consectetur. Vestibulum vel mi ac lacus bibendum viverra. Aliquam vitae elit ac quam mattis ultricies ac ut purus. Nam ullamcorper accumsan ex, at cursus nisi rhoncus eget.</p>
+                            
+                               Auto-évaluation 
+                                <div class="comprehension">
+                                    <hr>
+                                    <b>Mon auto-évaluation</b>
+                                    <table class="table-eval">
+                                        <tbody>
+                                            <tr class="big" id="autoevaltab">
+                                                <td id="TM" title="Très Mauvais"><i class="fa-solid fa-face-frown-open"></i></td>
+                                                <td id="M" title="Mauvais"><i class="fa-solid fa-face-frown"></i></td>
+                                                <td id="N" title="Neutre"><i class="fa-solid fa-face-meh"></i></td>
+                                                <td id="B" title="Bien"><i class="fa-solid fa-face-smile"></i> </td>
+                                                <td id="TB" title="Très Bien"><i class="fa-solid fa-face-laugh"></i></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                FIN Auto-évaluation 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        -->
+
+
+        <!-- decks recents + boutton de log out -->
+
+        <div id="historique-deck">
+            <h1 id="title-histo-deck" >Decks récents:</h1>
+
+        </div>
+
+        <div id="logout">
+            <a href="/logout"> 
+            <button id="logout-btn">
+                <i class="fa-solid fa-right-from-bracket fa-3xs" style="color: #fffbfb;"></i>
+                Déconnexion
+           </button>
+
+        </a>
+        </div>
+
+       
+          
+        </main>
+
+
+        <footer class="header_nav_mobile">
+            <div class="container">
+                <div class="navbar">
+                    <div class="mobile">
+                        <div class="li_nav"><a href="/hub"><i class='fas fa-gamepad'></i></a></div>
+                        <div><div class="vertical_bar"></div></div>
+                        <div class="li_nav"><a href="/decks"><i class="fas fa-clone"></i></a></div>
+                        <div><div class="vertical_bar"></div></div>
+                        <div class="li_nav"><a href="/home"><i class='fas fa-home'></i></a></div>
+                        <div><div class="vertical_bar"></div></div>
+                        <div class="li_nav"><a href="/search"><i class='fas fa-search'></i></a></div>
+                        <div><div class="vertical_bar"></div></div>
+                        <div class="li_nav"><a href="/profil"><i class='fas fa-user-alt'></i></a></div>
+                        <div><div class="vertical_bar"></div></div>
+                        <div class="li_nav"><a href="/gestion"><i class='fas fa-wrench'></i></a></div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </body>
+    <!--<script src="../js/main.js"></script>-->
+    <script>
+        $(document).ready(function(){
+            $(".carte").data("flipping", "false");
+            $(".carte").click(function(e){
+                e.preventDefault()
+                /*$(this).find(".cartefront").toggleClass('hide_card')
+                $(this).find(".carteback").toggleClass('hide_card')*/
+                if($(this).data("flipping") === "false") {
+
+                    this.classList.toggle('flip');
+
+                    if($(this).find(".cartefront").hasClass("hide_card")) {
+                        $(this).data("flipping", "true");
+                        setTimeout(() => {
+                            $(this).find(".carteback").toggleClass('hide_card')
+                            $(this).data("flipping", "false");
+                        }, 500);
+                        $(this).find(".cartefront").toggleClass('hide_card')
+                    }
+
+                    if($(this).find(".carteback").hasClass("hide_card")) {
+                        $(this).data("flipping", "true");
+                        setTimeout(() => {
+                            $(this).find(".cartefront").toggleClass('hide_card')
+                            $(this).data("flipping", "false");
+                        }, 500);
+                        $(this).find(".carteback").toggleClass('hide_card')
+                    }
+
+                    
+                }
+            });
+        })
+    </script>
+</html>

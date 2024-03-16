@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Profil de l'utilisateur</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="../img/logo_intellicard.png" type="image/x-icon">
+  <link rel="stylesheet" href="../css/profil.css">
+  <link type="text/css" rel="stylesheet" href="../css/header.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</head>
+
+<body class="body1">
+  <main>
+    <div class="container_left">
+      <div class="entete"  onclick="toggleMenu()" >
+        <h1>Profil</h1>
+        <div class="menu-icon">&#9776;</div>
+      </div>
+      <div class="donnees" style="animation: 0.3s ease 0s 1 normal forwards running fade-in;">
+        <form action="" id="edit_user">
+          <label for="full-name">Prénom et nom:</label>
+          <input type="text" id="full-name" name="full-name"
+            placeholder="<%= rows[0].firstname + ' ' + rows[0].surname %>" readonly="readonly">
+  
+          <label for="email">Addresse mail:</label>
+          <input type="text" id="email" name="email" placeholder="<%= rows[0].email %>" readonly="readonly">
+  
+          <label for="password">Modifier le mot de passe:</label>
+          <input type="password" id="old_password" name="old_password" placeholder="Mot de passe actuel">
+          <input type="password" id="new_password" name="new_password" placeholder="Nouveau mot de passe">
+          <input type="password" id="conf_new_password" name="conf_new_password"
+            placeholder="Confirmer le nouveau mot de passe">
+  
+          <input type="submit" value="Sauvegarder les modifications">
+  
+          <p id="info_modif" style="font-weight: bold;"></p>
+        </form>
+        <div id="logout">
+          <a href="/logout">
+            <button id="logout-btn">
+              <i class="fa-solid fa-right-from-bracket fa-3xs" style="color: #fffbfb;"></i>
+              Déconnexion
+            </button>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="container_right">
+      <header class="header_nav_pc">
+        <div class="container">
+          <div class="navbar">
+            <ul class="pc">
+              <a href="/hub" class="li_nav"><span class="white">Jeux</span></a>
+              <a href="/decks" class="li_nav"><span class="white">Decks</span></a>
+              <a href="/home" class="li_nav"><span class="white">Accueil</span></a>
+              <a href="/search" class="li_nav"><span class="white">Recherche</span></a>
+              <a href="/profil" class="li_nav"><span class="white">Profil</span></a>
+              <a href="/gestion" class="li_nav"><span class="white">Gestion</span></a>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <table>
+        <tr>
+          <td>Nombre de connexions</td>
+          <td><%= rows[0].nb_connexion %></td>
+        </tr>
+        <tr>
+          <td>Nombre de cartes révisés aujourd'hui</td>
+          <td><%= rows[0].nb_trained_this_day %></td>
+        </tr>
+        <tr>
+          <td>Nombre de cartes révisés au total</td>
+          <td><%= rows[0].nb_trained_all_time %></td>
+        </tr>
+        <tr>
+          <td>Dernier entrainement : </td>
+          <td><%= rows[0].last_train %></td>
+        </tr>
+        <tr>
+          <td>Nombre de decks/parcours débloqués</td>
+          <td><%= rows[0].nb_deck_unlocked %></td>
+        </tr>
+        <tr>
+          <td>Nombre de decks publiés</td>
+          <td><%= rows[0].nb_created %></td>
+        </tr>
+        <tr>
+          <td>Vos deck ont été débloqués </td>
+          <td><%= rows[0].nb_deck_used %> fois</td>
+        </tr>
+        <tr>
+          <td>Utilisateurs uniques qui utilisent vos decks </td>
+          <td><%= rows[0].nb_users_consulting %></td>
+        </tr>
+      </table>
+      <div class="graph">
+        <!-- Insérer ici le code HTML/CSS/JS du graphique -->
+        <div id="chart-wrapper"><canvas id="myChart" style="width:100%"></canvas></div>
+      </div>
+    </div>
+    <footer class="header_nav_mobile">
+      <div class="container">
+        <div class="navbar">
+          <div class="mobile">
+            <div class="li_nav"><a href="/hub"><i class='fas fa-gamepad'></i></a></div>
+            <div class="li_nav"><a href="/decks"><i class="fas fa-clone"></i></a></div>
+            <div class="li_nav"><a href="/home"><i class='fas fa-home'></i></a></div>
+            <div class="li_nav"><a href="/search"><i class='fas fa-search'></i></a></div>
+            <div class="li_nav"><a href="/profil"><i class='fas fa-user-alt'></i></a></div>
+            <div class="li_nav"><a href="/gestion"><i class='fas fa-wrench'></i></a></div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </main>
+</body>
+
+<script src="../js/functions.js"></script>
+<script src="../js/setup.js"></script>
+<script>
+  let dataCartes = [
+    <% for (let elem in cartes[0]) { %>
+      <%= cartes[0][elem] || 0 %>,
+    <% } %>
+  ];
+  let dataDays = [
+    <% for (let elem in days[0]) { %>
+    '<%= days[0][elem] %>',
+    <% } %>
+  ];
+  /* Traduction des jours en français */
+  let traductions = { 'Monday': 'Lundi', 'Tuesday': 'Mardi', 'Wednesday': 'Mercredi', 'Thursday': 'Jeudi', 'Friday': 'Vendredi', 'Saturday': 'Samedi', 'Sunday': 'Dimanche' };
+  dataDays = dataDays.map(function (jour) { return traductions[jour]; });
+
+  //console.log(dataDays);
+
+
+  /* Changement du MDP */
+  $(document).ready(function () {
+    $('#edit_user').submit(function (e) {
+      e.preventDefault();
+
+      let data = { 'old_pass': document.getElementById('old_password').value, 'new_pass': document.getElementById('new_password').value, 'conf_new_pass': document.getElementById('conf_new_password').value };
+      $.post('/edit_user_data', { 'pass': data }, function (response) {
+        {
+          console.log(response);
+
+          if (response.valid) {
+            console.info("C'est okay !");
+            document.getElementById("info_modif").style.color = "green";
+          }
+          document.getElementById("info_modif").innerHTML = response.message;
+        }
+      })
+        .fail(function (xhr, status, error) {
+          //console.error('Erreur de requête :', error);
+          document.getElementById("info_modif").style.color = "red";
+          document.getElementById("info_modif").innerHTML = xhr.responseJSON.message;
+        });
+    });
+  });
+</script>
+<script src="../js/profil.js"></script>
+
+</html>

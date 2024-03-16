@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="../img/logo_intellicard.png" type="image/x-icon">
+        <link type="text/css" rel="stylesheet" href="../css/adddeck.css">
+        <link type="text/css" rel="stylesheet" href="../css/style.css">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <title>Ajout de deck</title>
+    </head>
+
+    <body class="body1">
+        <div id="error_notif" class="error_notif">
+            <div id="error_content" class="error_content">Erreur</div>
+        </div>
+        <header class="header_nav_pc">
+            <div class="container">
+                <div class="navbar">
+                    <ul class="pc">
+                        <li class="li_nav"><a href="#">Jeu</a></li>
+                        <li class="li_nav"><a href="/decks">Decks</a></li>
+                        <li class="li_nav"><a href="/home">Accueil</a></li>
+                        <li class="li_nav"><a href="/search">Recherche</a></li>
+                        <li class="li_nav"><a href="/profil">Profil</a></li>
+                        <li class="li_nav"><a href="/manage">Manager</a></li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+        <main>
+            <div class="fom_adding_deck">
+                <h2>Add deck</h2>
+                <div class="infocarte">      
+                    <form id="form_deck" class="form_deck">
+                        <div class="first_infos">
+                            <div class="form-group">
+                                <label for="name">Nom</label>
+                                <input type="text" id="name" name="name" maxlength="100" required>
+                            </div>
+                            <div class="form-group-public">
+                                <label for="" >Accès : </label>
+                                <label for="private">Privé</label>
+                                <input type="radio" id="private" name="acces" value="PRIVATE" required>
+                                <label for="public">Public</label>
+                                <input type="radio" id="public" name="acces" value="PUBLIC" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="tag">Tag</label>
+                                <select id="tag" name="tag" required>
+                                    <option value="0">défaut</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="level">Level</label>
+                                <select id="level" name="level" required>
+                                    <option value="0">défaut</option>
+                                </select>
+                            </div>
+                        </div>
+
+
+                            
+                        <div id="cards_container" class="cards_container">
+                            <div class="card_group">
+                                <div class="card_container_mini">
+                                    <div class="maincarte_mini">
+                                        <div class="carte_mini" id="carte">
+                                            <div class="cartefront">
+                                                <h1><span class="fancy">Question 1 :</span></h1>
+                                                <div class="infofront">
+                                                    <!--<p class="p_card_mini"></p>-->
+                                                    <textarea class="textarea_deck" type="text" id="q1"  name="q[]" ></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card_container_mini">
+                                    <div class="maincarte_mini">
+                                        <div class="carte_mini flip" id="carte">
+                                            <div class="carteback">
+                                                <h1><span class="fancy_back">Réponse 1 :</span></h1>
+                                                <div class="infoback">
+                                                    <textarea class="textarea_deck" type="text" id="r1"  name="r[]" ></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="addFields"><i class="fa-solid fa-circle-plus"></i></div>
+                        </div>
+                        <div id="buttonAccesCard">   
+                            <!--création d'une mini carte réctangulaire-->
+                            <div class="listcard" id="zonelist">
+                                <p id="c">1</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="submit" value="Valid">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+        <footer class="header_nav_mobile">
+            <div class="container">
+                <div class="navbar">
+                    <div class="mobile">
+                        <div class="li_nav"><a href="#"><i class='fas fa-gamepad'></i></a></div>
+                        <div><div class="vertical_bar"></div></div>
+                        <div class="li_nav"><a href="/decks"><i class="fas fa-clone"></i></a></div>
+                        <div><div class="vertical_bar"></div></div>
+                        <div class="li_nav"><a href="/home"><i class='fas fa-home'></i></a></div>
+                        <div><div class="vertical_bar"></div></div>
+                        <div class="li_nav"><a href="/search"><i class='fas fa-search'></i></a></div>
+                        <div><div class="vertical_bar"></div></div>
+                        <div class="li_nav"><a href="/profil"><i class='fas fa-user-alt'></i></a></div>
+                        <div><div class="vertical_bar"></div></div>
+                        <div class="li_nav"><a href="/manage"><i class='fas fa-wrench'></i></a></div>
+                    </div>
+                </div>
+        </footer>
+    </body>
+        <script>
+            let showError = function() {
+                if(window.innerWidth < 800) {
+                    $('#error_notif').animate({bottom: '15vh'}, 150);
+                }
+                else {
+                    $('#error_notif').animate({bottom: '2vh'}, 150);
+                }
+                $('#error_notif').animate({left: '+=2vh'}, 60);
+                $('#error_notif').animate({left: '-=4vh'}, 60);
+                $('#error_notif').animate({left: '+=3vh'}, 60);
+                $('#error_notif').animate({left: '-=2vh'}, 60);
+                $('#error_notif').animate({left: '+=1vh'}, 60);
+    
+                setTimeout(() => {
+                    $('#error_notif').animate({bottom: '-20vh'}, 150);
+                }, 4000);
+            }
+
+
+            $(document).ready(function () {
+                
+                $.ajax({
+                    url: 'get_all_tag',
+                    type: 'POST',
+                    success: function(response) {
+                        console.log(response);
+                        const data = response.data
+                        data.forEach(element => {
+                            $('#tag').append('<option value="'+element.id_tag+'">'+element.tag+'</option>');
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        // Récupération de l'erreur
+                        console.error('Erreur de requête:', error, xhr);
+                        // Traitement de l'erreur
+                        document.getElementById("error_content").innerHTML = xhr.responseJSON.message;
+                        showError()
+                    }
+                });
+
+                $.ajax({
+                    url: 'get_all_level',
+                    type: 'POST',
+                    success: function(response) {
+                        console.log(response);
+                        const data = response.data
+                        data.forEach(element => {
+                            $('#level').append('<option value="'+element.id_level+'">'+element.level+'</option>');
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        // Récupération de l'erreur
+                        console.error('Erreur de requête:', error, xhr);
+                        // Traitement de l'erreur
+                        document.getElementById("error_content").innerHTML = xhr.responseJSON.message;
+                        showError()
+                    }
+                });
+
+
+
+
+                var fieldCount = 1;
+
+                $('#addFields').click(function() {
+                    fieldCount++;
+                    var newFieldGroup =
+                    
+                    '<div class="card_group">'+
+                        '<div class="card_container_mini">'+
+                            '<div class="maincarte_mini">'+
+                                '<div class="carte_mini" id="carte">'+
+                                    '<div class="cartefront">'+
+                                        '<h1><span class="fancy">Question ' + fieldCount + ' :</span></h1>'+
+                                        '<div class="infofront">'+
+                                            '<!--<p class="p_card_mini"></p>-->'+
+                                            '<textarea class="textarea_deck" type="text" id="q' + fieldCount + '"  name="q[]" required></textarea>'+
+                                        '</div>'+
+                                    '</div>'+
+                                '</div>'+
+                            '</div>'+
+                        '</div>'+
+                        '<div class="card_container_mini">'+
+                            '<div class="maincarte_mini">'+
+                                '<div class="carte_mini flip" id="carte">'+
+                                    '<div class="carteback">'+
+                                        '<h1><span class="fancy_back">Réponse ' + fieldCount + ' :</span></h1>'+
+                                        '<div class="infoback">'+
+                                            '<textarea class="textarea_deck" type="text" id="r' + fieldCount + '"  name="r[]" required></textarea>'+
+                                        '</div>'+
+                                    '</div>'+
+                                '</div>'+
+                            '</div>'+
+                        '</div>'+
+                        '<div id="deleteField"><i class="fa-solid fa-circle-minus"></i></div>'+
+                    '</div>';
+
+                    //ici ça créer ca pour aller à la carte crée
+                    var newButton =
+                    '<div class="listcard" id="zonelist">'+'<p id="ca"> '+ fieldCount+ '</p>'+'</div>';
+                    $('#buttonAccesCard').append(newButton);
+
+                    $('.card_group:nth-last-child(2)').after(newFieldGroup);
+                    $( "#addFields" )[0].scrollIntoView({ behavior: "smooth", block: "end", inline: "end" });
+
+                });
+
+                //fonction enlever la ca pour aller à la carte crée quand une carte est supprimé tout en évitant d'aller en dessous de 0
+                $('#cards_container').on('click', '#deleteField', function() {
+                    if(fieldCount > 0){
+                        $('#buttonAccesCard').children().last().remove();
+                    }
+                });
+
+
+
+                //fonction pour supprimer une carte
+                $('#cards_container').on('click', '#deleteField', function() {
+                    $(this).parent().remove();
+                    fieldCount--;
+                    // Mettre à jour les numéros des cartes restantes 
+                    $('#cards_container').children().each(function(index) {
+                        $(this).find('label').first().text('Question ' + (index + 1));
+                        $(this).find('textarea').first().attr('id', 'q' + (index + 1));
+                        $(this).find('label').last().text('Réponse ' + (index + 1));
+                        $(this).find('textarea').last().attr('id', 'r' + (index + 1));
+
+                    });
+
+                });
+                         
+            
+
+                //fonction pour aller à la carte correspondante
+                $('#buttonAccesCard').on('click', '.listcard', function() {
+                    var id = $(this).find('p').text();
+                    console.log(id);
+                    var card = $('#cards_container').children().eq(id-1);
+                    console.log(card);
+                    card[0].scrollIntoView({ behavior: "smooth", block: "end", inline: "end" });
+                });
+
+
+                
+
+                $('#form_deck').submit(function(event) {
+                    event.preventDefault();
+
+                    var formData = $('#form_deck').serialize();
+
+                    console.log($('#form_deck').serialize());
+
+                    console.log(formData);
+
+                    $.ajax({
+                        url: 'add_deck',
+                        type: 'POST',
+                        data: formData,
+                        success: function(response) {
+                            window.location.href = "/manage";
+                        },
+                        error: function(xhr, status, error) {
+                            // Récupération de l'erreur
+                            console.error('Erreur de requête:', error, xhr);
+                            // Traitement de l'erreur
+                            document.getElementById("error_content").innerHTML = xhr.responseJSON.message;
+                            showError()
+                        }
+                    });
+                });
+            });
+
+        </script>
+</html>

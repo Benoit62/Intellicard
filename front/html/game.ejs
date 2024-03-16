@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../img/logo_intellicard.png" type="image/x-icon">
+    <link type="text/css" rel="stylesheet" href="../css/test_jeu.css">
+    <link type="text/css" rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>Home</title>
+</head>
+
+
+<body class="body1">
+    <div class="firework"></div>
+    <div class="firework"></div>
+    <div class="firework"></div>
+    <div>
+        <div class="fireworkTest"></div>
+        <div class="fireworkTest"></div>
+        <div class="fireworkTest"></div>
+    </div>
+    <header class="header_nav_back_pc">
+        <a href="/memory">
+            <i class='fas fa-arrow-left'></i>
+        </a>
+    </header>
+    <main class="main2">
+        <div class="infos_container">
+            <p style="margin: 0;" class="score" id="score">Score : <%= game.score %></p>
+            <p style="margin: 0;" id="info"></p>
+        </div>
+        <div class="memory_container">
+            <% console.log("eznoberipnvpkenpgnvpkrnpnpivnerpknv pnrzpvhrepbnnode", game); %>
+            <% game.grille.forEach(element => { %>
+                <div class="card_container_mini">
+                    <div class="maincarte_mini">
+                        <div id="card_<%= element.id %>" data-position="<%= element.id %>" class="carte_mini flip noflip" id="carte">
+                            <div class="cartefront hide_card">
+                                <div class="infofront">
+                                    <img class="image_carte" style="display: none;" src=""></img>
+                                    <p class="p_card_mini"></p>
+                                </div>
+                            </div>
+                            <div class="carteback">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+    </main>
+    <footer class="header_nav_back_mobile">
+        <a href="/hub">
+            <i class='fas fa-arrow-left'></i>
+        </a>
+    </footer>
+</body>
+<script src="../js/functions.js"></script>
+<script src="../js/setup.js"></script>
+<script>
+
+    $(document).ready(function () {
+        $(".carte_mini").data("flipping", "false");
+
+        
+        $(".carte_mini").click(function (e) {
+            e.preventDefault()
+            const carte = $(this);
+            const position = carte.data("position")
+            
+            if (carte.data("flipping") === "false" && carte.find(".cartefront").hasClass("hide_card")) {
+                $.ajax({
+                    url: '../reveal_card',
+                    type: 'POST',
+                    data:{position:position},
+                    success: function(response) {
+
+                        console.log(response)
+
+                        if(response.game.response && response.game.cards.includes(carte.data("position").toString())) {
+                            carte[0].classList.toggle('flip');
+
+                            if (carte.find(".cartefront").hasClass("hide_card")) {
+                                carte.data("flipping", "true");
+                                carte.find(".cartefront").toggleClass('hide_card')
+                                carte.find(".cartefront").find('.p_card_mini').text(response.game.text)
+                                carte.find(".cartefront").find('.image_carte').attr('src', '../uploads/'+response.game.img)
+                                if(response.game.img != "") {
+                                    carte.find(".cartefront").find('.image_carte').show()
+                                }
+                                setTimeout(() => {
+                                    carte.find(".carteback").toggleClass('hide_card')
+                                    carte.data("flipping", "false");
+                                }, 500);
+                            }
+                        }
+                        if(!response.game.response && response.game.cards.includes(carte.data("position").toString())) {
+                            console.log("faux");
+                            if (carte.data("flipping") === "false") {
+
+                                carte[0].classList.toggle('flip');
+
+                                if (carte.find(".cartefront").hasClass("hide_card")) {
+                                    carte.data("flipping", "true");
+                                    carte.find(".cartefront").toggleClass('hide_card')
+                                    carte.find(".cartefront").find('.p_card_mini').text(response.game.text)
+                                    carte.find(".cartefront").find('.image_carte').attr('src', '../uploads/'+response.game.img)
+                                    if(response.game.img != "") {
+                                        carte.find(".cartefront").find('.image_carte').show()
+                                    }
+                                    setTimeout(() => {
+                                        carte.find(".carteback").toggleClass('hide_card')
+                                        carte.data("flipping", "false");
+
+
+                                        setTimeout(() => {
+                                            for(let carte of response.game.cards) {
+                                                console.log(carte)
+                                                const carteDOM = $('#card_'+carte);
+                                                console.log(carteDOM)
+                                                if (carteDOM.data("flipping") === "false") {
+
+                                                    carteDOM[0].classList.toggle('flip');
+
+                                                    if (carteDOM.find(".carteback").hasClass("hide_card")) {
+                                                        carteDOM.data("flipping", "true");
+                                                        carteDOM.find(".carteback").toggleClass('hide_card')
+                                                        carteDOM.find(".carteback").find('.p_card_mini').empty();
+                                                        carteDOM.find(".cartefront").find('.image_carte').attr("src", "")
+                                                        carteDOM.find(".cartefront").find('.image_carte').hide()
+                                                        setTimeout(() => {
+                                                            carteDOM.find(".cartefront").toggleClass('hide_card')
+                                                            carteDOM.data("flipping", "false");
+                                                        }, 500);
+                                                    }
+                                                }
+                                            }
+                                        }, 1000);
+                                    }, 500);
+                                }
+                            }
+                            
+                        }
+
+                        $('#score').text('Score : '+response.game.score);
+
+                        if(response.game.found && !response.game.end){
+                            $('#info').text('Bravo, vous avez trouvé une paire !');
+                            setTimeout(() => {
+                                $('#info').empty()
+                            }, 4000);
+
+                            $('.firework').toggleClass('animate');
+                            setTimeout(() => {
+                                $('.firework').toggleClass('animate');
+                            }, 2000);
+                        }
+
+                        if(response.game.end){
+                            $('#info').text('Partie terminée !');
+                            $('.firework').toggleClass('animate');
+                            $('.fireworkTest').toggleClass('animate');
+                        }
+                        
+                        
+                    },
+                    error: function(xhr, status, error) {
+                    }
+                });
+            }
+        });
+
+
+        
+    })
+</script>
+
+</html>

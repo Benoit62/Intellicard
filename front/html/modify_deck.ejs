@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../img/logo_intellicard.png" type="image/x-icon">
+    <link type="text/css" rel="stylesheet" href="../css/adddeck.css">
+    <link type="text/css" rel="stylesheet" href="../css/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Ajout de deck</title>
+</head>
+
+<body class="body1">
+    <div id="modal1" class="modal">
+        <div id="modal_valid_content" class="modal_valid_content">
+            <p>Êtes vous sur de vouloir supprimer cet élément ? <br> Cette opération est irréversible</p>
+            <button id="accept">Accepter</button>
+            <button id="reject">Annuler</button>
+        </div>
+    </div>
+
+    <div id="modal2" class="modal">
+        <div class="modal_content" style="display: flex; align-items: center; justify-content: center;" >
+            <form id="form_new_cards" style="width: 100%;" class="form_deck" enctype="multipart/form-data">
+                <div id="cards_container" class="cards_container">
+                    <div class="card_group">
+                        <div class="card_container_mini">
+                            <div class="maincarte_mini">
+                                <div class="carte_mini noflip">
+                                    <div class="cartefront">
+                                        <h1><span class="fancy">Question 1 :</span></h1>
+                                        <div class="infofront">
+                                            <label class="label_photo label_file" for="q-1">
+                                                <i class="fa-solid fa-image fa-3x label_file_icon"
+                                                    style="color: #3f2a56; padding: 20px;"></i>
+                                                <img style="display: none;" class="preview" src="#" alt="" />
+                                                <div style="display: none;" class="delete_file"><i
+                                                        class="fa-solid fa-circle-minus"></i></div>
+                                            </label>
+                                            <input id="q-1" type="file" class="photo" name="q-1" accept="image/*">
+                                            <textarea class="textarea_deck" type="text" id="q1" name="q[]"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card_container_mini">
+                            <div class="maincarte_mini">
+                                <div class="carte_mini flip noflip">
+                                    <div class="carteback">
+                                        <h1><span class="fancy_back">Réponse 1 :</span></h1>
+                                        <div class="infoback">
+                                            <label class="label_photo label_file" for="r-1">
+                                                <i class="fa-solid fa-image fa-3x label_file_icon"
+                                                    style="color: #3f2a56; padding: 20px;"></i>
+                                                <img style="display: none;" class="preview" src="#" alt="" />
+                                                <div style="display: none;" class="delete_file"><i
+                                                        class="fa-solid fa-circle-minus"></i></div>
+                                            </label>
+                                            <input id="r-1" type="file" class="photo" name="r-1" accept="image/*">
+                                            <textarea class="textarea_deck" type="text" id="r1" name="r[]"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="addFields"><i class="fa-solid fa-circle-plus"></i></div>
+                    <div id="import" class="import"><i class='fas fa-upload'></i></div>
+                </div>
+
+                <div id="buttonAccesCardAddCard">
+                    <div class="listcardAdd" id="zonelistAdd">
+                        <p id="cardAdd">1</p>
+                    </div>
+                </div>
+
+                <div class="form_group_deck">
+                    <button class="submit" type="submit" value="Ajouter">Ajouter</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div id="modal3" class="modal">
+        <div class="modal_content" style="display: flex; align-items: center; justify-content: center;">
+            <form id="form_modify_cards" style="height: fit-content; width: 100%;" class="form_deck" enctype="multipart/form-data">
+                <input type="hidden" name="id_card" id="id_card_modify">
+                <div id="cards_container" class="cards_container">
+                    <div class="card_group">
+                        <div class="card_container_mini">
+                            <div class="maincarte_mini">
+                                <div class="carte_mini noflip">
+                                    <div class="cartefront">
+                                        <h1><span class="fancy">Question :</span></h1>
+                                        <div class="infofront">
+                                            <label class="label_photo label_file" for="img_q">
+                                                <i class="fa-solid fa-image fa-3x label_file_icon"
+                                                    style="color: #3f2a56; padding: 20px;"></i>
+                                                <img style="display: none;" class="preview" src="#" alt="" />
+                                                <div style="display: none;" class="delete_file"><i
+                                                        class="fa-solid fa-circle-minus"></i></div>
+                                            </label>
+                                            <input id="img_q" type="file" class="photo" name="img_front"
+                                                accept="image/*">
+                                            <textarea class="textarea_deck" type="text" id="q" name="q"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card_container_mini">
+                            <div class="maincarte_mini">
+                                <div class="carte_mini flip noflip">
+                                    <div class="carteback">
+                                        <h1><span class="fancy_back">Réponse :</span></h1>
+                                        <div class="infoback">
+                                            <label class="label_photo label_file" for="img_r">
+                                                <i class="fa-solid fa-image fa-3x label_file_icon"
+                                                    style="color: #3f2a56; padding: 20px;"></i>
+                                                <img style="display: none;" class="preview" src="#" alt="" />
+                                                <div style="display: none;" class="delete_file"><i
+                                                        class="fa-solid fa-circle-minus"></i></div>
+                                            </label>
+                                            <input id="img_r" type="file" class="photo" name="img_back"
+                                                accept="image/*">
+                                            <textarea class="textarea_deck" type="text" id="r" name="r"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form_group_deck">
+                    <button class="submit" type="submit" value="Modifier">Modifier</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div id="modal4" class="modal">
+        <div id="modal_import_content" class="modal_content">
+            <div class="modal_content_import">
+                <p class="info_import">Assurer-vous de coller dans la zone prévu à cet effet, du texte sous la forme :<br><br> Q1:Ma question <br>R1:Ma réponse <br> Question 2:Ma Question 2 <br> Réponse 2 : Ma réponse 2 <br> Question: Ma question <br> Réponse : Ma réponse</p>
+                <div class="container_importation">
+                    <textarea id="import_value"></textarea>
+                    <div id="valider_import">Valider</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <header class="header_nav_pc">
+        <div class="container">
+            <div class="navbar">
+                <ul class="pc">
+                    <a href="/hub" class="li_nav"><span class="white">Jeux</span></a>
+                    <a href="/decks" class="li_nav"><span class="white">Decks</span></a>
+                    <a href="/home" class="li_nav"><span class="white">Accueil</span></a>
+                    <a href="/search" class="li_nav"><span class="white">Recherche</span></a>
+                    <a href="/profil" class="li_nav"><span class="white">Profil</span></a>
+                    <a href="/gestion" class="li_nav"><span class="white">Gestion</span></a>
+                </ul>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="fom_adding_deck">
+            <div class="display_choice">
+                <h1 id="show_deck" class="h1_fancy toggle_display bright_display"><span class="fancy">Deck</span></h1>
+            </div>
+            <div class="infocarte">
+                <form data-id="<%= deck[0].id_deck %>" id="form_deck" class="form_deck">
+                    <div class="first_infos">
+                        <div class="form_group_deck">
+                            <fieldset>
+                                <legend>Nom :</legend>
+                                <input value="<%= deck[0].name %>" type="text" id="name" name="name" maxlength="100"
+                                    required placeholder="Nom du deck">
+                            </fieldset>
+                        </div>
+
+                        <div class="form_group_deck">
+                            <fieldset>
+                                <legend>Acces :</legend>
+                                <label for="private">Privé</label>
+                                <input type="radio" id="private" name="acces" value="PRIVATE" required <%
+                                    if(deck[0].acces_type=='PRIVATE' ) { %>checked<% } %>>
+
+                                    <label for="public">Public</label>
+                                    <input type="radio" id="public" name="acces" value="PUBLIC" required <%
+                                        if(deck[0].acces_type=='PUBLIC' ) { %>checked<% } %>>
+
+
+                            </fieldset>
+                        </div>
+                        <div class="form_group_deck">
+                            <fieldset>
+                                <legend>Matière :</legend>
+                                <select id="tag" name="tag" required>
+                                    <option value="<%= deck[0].id_tag %>">
+                                        <%= deck[0].tag %>
+                                    </option>
+                                </select>
+                            </fieldset>
+                        </div>
+                        <div class="form_group_deck">
+                            <fieldset>
+                                <legend>Niveau :</legend>
+                                <select id="level" name="level" required>
+                                    <option value="<%= deck[0].id_level %>">
+                                        <%= deck[0].level %>
+                                    </option>
+                                </select>
+                            </fieldset>
+                        </div>
+                    </div>
+
+
+
+                    <div id="old_cards_container" class="cards_container">
+                        <% cards.forEach(function(element, index) { %>
+                            <div data-id="<%= element.id_card %>" style="position: relative;" class="card_group card_group_to_modify">
+                                <div class="card_container_mini">
+                                    <div class="maincarte_mini">
+                                        <div class="carte_mini noflip">
+                                            <div class="cartefront">
+                                                <h1><span class="fancy">Question <%= index +1 %> :</span></h1>
+                                                <div class="infofront">
+                                                    <% if(element.img_q !="" ){ %>
+                                                        <img class="image_carte img_carte_front"
+                                                            src="../uploads/<%= element.img_q %>"></img>
+                                                        <div data-side="Q" class="delete_photo_perm"><i
+                                                                class="fa-solid fa-circle-minus"></i></div>
+                                                        <% } %>
+                                                            <p class="p_card_mini">
+                                                                <%= element.question %>
+                                                            </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card_container_mini">
+                                    <div class="maincarte_mini">
+                                        <div class="carte_mini flip noflip">
+                                            <div class="carteback">
+                                                <h1><span class="fancy_back">Réponse <%= index +1 %> :</span>
+                                                </h1>
+                                                <div class="infoback">
+                                                    <% if(element.img_a !="" ){ %>
+                                                        <img class="image_carte img_carte_back"
+                                                            src="../uploads/<%= element.img_a %>"></img>
+                                                        <div data-side="R" class="delete_photo_perm"><i
+                                                                class="fa-solid fa-circle-minus"></i></div>
+                                                        <% } %>
+                                                            <p class="p_card_mini">
+                                                                <%= element.answer %>
+                                                            </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="delete_field_cards"><i class="fa-solid fa-circle-minus"></i></div>
+                            </div>
+                        <% }); %>
+                        <div id="add_cards"><i class="fa-solid fa-circle-plus"></i></div>
+                    </div>
+                    <div id="buttonAccesCard">
+                        <% if(!cards || cards.length <=0) { %>
+                            <div class="listcard" id="zonelist">
+                                <p id="c">1</p>
+                            </div>
+                        <% } else { %>
+                            <% cards.forEach(function(element, index) { %>
+                                <div class="listcard" id="zonelist">
+                                    <p id="c">
+                                        <%= index+1 %>
+                                    </p>
+                                </div>
+                            <% }); %>
+                        <% } %>
+                    </div>
+                    <input type="hidden" name="id_deck" value="<%= deck[0].id_deck %>">
+
+
+                    <% if(deck[0].type == "PARCOURS") { %>
+                        <div class="parcours_part">
+                            <h2>Parcours</h2>
+                            <div id="parcours_container" class="small_parcours_container">
+                                <ul class="activities" id="activities">
+                                <% parcours.forEach(function(element, index) { %>
+                                    <li data-id_step="<%= element.id_step %>" class="activities_item column_activitie_item">
+                                        <div class="header_item">
+                                            <h2><%= element.title %></h2>
+                                            <div data-type="eval" class="listchoix">
+                                                <% switch (element.type) { 
+                                                    case "VOD": %>
+                                                    <p><i class="fa-solid fa-circle-play fa-3x" style="color: #f06b42"></i></p>
+                                                <%        
+                                                        break;
+                                                    case "IMG": %>
+                                                    <p><i class="fa-solid fa-image fa-3x" style="color: #f06b42"></i></p>
+                                                <%
+                                                        break;
+                                                    case "PDF": %>
+                                                    <p><i class="fa-regular fa-file-pdf fa-3x" style="color: #f06b42"></i></p>
+                                                <%        
+                                                        break;
+                                                    case "FICHE": %>
+                                                    <p><i class="fa-solid fa-file fa-3x" style="color: #f06b42"></i></p>
+                                                <%      
+                                                        break;
+                                                    case "CARDS": %>
+                                                    <p><i class="fa-solid fa-layer-group fa-3x" style="color: #f06b42"></i></p>  
+                                                <%
+                                                    break;
+                                                    default:
+                                                        break;
+                                                } %>
+                                            </div>
+                                        </div>
+                                        <% switch (element.type) { 
+                                                case "VOD": %>
+                                                <iframe onload="updateProgressBar()" class="iframe_video" height="200" src="<%= element.content %>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                            <%        
+                                                    break;
+                                                case "IMG": %>
+                                                <img onload="updateProgressBar()" class="image_carte" src="../uploads/<%= element.content %>" alt=""/>
+                                            <%
+                                                    break;
+                                                case "PDF": %>
+                                                <object onload="updateProgressBar()" data="../uploads/<%= element.content %>" class="image_carte" type="application/pdf" width="100%" height="500px" src="" alt="">
+                                                    <a href="../uploads/<%= element.content %>" download="<%= element.title %>">Votre navigateur ne peut pas lire les pdf, téléchargez le document pour le consulter</a>
+                                                </object>
+                                            <%        
+                                                    break;
+                                                case "FICHE": %>
+                                                    <div onclick="displayFiche(<%= JSON.parse(element.content) %>)" onmouseenter="generateView($(this), <%= JSON.parse(element.content) %>, true)" class="apercu_fiche"></div>
+                                            <%
+                                                    break;
+                                                case "CARDS": %>
+                                                <div class="cards_container">
+                                                <%
+                                                    let q = element.all_card_q ? element.all_card_q.split('&') : [];
+                                                    let r = element.all_card_r ? element.all_card_r.split('&') : [];
+                                                    let img_q = element.all_card_img_q ? element.all_card_img_q.split('&') : [];
+                                                    let img_r = element.all_card_img_r ? element.all_card_img_r.split('&') : [];
+                                                    for(let i = 0; i < q.length; i++){
+                                                %>
+                                                    <div class="card_container_mini">
+                                                        <div class="maincarte_mini">
+                                                            <div class="carte_mini" id="carte">
+                                                                <div class="cartefront">
+                                                                        <h1><span class="fancy">Question :</span></h1>
+                                                                        <div class="infofront">
+                                                                            <% if(img_q[i] != ""){ %><img class="image_carte" src="../uploads/<%=img_q[i]%>"></img><% } %>
+                                                                            <p class="p_card_mini"><%= q[i].replace(/\n/g, '<br>')%></p>
+                                                                        </div>
+                                                                </div>
+                                                                <div class="carteback hide_card">
+                                                                        <h1><span class="fancy_back">Réponse :</span></h1>
+                                                                        <div class="infoback">
+                                                                            <% if(img_r[i] != "") { %><img class="image_carte" src="../uploads/<%=img_r[i]%>"></img><% } %>
+                                                                            <p class="p_card_mini"><%= r[i].replace(/\n/g, '<br>')%></p>
+                                                                        </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                            <%      } %>
+                                                </div>
+                                            <%    
+                                                break;
+                                                default:
+                                                    break;
+                                        } %>
+                                        <div class="delete_field_parcours"><i class="fa-solid fa-circle-minus"></i></div>
+                                    </li>
+                                <% }); %>
+                            </div>
+                        </div>
+                    <% } %>
+
+
+                    <div class="form-group">
+                        <input type="submit" value="Modifier">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+    <footer class="header_nav_mobile">
+        <div class="container">
+            <div class="navbar">
+                <div class="mobile">
+                    <div class="li_nav"><a href="/hub"><i class='fas fa-gamepad'></i></a></div>
+
+                    <div class="li_nav"><a href="/decks"><i class="fas fa-clone"></i></a></div>
+
+                    <div class="li_nav"><a href="/home"><i class='fas fa-home'></i></a></div>
+
+                    <div class="li_nav"><a href="/search"><i class='fas fa-search'></i></a></div>
+
+                    <div class="li_nav"><a href="/profil"><i class='fas fa-user-alt'></i></a></div>
+
+                    <div class="li_nav"><a href="/gestion"><i class='fas fa-wrench'></i></a></div>
+                </div>
+            </div>
+    </footer>
+</body>
+<script src="../js/functions.js"></script>
+<script src="../js/setup.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.delete_field_parcours').click(function (e) {
+            const step = $(this).closest('.activities_item');
+            const id = step.data('id_step')
+            $("#modal1").css('display', 'flex');
+
+            $("#modal1").find("#accept").off("click").click(function (e) {
+                $.ajax({
+                    url: '../remove_step',
+                    type: 'POST',
+                    data: {
+                        id_deck: $("#form_deck").data("id"),
+                        id_step: id
+                    },
+                    success: function (response) {
+                        window.location.reload()
+                    },
+                    error: function (xhr, status, error) {
+                        // Récupération de l'erreur
+                        console.error('Erreur de requête:', error, xhr);
+                        // Traitement de l'erreur
+                        showError(xhr.responseJSON.message)
+                    }
+                });
+
+                $("#modal1").find(".reject").off('click')
+                $("#modal1").find(".accept").off('click')
+                $("#modal1").css('display', 'none');
+            })
+
+            $("#modal1").find("#reject").click(function (e) {
+                $("modal1").find(".reject").off('click')
+                $("modal1").find(".accept").off('click')
+                $("#modal1").css('display', 'none');
+            })
+        })
+
+
+        
+
+
+
+        let fieldCount;
+
+        $.ajax({
+            url: '../get_all_tag',
+            type: 'POST',
+            success: function (response) {
+                console.log(response);
+                const data = response.data
+                data.forEach(element => {
+                    $('#tag').append('<option value="' + element.id_tag + '">' + element.tag + '</option>');
+                });
+            },
+            error: function (xhr, status, error) {
+                // Récupération de l'erreur
+                console.error('Erreur de requête:', error, xhr);
+                // Traitement de l'erreur
+                showError(xhr.responseJSON.message)
+            }
+        });
+
+        $.ajax({
+            url: '../get_all_level',
+            type: 'POST',
+            success: function (response) {
+                console.log(response);
+                const data = response.data
+                data.forEach(element => {
+                    $('#level').append('<option value="' + element.id_level + '">' + element.level + '</option>');
+                });
+            },
+            error: function (xhr, status, error) {
+                // Récupération de l'erreur
+                console.error('Erreur de requête:', error, xhr);
+                // Traitement de l'erreur
+                showError(xhr.responseJSON.message)
+            }
+        });
+
+
+        $('.delete_field_cards').click(function (e) {
+            const card = $(this).closest('.card_group');
+            const id = card.data('id')
+            $("#modal1").css('display', 'flex');
+
+            $("#modal1").find("#accept").off("click").click(function (e) {
+                $.ajax({
+                    url: '../remove_card',
+                    type: 'POST',
+                    data: {
+                        id_deck: $("#form_deck").data("id"),
+                        id_card: id
+                    },
+                    success: function (response) {
+                        card.remove()
+                    },
+                    error: function (xhr, status, error) {
+                        // Récupération de l'erreur
+                        console.error('Erreur de requête:', error, xhr);
+                        // Traitement de l'erreur
+                        showError(xhr.responseJSON.message)
+                    }
+                });
+
+                $("#modal1").find(".reject").off('click')
+                $("#modal1").find(".accept").off('click')
+                $("#modal1").css('display', 'none');
+            })
+
+            $("#modal1").find("#reject").click(function (e) {
+                $("modal1").find(".reject").off('click')
+                $("modal1").find(".accept").off('click')
+                $("#modal1").css('display', 'none');
+            })
+        })
+
+
+        $('.delete_photo_perm').click(function (e) {
+            const card = $(this).closest('.card_group');
+            const id = card.data('id')
+            const side = $(this).data("side")
+            const button = $(this);
+            $("#modal1").css('display', 'flex');
+
+            $("#modal1").find("#accept").off("click").click(function (e) {
+                $.ajax({
+                    url: '../remove_img',
+                    type: 'POST',
+                    data: {
+                        id_deck: $("#form_deck").data("id"),
+                        id_card: id,
+                        side: side
+                    },
+                    success: function (response) {
+                        console.log("allo")
+                        if (side === "Q") {
+                            card.find(".img_carte_front").remove()
+                        }
+                        if (side === "R") {
+                            card.find(".img_carte_back").remove()
+                        }
+                        button.remove()
+                    },
+                    error: function (xhr, status, error) {
+                        // Récupération de l'erreur
+                        console.error('Erreur de requête:', error, xhr);
+                        // Traitement de l'erreur
+                        showError(xhr.responseJSON.message)
+                    }
+                });
+
+                $("#modal1").find(".reject").off('click')
+                $("#modal1").find(".accept").off('click')
+                $("#modal1").css('display', 'none');
+            })
+
+            $("#modal1").find("#reject").click(function (e) {
+                $("modal1").find(".reject").off('click')
+                $("modal1").find(".accept").off('click')
+                $("#modal1").css('display', 'none');
+            })
+        })
+
+
+
+        //Modification de cartes 
+        $('.card_group_to_modify').click(function (e) {
+            const card = $(this)
+            const modal = $("#modal3");
+            if (!$(e.target).hasClass('fa-circle-minus')) {
+                modal.css('display', 'flex');
+                console.log(card.find(".p_card_mini").first().text(), modal.find("#q"))
+                modal.find("#id_card_modify").val(card.data("id"))
+                modal.find("#q").html(card.find(".p_card_mini").first().text().trim())
+                modal.find("#r").html(card.find(".p_card_mini").last().text().trim())
+                if (card.find(".img_carte_front").length > 0) {
+                    modal.find("#img_q").hide()
+                    modal.find(".preview").first().show().attr("src", card.find(".img_carte_front").attr("src"))
+                    modal.find(".delete_photo_perm").first().show()
+                    modal.find(".delete_file").first().hide();
+                    modal.find(".label_file_icon").first().hide();
+                    modal.find(".label_photo").first().css({
+                        backgroundColor: 'transparent',
+                        border: 'none',
+                        borderRadius: '0px'
+                    })
+                }
+                if (card.find(".img_carte_back").length > 0) {
+                    modal.find("#img_r").hide()
+                    modal.find(".preview").last().show().attr("src", card.find(".img_carte_back").attr("src"))
+                    modal.find(".delete_photo_perm").last().show()
+                    modal.find(".delete_file").last().hide();
+                    modal.find(".label_file_icon").last().hide();
+                    modal.find(".label_photo").last().css({
+                        backgroundColor: 'transparent',
+                        border: 'none',
+                        borderRadius: '0px'
+                    })
+                }
+            }
+        })
+
+        $('#form_modify_cards').submit(function (event) {
+            event.preventDefault();
+
+
+            var formData2 = new FormData($("#form_modify_cards")[0]);
+            formData2.append('id_deck', $("#form_deck").data("id"))
+
+            console.log(formData2);
+
+            $.ajax({
+                url: '../update_card',
+                type: 'POST',
+                data: formData2,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    console.log(response)
+                    window.location.href = "/modify-deck/" + response.id;
+                },
+                error: function (xhr, status, error) {
+                    // Récupération de l'erreur
+                    console.error('Erreur de requête:', error, xhr);
+                    // Traitement de l'erreur
+                    showError(xhr.responseJSON.message)
+                }
+            });
+        });
+
+
+
+
+
+
+
+
+
+        // Ajout de cartes
+        $("#add_cards").click(function (e) {
+            const card = $(this).closest('.card_group');
+            const id = card.data('id')
+            $("#modal2").css('display', 'flex');
+            fieldCount = 1;
+            fieldCount2 = 1;
+        })
+
+        $('#addFields').click(function () {
+            fieldCount++;
+            fieldCount2++;
+            var newFieldGroup =
+
+                '<div class="card_group">' +
+                '<div class="card_container_mini">' +
+                '<div class="maincarte_mini">' +
+                '<div class="carte_mini noflip"  >' +
+                '<div class="cartefront">' +
+                '<h1><span class="fancy">Question ' + fieldCount + ' :</span></h1>' +
+                '<div class="infofront">' +
+                '<label class="label_photo label_file" for="q-' + fieldCount + '">' +
+                '<i class="fa-solid fa-image fa-3x label_file_icon" style="color: #3f2a56; padding: 20px;"></i>' +
+                '<img style="display: none;" class="preview" src="#" alt=""/>' +
+                '<div style="display: none;" class="delete_file"><i class="fa-solid fa-circle-minus"></i></div>' +
+                '</label>' +
+                '<input id="q-' + fieldCount + '" type="file" class="photo" name="q-' + fieldCount + '" accept="image/*">' +
+                '<textarea class="textarea_deck" type="text" id="q' + fieldCount + '"  name="q[]" required></textarea>' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '<div class="card_container_mini">' +
+                '<div class="maincarte_mini">' +
+                '<div class="carte_mini flip noflip"  >' +
+                '<div class="carteback">' +
+                '<h1><span class="fancy_back">Réponse ' + fieldCount + ' :</span></h1>' +
+                '<div class="infoback">' +
+                '<label class="label_photo label_file" for="r-' + fieldCount + '">' +
+                '<i class="fa-solid fa-image fa-3x label_file_icon" style="color: #3f2a56; padding: 20px;"></i>' +
+                '<img style="display: none;" class="preview" src="#" alt=""/>' +
+                '<div style="display: none;" class="delete_file"><i class="fa-solid fa-circle-minus"></i></div>' +
+                '</label>' +
+                '<input id="r-' + fieldCount + '" type="file" class="photo" name="r-' + fieldCount + '" accept="image/*">' +
+                '<textarea class="textarea_deck" type="text" id="r' + fieldCount + '"  name="r[]" required></textarea>' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '<div id="deleteField"><i class="fa-solid fa-circle-minus"></i></div>' +
+                '</div>';
+
+            var newButtonAcces =
+                '<div class="listcardAdd" id="zonelistAdd">' + '<p id="cardAdd"> ' + fieldCount2 + '</p>' + '</div>';
+            $('#buttonAccesCardAddCard').append(newButtonAcces);
+
+            $(newFieldGroup).insertBefore(this);
+            $("#addFields")[0].scrollIntoView({ behavior: "smooth", block: "end", inline: "end" });
+
+            setImageForm();
+
+        });
+
+        //fonction enlever la ca pour aller à la carte crée quand une carte est supprimé tout en évitant d'aller en dessous de 0
+        $('#cards_container').on('click', '#deleteField', function () {
+            if (fieldCount > 0) {
+                $('#buttonAccesCard').children().last().remove();
+                $('#buttonAccesCardAddCard').children().last().remove();
+
+            }
+        });
+
+
+
+        //fonction pour supprimer une carte
+        $('#cards_container').on('click', '#deleteField', function () {
+            $(this).parent().remove();
+            fieldCount--;
+            fieldCount2--;
+            // Mettre à jour les numéros des cartes restantes 
+            $('#cards_container').children().each(function (index) {
+                $(this).find('span').first().text('Question ' + (index + 1));
+                $(this).find('textarea').first().attr('id', 'q' + (index + 1));
+                $(this).find('span').last().text('Réponse ' + (index + 1));
+                $(this).find('textarea').last().attr('id', 'r' + (index + 1));
+                $(this).find('.photo').first().attr('name', 'q-' + (index + 1));
+                $(this).find('.photo').last().attr('name', 'r-' + (index + 1));
+            });
+
+        });
+
+
+
+
+        //fonction pour aller à la carte correspondante
+        $('#buttonAccesCard').on('click', '.listcard', function () {
+            //on récupère le nbr de car grace à l'id id.length
+            var id = $(this).find('p').text();
+            console.log(id);
+            var card = $('#old_cards_container').children().eq(id - 1);
+            console.log(card);
+            card[0].scrollIntoView({ behavior: "smooth", block: "end", inline: "end" });
+        });
+
+        //fonction pour aller à la carte correspondante mais pour l'ajout
+        $('#buttonAccesCardAddCard').on('click', '.listcardAdd', function () {
+            //on récupère le nbr de car grace à l'id id.length
+            var idAdd = $(this).find('p').text();
+            console.log(idAdd);
+            var cardAdd = $('#cards_container').children().eq(idAdd - 1);
+            console.log(cardAdd);
+            cardAdd[0].scrollIntoView({ behavior: "smooth", block: "end", inline: "end" });
+        });
+
+
+        $('#form_new_cards').submit(function (event) {
+            event.preventDefault();
+
+
+            var formData2 = new FormData($("#form_new_cards")[0]);
+            formData2.append('id_deck', $("#form_deck").data("id"))
+
+            console.log(formData2);
+
+            $.ajax({
+                url: '../add_cards',
+                type: 'POST',
+                data: formData2,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    console.log(response)
+                    window.location.href = "/modify-deck/" + response.id;
+                },
+                error: function (xhr, status, error) {
+                    // Récupération de l'erreur
+                    console.error('Erreur de requête:', error, xhr);
+                    // Traitement de l'erreur
+                    showError(xhr.responseJSON.message)
+                }
+            });
+        });
+
+
+        $('#form_deck').submit(function (event) {
+            event.preventDefault();
+
+
+            var formData = new FormData($("#form_deck")[0]);
+
+            console.log(formData);
+
+            $.ajax({
+                url: '../update_infos_deck',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    console.log(response)
+                    window.location.href = "/my-deck/" + response.id;
+                },
+                error: function (xhr, status, error) {
+                    // Récupération de l'erreur
+                    console.error('Erreur de requête:', error, xhr);
+                    // Traitement de l'erreur
+                    showError(xhr.responseJSON.message)
+                }
+            });
+        });
+
+        
+        $('#import').click(function(){
+            $("#modal4").css('display', 'flex');
+        })
+        $('#valider_import').click(function(){
+            parse($("#import_value").val());
+            $("#modal4").css('display', 'none');
+        })
+    });
+
+
+
+
+    function parse(input) {
+        const parsedData = parseQuestionsAndAnswers(input);
+        if(parsedData) {
+            $('#buttonAccesCardAddCard').empty();
+            $("#form_new_cards").find('.card_group').empty();
+            fieldCount2 = 0;
+        }
+        parsedData.forEach(element => {
+            fieldCount2++;
+            var newFieldGroup =
+            '<div class="card_group">'+
+                '<div class="card_container_mini">'+
+                    '<div class="maincarte_mini">'+
+                        '<div class="carte_mini noflip" id="carte">'+
+                            '<div class="cartefront">'+
+                                '<h1><span class="fancy">Question ' + fieldCount2 + ' :</span></h1>'+
+                                '<div class="infofront">'+
+                                    '<label class="label_photo label_file" for="q-' + fieldCount2 + '">'+
+                                        '<i class="fa-solid fa-image fa-3x label_file_icon" style="color: #3f2a56; padding: 20px;"></i>'+
+                                        '<img style="display: none;" class="preview" src="#" alt=""/>'+
+                                        '<div style="display: none;" class="delete_file"><i class="fa-solid fa-circle-minus"></i></div>'+
+                                    '</label>'+
+                                    '<input id="q-' + fieldCount2 + '" type="file" class="photo" name="q-' + fieldCount2 + '" accept="image/*">'+
+                                    '<textarea class="textarea_deck" type="text" id="q' + fieldCount2 + '"  name="q[]" required>'+element.question+'</textarea>'+
+                                '</div>'+
+                            '</div>'+
+                        '</div>'+
+                    '</div>'+
+                '</div>'+
+                '<div class="card_container_mini">'+
+                    '<div class="maincarte_mini">'+
+                        '<div class="carte_mini flip noflip" id="carte">'+
+                            '<div class="carteback">'+
+                                '<h1><span class="fancy_back">Réponse ' + fieldCount2 + ' :</span></h1>'+
+                                '<div class="infoback">'+
+                                    '<label class="label_photo label_file" for="r-' + fieldCount2 + '">'+
+                                        '<i class="fa-solid fa-image fa-3x label_file_icon" style="color: #3f2a56; padding: 20px;"></i>'+
+                                        '<img style="display: none;" class="preview" src="#" alt=""/>'+
+                                        '<div style="display: none;" class="delete_file"><i class="fa-solid fa-circle-minus"></i></div>'+
+                                    '</label>'+
+                                    '<input id="r-' + fieldCount2 + '" type="file" class="photo" name="r-' + fieldCount2 + '" accept="image/*">'+
+                                    '<textarea class="textarea_deck" type="text" id="r' + fieldCount2 + '"  name="r[]" required>'+element.answer+'</textarea>'+
+                                '</div>'+
+                            '</div>'+
+                        '</div>'+
+                    '</div>'+
+                '</div>'+
+                '<div id="deleteField"><i class="fa-solid fa-circle-minus"></i></div>'+
+            '</div>';
+
+
+            var newButtonAcces =
+                '<div class="listcardAdd" id="zonelistAdd">' + '<p id="cardAdd"> ' + fieldCount2 + '</p>' + '</div>';
+            $('#buttonAccesCardAddCard').append(newButtonAcces);
+
+            $(newFieldGroup).insertBefore($("#import").prev());
+            
+            $( "#addFields" )[0].scrollIntoView({ behavior: "smooth", block: "end", inline: "end" });
+
+            setImageForm();
+        });
+    }
+
+
+
+    function parseQuestionsAndAnswers(input) {
+        const lines = input.split('\n');
+        const qaPairs = [];
+
+        console.log(lines);
+
+        let currentQuestion = null;
+        let currentAnswer = null;
+
+        for (let i = 0; i < lines.length; i++) {
+            const line = lines[i].trim();
+
+            if (line.startsWith('Q')) {
+                currentQuestion = parsePhrase(line);
+            } else if (line.startsWith('R')) {
+                currentAnswer = parsePhrase(line);
+            }
+
+            if (currentQuestion && currentAnswer) {
+                qaPairs.push({
+                    question: currentQuestion,
+                    answer: currentAnswer
+                });
+
+                currentQuestion = null;
+                currentAnswer = null;
+            }
+        }
+
+        return qaPairs;
+    }
+
+    function parsePhrase(chaine) {
+        var indexDeuxPoints = chaine.indexOf(":");
+        if (indexDeuxPoints !== -1) {
+            var partieApresDeuxPoints = chaine.slice(indexDeuxPoints + 1, chaine.length);
+            return partieApresDeuxPoints.trim();
+        } else {
+            // Retourner la chaîne d'origine si ":" n'est pas trouvé
+            return chaine.trim();
+        }
+    }
+
+</script>
+
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="../img/logo_intellicard.png" type="image/x-icon">
+        <link type="text/css" rel="stylesheet" href="../css/parcours_resume.css">
+        <link type="text/css" rel="stylesheet" href="../css/deck.css">
+        <link type="text/css" rel="stylesheet" href="../css/style.css">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <title>Parcours</title>
+    </head>
+
+    <body class="body1">
+        <div id="error_notif" class="error_notif">
+            <div id="error_content" class="error_content">Erreur</div>
+        </div>
+        <header class="header_nav_pc">
+            <div class="container">
+                <div class="navbar">
+                    <ul class="pc">
+                        <a href="/hub" class="li_nav"><span class="white">Jeux</span></a>
+                        <a href="/decks" class="li_nav"><span class="white">Decks</span></a>
+                        <a href="/home" class="li_nav"><span class="white">Accueil</span></a>
+                        <a href="/search" class="li_nav"><span class="white">Recherche</span></a>
+                        <a href="/profil" class="li_nav"><span class="white">Profil</span></a>
+                        <a href="/gestion" class="li_nav"><span class="white">Gestion</span></a>
+                    </ul>
+                </div>
+            </div>
+        </header>
+        <main>
+            <div class="fom_adding_deck">
+                <div class="haut">
+                    <h1 class="name"><%= parcours[0].name %></h1>
+                    <div class="button_deck">
+                        <button class="btn_eval" id="button_deck">Accéder au parcours</button>
+
+                    </div>
+                </div>
+                <div class="haut">
+                    <div class="button_deck_arrow">
+                        <div class="up_vote" id="up_vote"><i class="fa fa-arrow-up"></i> <span id="nb_vote_up"><%= parcours[0].up_vote %></span></div>
+                        <div class="down_vote" id="down_vote"><i class="fa fa-arrow-down"></i> <span id="nb_vote_down"><%= parcours[0].down_vote %></span></div>
+                    </div>
+                </div>
+                <div class="haut">
+                    <!--division de la page en deux-->
+                    <div class="graph">
+                        <!-- Insérer ici le code HTML/CSS/JS du graphique -->
+                        <h2>Résultat moyen du parcours</h2>
+                        <div id="chart-wrapper"><canvas id="myChart" style="width:100%"></canvas></div>
+                    </div>
+                    <div>
+                        <h2>Liste des Objectifs</h2>
+                        <div class="average_score">
+                            <div>Score moyen :  <i class="fa-solid fa-face-frown TM"></i>
+                                                <i class="fa-solid fa-face-frown-open M"></i>
+                                                <i class="fa-solid fa-face-meh N"></i>
+                                                <i class="fa-solid fa-face-smile B"></i>
+                                                <i class="fa-solid fa-face-laugh TB"></i>
+                                                <i class='fas fa-ban NEW'></i>
+                            </div>
+                        </div>
+                        <!--ajout une liste afin de pouvoir voir si le deck a été fait aujourdhui ou non, combien de fois il a été fait et la date de la dernière fois, le nombre de carte étudiés et le nombre de carte total-->
+                        <ul class="list">
+                            <li class="list">Cartes révisées aujourdhui : <%= stats.nb_card_this_day || 0 %></li>
+                            <li class="list">Cartes révisées au total : <%= stats.nb_card_all_time || 0 %></li>
+                            <li class="list">Derniere révision : <%= stats.last_train || 'Aucune révision' %></li>
+                            <li class="list">Nombre de sessions : <%= stats.nb_session || 0 %></li>
+                            <li class="list">Éléments vus : <%= (stats.nb_elements_viewed || 0) + '/' + (stats.nb_elements_total_in_parcours || 0) %></li>
+                        </ul>                 
+                    </div>
+                    
+                </div>
+                <hr>
+            </div> 
+        </main>
+        <footer class="header_nav_mobile">
+            <div class="container">
+                <div class="navbar">
+                    <div class="mobile">
+                        <div class="li_nav"><a href="/hub"><i class='fas fa-gamepad'></i></a></div>
+                        
+                        <div class="li_nav"><a href="/decks"><i class="fas fa-clone"></i></a></div>
+                        
+                        <div class="li_nav"><a href="/home"><i class='fas fa-home'></i></a></div>
+                        
+                        <div class="li_nav"><a href="/search"><i class='fas fa-search'></i></a></div>
+                        
+                        <div class="li_nav"><a href="/profil"><i class='fas fa-user-alt'></i></a></div>
+                        <div class="li_nav"><a href="/gestion"><i class='fas fa-wrench'></i></a></div>
+                    </div>
+                </div>
+            </div>
+        </footer>  
+    </body>
+</html>

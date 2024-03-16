@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="../img/logo_intellicard.png" type="image/x-icon">
+        <link type="text/css" rel="stylesheet" href="../css/deck.css">
+        <link type="text/css" rel="stylesheet" href="../css/style.css">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <title>Ajout de deck</title>
+    </head>
+
+    <body class="body1">
+        <div id="error_notif" class="error_notif">
+            <div id="error_content" class="error_content">Erreur</div>
+        </div>
+        <header class="header_nav_pc">
+            <div class="container">
+                <div class="navbar">
+                    <ul class="pc">
+                        <li class="li_nav"><a href="#">Jeu</a></li>
+                        <li class="li_nav"><a href="/decks">Decks</a></li>
+                        <li class="li_nav"><a href="/home">Accueil</a></li>
+                        <li class="li_nav"><a href="/search">Recherche</a></li>
+                        <li class="li_nav"><a href="/profil">Profil</a></li>
+                        <li class="li_nav"><a href="/manage">Manager</a></li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+        <main>
+            <div class="fom_adding_deck">
+                <div class="haut">
+                    <h1>Nom du deck</h1>
+                    <div class="button_deck">
+                        <button class="button_deck" id="button_deck">Entrainement</button>
+                        <button class="button_deck" id="button_deck">Evaluation</button>
+
+                    </div>
+                    <div class="button_deck">
+                        <button class="button_deck" id="button_deck"><i class="fas fa-arrow-up"></i></button>
+                        <button class="button_deck" id="button_deck"><i class="fas fa-arrow-down"></i></button>
+                    </div>
+                </div>
+                <div class="haut">
+                    <!--division de la page en deux-->
+                    <div class="graph">
+                        <!-- Insérer ici le code HTML/CSS/JS du graphique -->
+                        <div id="chart-wrapper"><canvas id="myChart" style="width:100%"></canvas></div>
+                    </div>
+                    <div>
+                        <!--cote droit, liste-->
+                        Ceci est la liste des cartes
+
+
+                    </div>
+                </div>
+            </div>   
+
+            <script>
+                //création de l'histogramme avec en abysse la moyenne des notes allant de (Très mauvais, Mauvais, Moyen, Bon, Très bon) et en ordonnée le nombre de cartes ayant cette note
+                var ctx = document.getElementById('myChart').getContext('2d');
+                var myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['\uf57a', 'Mauvais', 'Moyen', 'Bon', 'Très bon'],
+                        datasets: [{
+                                label: 'Nombre de cartes',
+                                data: [12, 19, 3, 5, 2], //données à récupérer dans la base de données donc a faire 
+                                backgroundColor: [
+                                    'rgba(255, 0, 0, 0.2)', //couleur des barres
+                                    'rgba(255, 69, 74, 0.2)',
+                                    'rgba(100, 148, 237, 0.2)',
+                                    'rgba(173, 255, 47, 0.2)',
+                                    'rgba(0, 183, 14, 0.2)'
+                                ],
+                                borderColor: [
+                                    'rgba(255, 0, 0, 1)', //couleur des bordures
+                                    'rgba(255, 69, 74, 1)',
+                                    'rgba(100, 148, 237, 1)',
+                                    'rgba(173, 255, 47, 1)',
+                                    'rgba(0, 183, 14, 1)'
+                                ],
+                                borderWidth: 1
+                            }]
+                            
+
+
+                        },
+                        //enlever la barre de légende
+
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            },
+                            pointLabels: {
+                                fontFamily: '"Font Awesome 5 Free"',
+                            },
+                            plugins: {
+                            legend: {
+                                display: false
+                            }
+                            },
+                        }
+                    });
+            </script>
+</html>

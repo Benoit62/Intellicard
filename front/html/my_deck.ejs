@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="../img/logo_intellicard.png" type="image/x-icon">
+        <link type="text/css" rel="stylesheet" href="../css/deck.css">
+        <link type="text/css" rel="stylesheet" href="../css/style.css">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <title>Ajout de deck</title>
+    </head>
+
+    <body class="body1">
+        <header class="header_nav_pc">
+            <div class="container">
+                <div class="navbar">
+                    <ul class="pc">
+                        <a href="/hub" class="li_nav"><span class="white">Jeux</span></a>
+                        <a href="/decks" class="li_nav"><span class="white">Decks</span></a>
+                        <a href="/home" class="li_nav"><span class="white">Accueil</span></a>
+                        <a href="/search" class="li_nav"><span class="white">Recherche</span></a>
+                        <a href="/profil" class="li_nav"><span class="white">Profil</span></a>
+                        <a href="/gestion" class="li_nav"><span class="white">Gestion</span></a>
+                    </ul>
+                </div>
+            </div>
+        </header>
+        <main>
+            <div class="fom_adding_deck">
+                <div class="haut">
+                    <h1 class="name"><%= deck[0].name %></h1>
+                    <div class="button_deck">
+                        <a href="../modify-deck/<%= deck[0].id_deck %>" class="btn_entrainement" id="button_deck">Modifier</a>
+                        
+
+                        <div class="params_button">
+                            <button onmouseenter="changeClass()" onmouseout="returnClass()" id="trash" class="btn_trash"><a><i id="trash_i"  class="fa-solid fa-trash" ></i></a></button>
+                            <form id="modal_params" class="modal_ask_supp">
+                                <input class="id_deck" type="hidden" name="id_deck" value="<%= deck[0].id_deck %>">
+                                <h2 style="text-align: center; margin: 0 0 10px 0;">Demande de suppression</h2>
+                                <fieldset>
+                                    <legend>Raison :</legend>
+                                    <textarea id="reason" name="reason" class="reason_textarea"></textarea>
+                                </fieldset>
+                                <input type="submit" class="send_ask">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="haut">
+                    <% if(deck[0].acces_type === 'PRIVATE') { %>
+                        <div class="button_deck_arrow">
+                            <div class="code" id="code"><i class='fas fa-lock'></i> <span id="nb_vote_up"><%= deck[0].code %></span></div>
+                            <textarea style="width: 0; height: 0; position: relative; resize: none; padding: 0; border: none;" id="code_input" value="<%= deck[0].code %>"><%= deck[0].code %></textarea>
+                        </div>
+                    <% } %>
+                    <div class="button_deck_arrow">
+                        <div class="up_vote" id="up_vote"><i class="fa fa-arrow-up"></i> <span id="nb_vote_up"><%= deck[0].up_vote %></span></div>
+                        <div class="down_vote" id="down_vote"><i class="fa fa-arrow-down"></i> <span id="nb_vote_down"><%= deck[0].down_vote %></span></div>
+                    </div>
+                </div>
+                <div class="haut">
+                    <!--division de la page en deux-->
+                    <div class="graph">
+                        <!-- Insérer ici le code HTML/CSS/JS du graphique -->
+                        <h2>Résultat moyen du deck</h2>
+                        <div id="chart-wrapper"><canvas id="myChart" style="width:100%"></canvas></div>
+                    </div>
+                    <div>
+                        <h2>Liste des Objectifs</h2>
+                        <div class="average_score">
+                            <div>Score moyen : <% switch (deck[0].average_score) {
+                                                    case 1:
+                                                %>
+                                                    <i class="fa-solid fa-face-frown TM"></i>
+                                                <%        
+                                                        break;
+                                                    case 2:
+                                                %>
+                                                    <i class="fa-solid fa-face-frown-open M"></i>
+                                                <%        
+                                                        break;
+                                                    case 3:
+                                                %>
+                                                    <i class="fa-solid fa-face-meh N"></i>
+                                                <%        
+                                                        break;
+                                                    case 4:
+                                                %>
+                                                    <i class="fa-solid fa-face-smile B"></i>
+                                                <%        
+                                                        break;
+                                                    case 5:
+                                                %>
+                                                    <i class="fa-solid fa-face-laugh TB"></i>
+                                                <%        
+                                                        break;
+                                                
+                                                    default:
+                                                %>
+                                                    <i class='fas fa-ban NEW'></i>
+                                                <%
+                                                        break;
+                            } %></div>
+                        </div>
+                        <!--ajout une liste afin de pouvoir voir si le deck a été fait aujourdhui ou non, combien de fois il a été fait et la date de la dernière fois, le nombre de carte étudiés et le nombre de carte total-->
+                        <ul class="list">
+                            <li class="list">Cartes révisées aujourdhui : <span class="stat"><%= stats.nb_card_this_day || 0 %></span></li>
+                            <li class="list">Cartes révisées au total : <span class="stat"><%= stats.nb_card_all_time || 0 %></span></li>
+                            <li class="list">Derniere révision : <span class="stat"><%= stats.last_train || 'Aucune révision' %></span></li>
+                            <li class="list">Nombre de sessions : <span class="stat"><%= stats.nb_session || 0 %></span></li>  
+                            <li class="list">Deck débloque par  : <span class="stat"><%= stats.nb_users_consulting || 0 %></span> personne<% if(stats.nb_users_consulting > 1){ %>s<% } %></li>  
+                        </ul>               
+                    </div>
+                    
+                </div>
+                <hr>
+                <div class="card_part">
+                    <!--Liste des carte en ligne avec un overflow-->
+                    <h2>Liste des cartes</h2>
+                    <div id="cards_container" class="cards_container">
+                        <% cards.forEach(function(element, index) { %>
+                            <!--<%= element.score %>-->
+                            <div class="card_container_mini">
+                                <div class="maincarte_mini">
+                                    <div class="carte_mini" id="carte">
+                                        <div class="cartefront">
+                                            <h1><span class="fancy">Question :</span></h1>
+                                            <div class="infofront">
+                                                <% if(element.img_q != "") { %>
+                                                    <img class="image_carte" src="../uploads/<%= element.img_q %>"></img>
+                                                <% } %>
+                                                <p class="p_card_mini"><%= element.question %></p>
+                                                <div class="comprehension">
+                                                    <table class="table-eval">
+                                                        <tbody>
+                                                            <tr class="big" id="autoevaltab">
+                                                                <% switch (element.average_score_by_card) {
+                                                                    case 1:
+                                                                %>
+                                                                    <td data-eval="1" class="eval" id="TM" title="Très Mauvais"><i class="fa-solid fa-face-frown"></i></td>
+                                                                <%        
+                                                                        break;
+                                                                    case 2:
+                                                                %>
+                                                                    <td data-eval="2" class="eval" id="M" title="Mauvais"><i class="fa-solid fa-face-frown-open"></i></td>
+                                                                <%        
+                                                                        break;
+                                                                    case 3:
+                                                                %>
+                                                                    <td data-eval="3" class="eval" id="N" title="Neutre"><i class="fa-solid fa-face-meh"></i></td>
+                                                                <%        
+                                                                        break;
+                                                                    case 4:
+                                                                %>
+                                                                    <td data-eval="4" class="eval" id="B" title="Bien"><i class="fa-solid fa-face-smile"></i> </td>
+                                                                <%        
+                                                                        break;
+                                                                    case 5:
+                                                                %>
+                                                                    <td data-eval="5" class="eval" id="TB" title="Très Bien"><i class="fa-solid fa-face-laugh"></i></td>
+                                                                <%        
+                                                                        break;
+                                                                
+                                                                    default:
+                                                                %>
+                                                                    <td data-eval="0" class="eval" id="NEW" title="Nouveau"><i class='fas fa-ban'></i></td>
+                                                                <%
+                                                                        break;
+                                                                } %>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="carteback hide_card">
+                                            <h1><span class="fancy_back">Réponse :</span></h1>
+                                            <div class="infoback">
+                                                <% if(element.img_a != "") { %>
+                                                    <img class="image_carte" src="../uploads/<%= element.img_a %>"></img>
+                                                <% } %>
+                                                <p class="p_card_mini"><%= element.answer %></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <% }); %>
+                    </div>
+                </div>
+                <% if(deck[0].type == "PARCOURS") { %>
+                    <div class="parcours_part">
+                        <h2>Parcours</h2>
+                        <div id="parcours_container" class="small_parcours_container">
+                            <ul class="activities" id="activities">
+                            <% parcours.forEach(function(element, index) { %>
+                                <li class="activities_item column_activitie_item">
+                                    <div class="header_item">
+                                        <h2><%= element.title %></h2>
+                                        <div data-type="eval" class="listchoix">
+                                            <% switch (element.type) { 
+                                                case "VOD": %>
+                                                <p><i class="fa-solid fa-circle-play fa-3x" style="color: #f06b42"></i></p>
+                                            <%        
+                                                    break;
+                                                case "IMG": %>
+                                                <p><i class="fa-solid fa-image fa-3x" style="color: #f06b42"></i></p>
+                                            <%
+                                                    break;
+                                                case "PDF": %>
+                                                <p><i class="fa-regular fa-file-pdf fa-3x" style="color: #f06b42"></i></p>
+                                            <%        
+                                                    break;
+                                                case "FICHE": %>
+                                                <p><i class="fa-solid fa-file fa-3x" style="color: #f06b42"></i></p>
+                                            <%      
+                                                    break;
+                                                case "CARDS": %>
+                                                <p><i class="fa-solid fa-layer-group fa-3x" style="color: #f06b42"></i></p>  
+                                            <%
+                                                break;
+                                                default:
+                                                    break;
+                                            } %>
+                                        </div>
+                                    </div>
+                                    <% switch (element.type) { 
+                                            case "VOD": %>
+                                            <iframe onload="updateProgressBar()" class="iframe_video" height="200" src="<%= element.content %>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                        <%        
+                                                break;
+                                            case "IMG": %>
+                                            <img onload="updateProgressBar()" class="image_carte" src="../uploads/<%= element.content %>" alt=""/>
+                                        <%
+                                                break;
+                                            case "PDF": %>
+                                            <object onload="updateProgressBar()" data="../uploads/<%= element.content %>" class="image_carte" type="application/pdf" width="100%" height="500px" src="" alt="">
+                                                <a href="../uploads/<%= element.content %>" download="<%= element.title %>">Votre navigateur ne peut pas lire les pdf, téléchargez le document pour le consulter</a>
+                                            </object>
+                                        <%        
+                                                break;
+                                            case "FICHE": %>
+                                                <div onclick="displayFiche(<%= JSON.parse(element.content) %>)" onmouseenter="generateView($(this), <%= JSON.parse(element.content) %>, true)" class="apercu_fiche"></div>
+                                        <%
+                                                break;
+                                            case "CARDS": %>
+                                            <div class="cards_container">
+                                            <%
+                                                let q = element.all_card_q ? element.all_card_q.split('&') : [];
+                                                let r = element.all_card_r ? element.all_card_r.split('&') : [];
+                                                let img_q = element.all_card_img_q ? element.all_card_img_q.split('&') : [];
+                                                let img_r = element.all_card_img_r ? element.all_card_img_r.split('&') : [];
+                                                for(let i = 0; i < q.length; i++){
+                                            %>
+                                                <div class="card_container_mini">
+                                                    <div class="maincarte_mini">
+                                                        <div class="carte_mini" id="carte">
+                                                            <div class="cartefront">
+                                                                    <h1><span class="fancy">Question :</span></h1>
+                                                                    <div class="infofront">
+                                                                        <% if(img_q[i] != ""){ %><img class="image_carte" src="../uploads/<%=img_q[i]%>"></img><% } %>
+                                                                        <p class="p_card_mini"><%= q[i].replace(/\n/g, '<br>')%></p>
+                                                                    </div>
+                                                            </div>
+                                                            <div class="carteback hide_card">
+                                                                    <h1><span class="fancy_back">Réponse :</span></h1>
+                                                                    <div class="infoback">
+                                                                        <% if(img_r[i] != "") { %><img class="image_carte" src="../uploads/<%=img_r[i]%>"></img><% } %>
+                                                                        <p class="p_card_mini"><%= r[i].replace(/\n/g, '<br>')%></p>
+                                                                    </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                        <%      } %>
+                                            </div>
+                                        <%    
+                                            break;
+                                            default:
+                                                break;
+                                    } %>
+                                </li>
+                            <% }); %>
+                        </div>
+                    </div>
+                <% } %>
+            </div> 
+        </main>
+        <footer class="header_nav_mobile">
+            <div class="container">
+                <div class="navbar">
+                    <div class="mobile">
+                        <div class="li_nav"><a href="/hub"><i class='fas fa-gamepad'></i></a></div>
+                         
+                        <div class="li_nav"><a href="/decks"><i class="fas fa-clone"></i></a></div>
+                         
+                        <div class="li_nav"><a href="/home"><i class='fas fa-home'></i></a></div>
+                         
+                        <div class="li_nav"><a href="/search"><i class='fas fa-search'></i></a></div>
+                         
+                        <div class="li_nav"><a href="/profil"><i class='fas fa-user-alt'></i></a></div>
+                         
+                        <div class="li_nav"><a href="/gestion"><i class='fas fa-wrench'></i></a></div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </body>
+    <script src="../js/functions.js"></script>
+    <script src="../js/setup.js"></script>
+    <script src="../js/create_fiche.js"></script>
+    <script>
+        //change la classe de l'id button_supp quand la souris est sur le bouton
+        function changeClass() {
+            document.getElementById("trash_i").className = "fa-solid fa-trash fa-bounce";
+  
+        }
+        function returnClass() {
+            document.getElementById("trash_i").className = "fa-solid fa-trash";
+
+        }
+
+        let datas = [
+        <% cards.forEach(function(element, index) { %>
+            <%= element.average_score_by_card || 0 %>,
+        <% }); %>
+        ];
+        const compterOccurrences = (tableau) => tableau.reduce((occurrences, element) => (occurrences[element] = (occurrences[element] || 0) + 1, occurrences), {0:0,1:0, 2:0, 3:0, 4:0, 5:0});
+        const resultat = Object.values(compterOccurrences(datas));
+        console.log(datas, resultat);
+
+        $(document).ready(function(){
+            $("#trash").click(function (e) {
+                $(this).next(".modal_ask_supp").toggleClass("display")
+            })
+
+            $("#modal_params").submit(function (e) {
+                e.preventDefault()
+                const data = $(this).serialize()
+                $.ajax({
+                    url: '/ask_supp',
+                    type: 'POST',
+                    data:data,
+                    success: function(response) {
+                        $("#modal_params").toggleClass("display")
+                        $("#reason").val("")
+                    },
+                    error: function(xhr, status, error) {
+                        // Récupération de l'erreur
+                        console.error('Erreur de requête:', error, xhr);
+                        // Traitement de l'erreur
+                        showError(xhr.responseJSON.message)
+                        $("#modal_params").toggleClass("display")
+                        $("#reason").val("")
+                    }
+                });
+            })
+
+            $('#code').click(function(){
+                var copyText = document.getElementById("code_input");
+
+                // Select the text field
+                copyText.select();
+
+                // Copy the text inside the text field
+                document.execCommand('copy');
+
+                // Alert the copied text
+                alert("Copied the text: " + copyText.value);
+            })
+        });
+        
+        //création de l'histogramme avec en abysse la moyenne des notes allant de (Très mauvais, Mauvais, Moyen, Bon, Très bon) et en ordonnée le nombre de cartes ayant cette note
+        var ctx = document.getElementById('myChart').getContext('2d');
+        Chart.defaults.font.family ="'FontAwesome'";
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                //ajout des icones fontawesome avec \u sans solid
+                labels: ['\uf05e', '\uf57A', '\uf119', '\uf11a', '\uf118', '\uf599'], 
+                datasets: [{
+                        label: 'Nombre de cartes',
+                        data: resultat, //données à récupérer dans la base de données donc a faire 
+                        backgroundColor: [
+                            'rgba(128,0,128, 0.2)',
+                            'rgba(255, 0, 0, 0.2)', //couleur des barres
+                            'rgba(255, 69, 74, 0.2)',
+                            'rgba(100, 148, 237, 0.2)',
+                            'rgba(173, 255, 47, 0.2)',
+                            'rgba(0, 183, 14, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(128,0,128, 1)',
+                            'rgba(255, 0, 0, 1)', //couleur des bordures
+                            'rgba(255, 69, 74, 1)',
+                            'rgba(100, 148, 237, 1)',
+                            'rgba(173, 255, 47, 1)',
+                            'rgba(0, 183, 14, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true //commence à 0
+                    },
+                    x:{
+                        ticks: {
+                            //change la couleur des abscisses
+                            color: 'rgba(0, 0, 0, 1)',
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false //enlève la légende
+                    }
+                }                        
+            }
+        });
+    </script>
+</html>

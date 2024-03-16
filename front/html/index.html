@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="../img/logo_intellicard.png" type="image/x-icon">
+        <link type="text/css" rel="stylesheet" href="../css/index.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+            integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+            crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <title>IntelliCard</title>
+    </head>
+
+    <body>
+        
+
+
+        <div class="texte nooverflow">
+
+            <h1>Bienvenue sur <u>IntelliCard</u> !</h1>
+            <p>La plateforme ultime pour un apprentissage efficace et personnalisé.<br></p>
+            <div class="list_container">
+                <p>◉&ensp;Explorez les decks partagés par la communauté ou créez les vôtres.</p>
+                <p>◉&ensp;Révisez et entraînez-vous dans différentes matières grâce à nos cartes intelligentes</p>
+                <p>◉&ensp;Suivez votre progression, identifiez vos lacunes et améliorez-vous grâce à nos outils avancés</p>
+                <p>◉&ensp;Testez vos connaissances avec notre quiz quotidien</p>
+                <p>◉&ensp;Recevez des notifications pour une pratique régulière</p>
+            </div>
+            <p>Avec IntelliCard, vous êtes maître de votre apprentissage.</p>
+            <p>Inscrivez-vous maintenant pour accéder à notre plateforme et libérer tout votre potentiel !</p>
+            
+            <!-- Bouton dans la div car plus pratique -->
+            <div class="centered-div" >
+                <a href="login" id="lien_login"> 
+                    <button class="btn-home">Commencer mon apprentissage</button>
+                </a>
+            </div>
+        </div>
+
+    </body>
+    <!-- Fichiers JS -->
+    <!--
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        let socket = io();
+    </script>
+    <script src="../js/cookie.js"></script>
+    -->
+    <!-- FIN Fichiers JS -->
+
+    <script>
+        //Sur Android
+        if (/Android/i.test(navigator.userAgent)) {
+            console.info("Autre que Android !");
+            let lien = document.getElementById('lien_login');
+            lien.href = "appmobile";
+        }
+    </script>
+</html>
