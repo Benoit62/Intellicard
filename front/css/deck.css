@@ -1,0 +1,321 @@
+.name {
+    max-width: 50%;
+    text-align: left;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+h2 {
+    /*color: #3f2a56;*/
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.fom_adding_deck {
+    background: linear-gradient(to bottom right, #293844, #5a5c5e);
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    animation: fadeIn 0.5s;
+    width: 80%;
+    margin: 10px auto;
+    position: relative;
+}
+
+.haut {
+    /*alignement des éléments*/
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+}
+
+.graph {
+    background-color: linear-gradient(to bottom right, #293844, #5a5c5e);
+    ;
+    margin-top: 30px;
+}
+
+#chart-wrapper {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+}
+
+
+.button_deck_arrow {
+    width: 20%;
+    display: flex;
+    justify-content: space-around;
+    margin: 12px 0 10px;
+    font-size: 120%;
+}
+
+.btn_entrainement {
+    padding: 12px 24px;
+    background-color: #2b39b4;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 100%;
+    margin: 10px 0;
+    text-decoration: none;
+    width: fit-content;
+}
+
+.btn_eval {
+    /* comme btn_entrainement mais avec couleur différentes*/
+    padding: 12px 24px;
+    background-color: #c41b1b;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 100%;
+    margin: 10px 0;
+    text-decoration: none;
+    width: fit-content;
+}
+
+.btn_block
+{
+
+    padding: 12px 24px;
+    background-color:rgb(202, 141, 8);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 100%;
+    margin: 10px 0;
+    text-decoration: none;
+    width: fit-content;
+
+}
+
+.btn_trash
+{
+
+    padding: 12px 24px;
+    background-color:rgb(202, 141, 8);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 100%;
+    margin: 10px 0;
+    text-decoration: none;
+    width: fit-content;
+
+}
+
+.button_deck {
+    width: 48%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 12px 0 10px;
+    font-size: 120%;
+}
+
+/*hover sur les boutons*/
+.btn_entrainement:hover,
+.btn_eval:hover,.btn_block:hover
+{
+    background-color: #1b1b1b;
+}
+
+@keyframes jump {
+    0%   {transform: translate3d(0,0,0) scale3d(1,1,1);}
+    40%  {transform: translate3d(0,150%,0) scale3d(1,1,1);}
+    100% {transform: translate3d(0,300%,0) scale3d(1,0.9,1);}
+}
+
+
+
+
+
+.card_part {
+    width: 100%;
+}
+
+.card_part .cards_container {
+    width: 100%;
+}
+
+.code {
+    cursor: pointer;
+}
+
+
+
+
+
+
+/* empile les divs se trouvant dans fom_adding_deck quand l'utilisateur est sur mobile */
+@media screen and (max-width: 768px) {
+    .fom_adding_deck {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 95%;
+    }
+
+    .haut {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 98%;
+    }
+
+    .button_deck {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .button_deck_arrow {
+        width: 100%;
+        justify-content: space-around;
+    }
+
+ 
+  
+}
+
+@media screen and (min-width: 769px) and (max-width: 1000px)
+{
+    .button_deck {
+        display: flex;
+        flex-direction: column;
+       /* align-items: center; */
+
+      }
+      
+      .button_deck > * {
+        margin-right: 10px;
+      }
+
+}
+
+@media screen and (max-width: 390px) {
+    .button_deck {
+      flex-direction: column;
+    }
+    .button_deck > * {
+      width: auto;
+      margin-bottom: 10px;
+    }
+  }
+
+
+
+  /* Modal mpdifiction deck */
+
+.modal_valid_arc {
+    color: white;
+    width: 30vw;
+    height: 30vh;
+    background: linear-gradient(to bottom right, #33414d, #4f5559);
+    overflow-y: scroll;   
+}
+
+.modal_valid_arc::-webkit-scrollbar {
+    display: none;
+}
+
+
+
+
+
+/* Paramètres */
+
+.params_button {
+    width: auto;
+    height: auto;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.params_button > i {
+    font-size: 160%;
+}
+
+
+.modal_params {
+    position: absolute;
+    top: 50px;
+    width: fit-content;
+    padding: 20px;
+    background-color:#3e474f;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    font-size: 80%;
+}
+
+.modal_params.display {
+    display: flex;
+}
+
+.modal_params fieldset {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal_ask_supp {
+    position: absolute;
+    top: 50px;
+    width: 400%;
+    padding: 20px;
+    background-color:#3e474f;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    font-size: 80%;
+}
+
+.modal_ask_supp.display {
+    display: flex;
+}
+
+.reason_textarea {
+    background-color: transparent;
+    resize: none;
+    height: 70px;
+    border: none;
+    color: white;
+    width: 100%;
+}
+
+.send_ask {
+    background-color:rgb(202, 141, 8);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+
+@media screen and (max-width: 800px) {
+    .modal_params {
+        top: 50px;
+        right: 0;
+    }
+
+    .modal_ask_supp {
+        top: 50px;
+        right: 0;
+    }
+}

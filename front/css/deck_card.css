@@ -1,0 +1,87 @@
+
+.deck_display{
+  font-family: 'zilla slab',sans-serif;
+  width: 250px;
+  height: auto;
+  text-align: center;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 25px;
+
+  background: linear-gradient(to bottom right, #33414d, #40464a);
+  color: white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  animation: fadeIn 0.5s;
+  cursor: pointer;
+}
+
+.title_deck_display{
+  margin: 7px;
+  font-size: 130%;
+}
+
+.by{
+  margin: 0;
+  font-size: 80%;
+}
+
+.votes {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  margin: 12px 0 10px;
+  font-size: 120%;
+}
+
+.each_vote {
+  max-width: 45%;
+  min-width: 30%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.up_vote i {
+  color: green;
+}
+.down_vote i {
+  color: red;
+}
+
+.tag_container {
+  margin: 0 auto;
+}
+
+.tag {
+  background-color: #3f2a56;
+  padding: 4px 12px 7px;
+  margin: 0;
+  border-radius: 25px;
+  line-height: auto;
+  color: white;
+  width: fit-content;
+  display: flex;
+  align-items: center;
+}
+
+.tag p {
+  margin: 0;
+  white-space: nowrap;
+}
+
+
+.puce {
+  color: #ed592c;
+}
+
+
+
+
+
+@media screen and (max-width: 800px) {
+  .deck_display{
+    width: 90vw;
+    text-align: center;
+    margin: 10px auto;
+  }
+  
+}

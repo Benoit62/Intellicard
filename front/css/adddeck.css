@@ -1,0 +1,189 @@
+.fom_adding_deck {
+  background: linear-gradient(to bottom right, #293844, #5a5c5e);
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  animation: fadeIn 0.5s;
+  width: 80%;
+  margin: 10px auto;
+}
+
+.fom_adding_deck h2 {
+  /*color: #3f2a56;*/
+  text-align: center;
+  margin-bottom: 30px;
+
+}
+
+
+.first_infos {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 20px 0;
+}
+
+
+.form_group_deck {
+  width: 20%;
+  margin: 0 auto;
+}
+
+.form_group_deck input:focus-visible {
+  border: none;
+}
+
+fieldset {
+  border-radius: 10px;
+  background-color: rgb(63, 60, 60);
+}
+
+legend {
+  font-size: 120%;
+}
+
+
+.textarea_deck {
+  width: 90%;
+  height: 150px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-family: Arial, sans-serif;
+  font-size: 10px;
+  background-color: rgb(46, 44, 44);
+  color: white;
+  resize: none;
+  font-size: 110%;
+}
+
+
+.listcard, .listcardAdd {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 20px;
+  height: 30px;
+  border-radius: 5px;
+  padding: 10px;
+  text-align: center;
+  margin: 5px;
+
+  color: white;
+  border: 2px solid white;
+  background-color: rgb(63, 60, 60);
+  cursor: pointer;
+}
+
+#buttonAccesCard, #buttonAccesCardAddCard {
+  width: auto;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 10px;
+  overflow-y: scroll;
+  width: 90%;
+  margin: 0 auto;
+}
+
+#addFields, #add_cards {
+  font-size: 500%;
+  color: green;
+  cursor: pointer;
+}
+
+#deleteField, .delete_field_parcours {
+  font-size: 150%;
+  color: rgba(255, 0, 0, 0.514);
+  cursor: pointer;
+}
+
+
+
+.infofront,
+.infoback {
+    position: relative;
+}
+
+@media screen and (max-width: 800px) {
+
+  .fom_adding_deck {
+    width: 95%;
+  }
+
+  .first_infos {
+    flex-wrap: wrap;
+  }
+  
+  
+  .form_group_deck {
+    width: 48%;
+    margin: 10px auto;
+  }
+}
+
+.display_choice {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  margin: 2vh 0;
+}
+
+
+.toggle_display {
+  cursor: pointer;
+  padding: 13px;
+}
+
+.h1_fancy {
+  margin: 0 !important;
+}
+
+.h1_fancy::after {
+  content: unset !important;
+}
+
+.hide_container {
+  display: none;
+}
+
+.bright_display {
+  border: 7px solid #ed592c;
+  border-radius: 10px;
+}
+
+
+.fancy {
+  padding: 30px 0 8px;
+  position: relative;
+}
+
+.fancy::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -5px;
+  width: 150px;
+  height: 14px;
+  transform: skew(-12deg) translateX(-50%);
+  background: #ed592c;
+  z-index: -1;
+}
+
+
+
+
+
+
+.deck_container,
+.parcours_container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  grid-gap: 20px;
+  justify-items: center;
+}
+
+.hide_container {
+  display: none;
+}

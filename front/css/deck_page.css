@@ -1,0 +1,27 @@
+/* texte */
+p {
+    font-family: 'zilla slab',sans-serif;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+    margin: 0;
+}
+  
+.carte-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    overflow-x: auto;  
+}
+  
+.cartedisplay {
+    width: 150px; /* Largeur des cartes */
+    height: 170px; /* Hauteur des cartes */
+    background-color: black;
+    color: white;
+    text-align: center;
+    margin: 10px; /* Marge autour des cartes */
+    padding: 10px; /* Espacement interne des cartes */
+    border-radius: 25px;
+}

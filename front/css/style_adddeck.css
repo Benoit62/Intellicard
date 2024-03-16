@@ -1,0 +1,86 @@
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to bottom right, #3f2a56, #f06b42);
+    background-attachment: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+}
+  
+.login-container {
+    background: linear-gradient(to bottom right, #293844, #5a5c5e);
+    color: white;
+    padding: 40px 60px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    animation: fadeIn 0.5s;
+    width: 80%;
+}
+  
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+  
+.login-container h2 {
+  /*color: #3f2a56;*/
+  text-align: center;
+  margin-bottom: 30px;
+}
+  
+.form-group {
+  margin-bottom: 20px;
+  text-align: center; /* Centrer le contenu du groupe */
+}
+  
+.form-group label {
+display: block;
+/*color: #3f2a56;*/
+margin-bottom: 5px;
+text-align: center; /* Centrer le texte du label */
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"] {
+padding: 10px;
+border: 1px solid #3f2a56;
+border-radius: 5px;
+outline: none;
+text-align: center;
+
+}
+
+.form-group input[type="submit"] {
+width: auto;
+padding: 10px;
+background-color: #f06b42;
+color: #ffffff;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+font-size: 110%;
+}
+
+.form-group input[type="submit"]:hover {
+background-color: #d9512b;
+}
+
+.first_infos {
+    display: flex;
+    justify-content: space-around;
+}
+
+.cards {
+    display: flex;
+    justify-content: center;
+    overflow-x: scroll;
+}
+
+.error {
+color: red;
+text-align: center;
+}
+

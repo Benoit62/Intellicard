@@ -1,0 +1,313 @@
+.content {
+    padding: 0 1vw;
+}
+
+.first_infos {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px 0;
+    background: linear-gradient(to bottom right, #293844, #5a5c5e);
+    padding: 20px;
+    box-shadow: 0 0 5px 1px #414546;
+    border-radius: 5px;
+}
+
+.form_group_deck {
+    color: white;
+}
+
+.form_group_deck.form_group2 {
+    width: 60%;
+    margin: 0 auto;
+}
+
+
+.form_group_deck.form_group1 {
+    width: 25%;
+    height: inherit;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 auto;
+}
+
+.form_group_deck input,
+.form_group_deck textarea {
+    background-color: rgb(63, 60, 60);
+    border: none;
+    color: white;
+    resize: none;
+    width: 100%;
+}
+
+.form_group_deck textarea {
+    width: 100%;
+    height: 60px;
+    font-family: inherit;
+}
+
+.form_group_deck input:focus-visible {
+    border: none;
+}
+
+fieldset {
+    border-radius: 10px;
+    background-color: rgb(63, 60, 60);
+    width: 90%;
+}
+
+legend {
+    font-size: 120%;
+}
+
+#addFields,
+.add_fields {
+    font-size: 500%;
+    color: green;
+    cursor: pointer;
+    text-align: center;
+}
+
+#deleteFields,
+.delete_fields {
+    font-size: 150%;
+    color: rgba(255, 0, 0);
+    cursor: pointer;
+}
+
+.delete_field_parcours {
+    position: absolute;
+    top: -15px;
+    right: -10px;
+    font-size: 150%;
+    color: rgba(255, 0, 0);
+    cursor: pointer;
+}
+
+.parcours_items_choices {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+
+
+.parcours_items_choices>div {
+    cursor: pointer;
+}
+
+
+
+.textarea_deck {
+    width: 90%;
+    height: 150px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-family: Arial, sans-serif;
+    font-size: 10px;
+    background-color: rgb(46, 44, 44);
+    color: white;
+    resize: none;
+    font-size: 110%;
+}
+
+
+.apercu_fiche {
+    height: 222px;
+    width: 156px;
+    color: white;
+    border: 3px solid #3f2a56;
+    border-radius: 2px;
+    background-color: rgb(46, 44, 44);
+    box-shadow: 0 0 5px 1px #3f2a56;
+    backdrop-filter: blur(15px);
+    padding: 1%;
+    cursor: pointer;
+}
+
+.iframe_video {
+    margin: 10px auto;
+    width: 100%;
+}
+
+.url {
+    width: 90%;
+    padding: 10px;
+    background-color: rgb(63, 60, 60);
+    color: white;
+    border: 1px solid white;
+    border-radius: 5px;
+}
+
+.each_question {
+    width: 100%;
+    color: white;
+}
+
+.first_line_question {
+    display: flex;
+}
+
+.question {
+    padding: 10px;
+}
+
+.question_type {
+    border: 1px solid grey;
+    padding: 10px;
+    cursor: pointer;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.question_type_select {
+    position: absolute;
+    background-color: #293844;
+    width: calc(100% + 20px);
+    top: -20px;
+    left: -11px;
+    padding: inherit;
+    box-sizing: border-box;
+    transform: scale(1);
+}
+
+.close {
+    color: red;
+    position: absolute;
+    right: -10px;
+    top: -10px;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 150%;
+}
+
+
+
+
+/* Editeur de fiche */
+
+.modal_flex {
+    display: flex;
+    height: 100%;
+    width: 100%;
+
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.brouillon_fiche_container {
+    width: 50%;
+    height: 100%;
+    overflow-y: scroll;
+    overflow-y: hidden;
+}
+
+.brouillon_fiche {
+    width: 95%;
+    height: 96%;
+    color: white;
+    border: 3px solid #3f2a56;
+    border-radius: 20px;
+    background-color: rgb(46, 44, 44);
+    box-shadow: 0 0 5px 1px #3f2a56;
+    backdrop-filter: blur(15px);
+    margin: 0 auto;
+    padding: 1%;
+    margin: 1%;
+}
+
+.side_fiche_editor {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.tools_container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+
+.elem_to_add {
+    font-size: 120%;
+    background-color: #d9512b;
+    margin: 10px 0;
+    padding: 8px;
+    cursor: pointer;
+    font-weight: bolder;
+}
+
+.second_tools {
+    height: 75%;
+    overflow-y: scroll;
+}
+
+.each_container_tool {
+    margin: 15px 0;
+    display: flex;
+    justify-content: space-around   ;
+    align-items: center;
+}
+
+
+.valid_fiche {
+    width: fit-content;
+    background-color: #f06b42;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 110%;
+    text-align: center;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+
+.def {
+    padding: 5px;
+    width: 80%;
+    margin: 5px auto;
+    border: 1px solid red;
+}
+
+
+
+.listcard {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 20px;
+    height: 30px;
+    border-radius: 5px;
+    padding: 10px;
+    text-align: center;
+    margin: 5px;
+  
+    color: white;
+    border: 2px solid white;
+    background-color: rgb(63, 60, 60);
+    cursor: pointer;
+  }
+  
+  #buttonAccesCard {
+    width: auto;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px;
+    overflow-y: scroll;
+    width: 90%;
+    margin: 0 auto;
+  }
+  
+
+
+
+

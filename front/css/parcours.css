@@ -1,0 +1,11 @@
+.next_activitie {
+  width: auto;
+  padding: 10px 20px;
+  background-color: #f06b42;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 110%;
+  margin-top: 10px;
+}

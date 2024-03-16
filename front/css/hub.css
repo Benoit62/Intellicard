@@ -1,0 +1,9 @@
+.game_button {
+    width: 290px;
+    height: 261px;
+    background-image: url("../img/logo_memory.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-clip: padding-box;
+}

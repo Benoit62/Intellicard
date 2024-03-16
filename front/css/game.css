@@ -1,0 +1,25 @@
+h1{
+    text-align: center;
+    color:white;
+    font-weight: 700;
+    font-size: 50px;
+}
+
+.cardsM{
+
+    margin: 48px auto;
+    width: max-content;
+    display: grid ;
+    /* 4 colonnes de 100px*/
+    grid-template-columns: repeat(5 , 100px);
+    gap: 16px;
+}
+
+.cardM{
+
+    height: 100px;
+    background-color:gray ;
+    border: 5px #111111;
+    cursor: pointer;
+    border-radius: 5%;
+}

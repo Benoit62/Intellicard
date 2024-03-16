@@ -1,0 +1,95 @@
+.container_admin_page {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.container_tag_infos {
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.container_tag_infos i  {
+    margin-bottom: 10px;
+    font-size: 130%;
+    cursor: pointer;
+}
+
+.tags_container {
+    width: 48%;
+    padding: 1%;
+}
+
+.tag_container {
+    margin-bottom: 10px!important;
+}
+
+.form_add_tag {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border: 2px white dotted;
+    padding: 15px;
+}
+
+.input_tag {
+    border: none;
+    font-size: 100%;
+    background-color: transparent;
+    color: white;
+}
+
+.button_add_tag {
+    border: none;
+    font-size: 100%;
+    background-color: transparent;
+    color: white;
+    cursor: pointer;
+}
+
+@media only screen and (max-width: 800px) {
+    .tags_container {
+        width: 100%;
+        margin-bottom: 40px;
+    }
+}
+
+
+
+.supp_ask_container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.each_supp_ask {
+    width: 100%;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.infos_supp {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    max-width: 40%;
+}
+
+.actions, .valid_actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 20%;
+}
+
+.actions i, .valid_actions i {
+    font-size: 200%;
+    cursor: pointer;
+}
+
+.valid_actions {
+    display: none;
+}

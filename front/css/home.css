@@ -1,0 +1,25 @@
+/* pour la page home */
+main{
+  display: flex;
+  flex-direction: column;
+}
+
+
+#title-histo-deck
+{
+    color: white;
+    margin-left: 2%;
+  font-size: x-large;
+}
+
+
+@media screen and (max-width: 800px) {
+
+    #logout{
+        position: fixed;
+        top: 10px;
+        bottom: unset;
+        text-align: center;
+        margin: 0 auto;
+    }
+}

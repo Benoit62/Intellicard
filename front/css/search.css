@@ -1,0 +1,128 @@
+.search_container {
+    position: sticky;
+    top: 0;
+    background: linear-gradient(to bottom right, #33414d, #4f5559);
+    width: 95%;
+    margin: 0 auto;
+    border-radius: 15px;
+}
+
+
+.suprem-header{
+    color: #fff;
+    padding: 2vh 2vw;
+    text-align: center;
+}
+
+.search_bar {
+    display: flex;
+    justify-content: space-around;
+}
+  
+.search_bar input[type="text"] {
+    padding: 5px;
+    width: 200px;
+    font-size: 120%;
+}
+  
+.search_bar button[type="submit"] {
+    background-color: #4285f4;
+    border: none;
+    border-radius: 3px;
+    color: #fff;
+    padding: 0 10px;
+    font-size: 120%;
+    height: 100%;
+}
+
+.search_bar select {
+    width: 96%;
+    height: 96%;
+    padding: 2%;
+    font-size: 100%;
+    color: white;
+    background-color: #414b53;
+    border: 2px solid white;
+}
+
+.tags_container, .levels_container {
+    width: 98%;
+    margin: 0 auto;
+    overflow-x: scroll;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.tags_container {
+    padding: 10px 0 2px;
+}
+.levels_container {
+    padding: 2px 0 10px;
+}
+
+.tag_container, .level_container {
+    cursor: pointer;
+}
+
+.bright_tag, .bright_level {
+    border: 2px solid white;
+}
+
+
+
+
+.each_input_search {
+    width: 30%;
+}
+
+
+
+
+
+
+
+@media screen and (max-width: 800px) {
+
+    .search_container {
+        width: 98%;
+        top: 5px;
+    }
+
+    .suprem-header{
+        color: #fff;
+        padding: 2vh 2vw;
+        margin-top: 1vh;
+        text-align: center;
+    }
+
+    .search_bar {
+        flex-direction: column;
+    }
+
+    .tags_container, .levels_container {
+        font-size: 80%;
+        width: 98%;
+    }
+
+    .tag_container {
+        margin: 0 5px!important;
+        cursor: pointer;
+    }
+
+    .search_bar input[type="text"] {
+        font-size: 120%;
+    }
+      
+    .search_bar button[type="submit"] {
+        font-size: 120%;
+    }
+
+    .search_bar {
+        flex-direction: column;
+    }
+
+    .each_input_search {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}

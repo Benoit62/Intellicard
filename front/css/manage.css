@@ -1,0 +1,96 @@
+.error {
+  color: white;
+  text-align: center;
+  width: 100%;
+}
+
+.main_manager {
+  display: flex;
+  flex-direction: column;
+  width: 95vw;
+  margin: 0 auto;
+  height: 100%;
+}
+
+.display_choice {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  margin: 2vh 0;
+}
+
+.display_results {
+  overflow-y: scroll;
+}
+
+
+.deck_container, .parcours_container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  grid-gap: 20px;
+  justify-items: center;
+}
+
+.toggle_display {
+  cursor: pointer;
+  padding: 13px;
+}
+
+.h1_fancy {
+  margin: 0 !important;
+  font-size: 150%;
+}
+
+.fancy::after {
+  content: unset!important;
+}
+
+.hide_container {
+  display: none!important;
+}
+
+.bright_display {
+  border: 7px solid #ed592c;
+  border-radius: 10px;
+}
+
+
+@media screen and (max-width: 800px) {
+  .main_manager {
+    display: flex;
+    flex-direction: column-reverse;
+    width: 100vw;
+    margin: 0 auto;
+    height: 100%;
+  }
+
+}
+
+.adddeck, .addparcours {
+  font-size: 350%;
+  
+  cursor: pointer;
+}
+
+.adddeck, a{
+  color: #ed592c;
+}
+
+.adddeck:hover, .addparcours:hover {
+  color: #3f2a56;
+}
+
+.adddeck::after, .addparcours::after {
+  content: unset;
+}
+
+.title_add {
+  margin: 7px;
+  font-size: 130%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: white;
+}
+
