@@ -1,7 +1,7 @@
 
-# HEIC Converter
+# Intellicard
 
-Small python application that allow you to convert a folder (including all subfolders) of HEIC images into JPEG images.
+Web application that helps you with school revision or allow you to create content to help community based on card system
 
 
 ## Authors
@@ -22,11 +22,11 @@ First, you will need to install all the dependencies.
 ```
 
 Then, add a .env file and add your database credentials and the port to run the website.
-* HOST
-* DATABASE
-* USER
-* PASSWORD
-* PORT
+* HOST = "host"
+* DATABASE = "database_name"
+* USER = "user"
+* PASSWORD = "password"
+* PORT = 8100
 
 
 Now, you are ready to launch your application
